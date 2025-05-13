@@ -89,7 +89,8 @@ class AuthController extends Controller
                 $message = __("messages.sign_in_success");
                 $user = Auth::user();
                 $user->image = getImage($user->image);
-                $accessToken = $user->createToken('authToken')->accessToken;
+                // $accessToken = $user->createToken('authToken')->accessToken;
+                $accessToken = $user->createToken('API Token')->accessToken;;
 				$user->accessToken = $accessToken;
 				$cart_count = AddToCart::where('user_id', $user->id)->count();
             }

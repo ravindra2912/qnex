@@ -289,6 +289,11 @@ section {
 	}
 }
 
+.object-cover {
+	object-fit: cover;
+	width: 100%;
+  }
+
 /******* navigation start **************/
 @media (max-width: 991px) {
 	.navbar-collapse {
@@ -312,6 +317,7 @@ section {
 
 .navbar {
 	padding: .5rem 2rem;
+	box-shadow: 0px -3px 10px 0px gray;
 }
 
 nav .nav-link {
@@ -564,7 +570,7 @@ nav .search-icon,
 
 @media only screen and (max-width: 600px) {
 	#home-slider .carousel-item img {
-		height: 255px;
+		height: 150px;
 		border-radius: 20px;
 		width: 100% !important;
 		object-fit: contain;
@@ -629,6 +635,20 @@ nav .search-icon,
 	opacity: 1;
 }
 
+#home-category{
+	img{
+		height: 300px;
+		width: 100%;
+		object-fit: cover;
+	}
+
+	@media only screen and (max-width: 600px) {
+		img{
+			height: 150px;
+		}
+	}
+}
+
 
 
 /******* home slider end **************/
@@ -656,7 +676,7 @@ nav .search-icon,
 
 /******* new product start **************/
 .new-product {
-	background: #F8F8F8;
+	/* background: #F8F8F8; */
 	padding: 5px 15px;
 	border-radius: 10px;
 	/* position: relative; */
@@ -721,11 +741,11 @@ nav .search-icon,
 	text-transform: none;
 	width: auto;
 	display: -webkit-box;
-	-webkit-line-clamp: 2;
+	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	height: 48px;
+	height: 24px;
 
 }
 
@@ -762,7 +782,7 @@ nav .search-icon,
 
 @media only screen and (max-width: 600px) {
 	.new-product {
-		padding: 5px 7px;
+		padding: 3px 4px;
 	}
 
 	#products .pos {

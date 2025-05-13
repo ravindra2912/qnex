@@ -67,7 +67,12 @@ class HomeController extends Controller
 			}
 		}
 
-		$categoty = Category::where('status', 'Active')->where('level', 0)->limit(4)->get();
+		$categoty = Category::select('id', 'name', 'slug', 'image', 'banner_img')
+		->where('parent_id', null)
+		->where('level', 0)
+		->where('status', 'Active')
+		->orderBy('name', 'ASC')
+		->limit(4)->get();
 		
 					
         return view('front.home', compact('HomeBanner', 'PopularProduct', 'LatestArrival', 'featured', 'categoty'));

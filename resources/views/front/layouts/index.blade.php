@@ -176,7 +176,7 @@
 			<ul class="navbar-nav ml-auto mr-md-3">
 				<li class="nav-item {{ (request()->is('Home') || request()->is('/')) ? 'active' : '' }}"><a href="{{ url('/') }}" class="nav-link text-center">Home</a></li>
 				<li class="nav-item {{ (request()->is('Products')) ? 'active' : '' }}"><a href="{{ url('/Products') }}" class="nav-link text-center">Product</a></li>
-				<li class="nav-item {{ (request()->is('Home') || request()->is('collections')) ? 'active' : '' }}"><a href="{{ url('/collections') }}" class="nav-link text-center">Collections</a></li>
+				<!-- <li class="nav-item {{ (request()->is('Home') || request()->is('collections')) ? 'active' : '' }}"><a href="{{ url('/collections') }}" class="nav-link text-center">Collections</a></li> -->
 				<li class="nav-item {{ (request()->is('AboutUs')) ? 'active' : '' }}"><a href="{{ url('/AboutUs') }}" class="nav-link text-center">About Us</a></li>
 				<li class="nav-item {{ (request()->is('ContactUs')) ? 'active' : '' }}"><a href="{{ url('/ContactUs') }}" class="nav-link text-center">Contact Us</a></li>
 				<li class="nav-item {{ (request()->is('FAQ')) ? 'active' : '' }}"><a href="{{ url('/FAQ') }}" class="nav-link text-center">FAQ</a></li>

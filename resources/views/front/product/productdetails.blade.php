@@ -216,10 +216,10 @@
 
 @section('content')
 
-<section id="nevigation-header">
+<!-- <section id="nevigation-header">
 	<h3>Product Details</h3>
 	<p>Shop <i class="fa-solid fa-angle-right"></i> {{ $product->name }}</p>
-</section>
+</section> -->
 
 <section id="product-detail" class="mt-5 mb-5 pb-5">
 	<div class="container">
@@ -466,13 +466,11 @@
 			</div>
 
 			@foreach($related_product as $val)
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
+			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos p-0">
 				<div class="new-product">
 					<div class="product-img">
 						<img loading="lazy" class="product__single" src="{{ getImage(isset($val->images_data[0])?$val->images_data[0]->image:'') }}" alt="{{ $val->name }}">
-						@if (isset($val->images_data[1]))
-						<img loading="lazy" class="secondary-img" src="{{ getImage($val->images_data[1]->image) }}" alt="{{ $val->name }}">
-						@endif
+						<img loading="lazy" class="secondary-img" src="{{ getImage(isset($val->images_data[1]) ? $val->images_data[1]->image:'') }}" alt="{{ $val->name }}">
 					</div>
 					<div class="product-info text-center">
 						<!-- <div class="row mt-2 pb-0" >
@@ -486,7 +484,7 @@
 							</div> -->
 						<!-- <p class="product-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi feugiat velit urna, sed tincidunt est fermentum id.</p> -->
 						<h4 class="product-name mt-3">{{ $val->name }}</h4>
-						<div class="ratting">
+						<!-- <div class="ratting">
 							@for( $i=1; $i<=5; $i++)
 								@if($val->rating >= $i)
 								<i class="fa-solid fa-star text-warning"></i>
@@ -495,7 +493,7 @@
 								@endif
 								@endfor
 								<span>({{ $val->review_count }})</span>
-						</div>
+						</div> -->
 						<p class="product-price mt-2">Rs. {{ $val->price }}</p>
 					</div>
 				</div>

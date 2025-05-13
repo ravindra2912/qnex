@@ -136,10 +136,10 @@
 		
 	</style>
 
-	<section id="nevigation-header">
+	<!-- <section id="nevigation-header">
 		<h3>Our Shop</h3>
 		<p>Home <i class="fa-solid fa-angle-right"></i> Shop</p>
-	</section>
+	</section> -->
   
 	<section id="products" class="mt-5 mb-5 pb-5">
 		<div class="container">

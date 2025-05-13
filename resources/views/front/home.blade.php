@@ -44,7 +44,23 @@
 
 
 
-<section id="service-info">
+<section id="home-category">
+	<div class="container mt-3">
+		<div class="row">
+		<div class="col-lg-12 col-md-12 col-12 mb-3 text-center">
+				<h4 class="font-weight-bold">Category</h4>
+			</div>
+			@foreach ($categoty as $cat)
+			<div class="col-lg-3 col-md-2 col-6 text-center ">
+				<img src="{{ $cat->image_url }}" alt="{{ $cat->name }}"  class="rounded cat-img" />
+				<label class="pt-1">{{ $cat->name }}</label>
+			</div>
+			@endforeach
+		</div>
+	</div>
+</section>
+
+<!-- <section id="service-info">
 	<div class="container mt-3">
 		<div class="row">
 
@@ -89,10 +105,10 @@
 
 		</div>
 	</div>
-</section>
+</section> -->
 
 <section id="latest-arival ">
-	<div class="container  mt-5 section-border p-5">
+	<div class="container  mt-5 section-border pt-2">
 		<div class="row header-contaimer ">
 			<div class="col-lg-12 col-md-12 col-12 text-center">
 				<h4 class="font-weight-bold">Latest Arrival</h4>
@@ -100,30 +116,16 @@
 			</div>
 
 			@foreach($LatestArrival as $val)
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
+			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos p-0">
 				<div class="new-product">
 					<div class="product-img">
 						<img loading="lazy" class="product__single" src="{{ getImage(isset($val->images_data[0])?$val->images_data[0]->image:'') }}" alt="{{ $val->name }}">
-						@if (isset($val->images_data[1]))
-						<img loading="lazy" class="secondary-img" src="{{ getImage($val->images_data[1]->image) }}" alt="{{ $val->name }}">
-						@endif
+						<img loading="lazy" class="secondary-img" src="{{ getImage(isset($val->images_data[1]) ? $val->images_data[1]->image:'') }}" alt="{{ $val->name }}">
 
 					</div>
 					<div class="product-info text-center">
-						<!--  
-<div class="row mt-2 pb-0">
-							<div class="col-sm-12  col-12">
-								<div class="d-flex mt-2 justify-content-center">
-									<p class="badges bg-danger"></p>
-									<p class="badges bg-success"></p>
-									<p class="badges bg-warning"></p>
-								</div>
-							</div>
-						</div>
- -->
-						<!-- <p class="product-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi feugiat velit urna, sed tincidunt est fermentum id.</p> -->
 						<h4 class="product-name mt-3">{{ $val->name }}</h4>
-						<div class="ratting">
+						<!-- <div class="ratting">
 							@for( $i=1; $i<=5; $i++)
 								@if($val->rating >= $i)
 								<i class="fa-solid fa-star text-warning"></i>
@@ -132,7 +134,7 @@
 								@endif
 								@endfor
 								<span>({{ $val->review_count }})</span>
-						</div>
+						</div> -->
 						<p class="product-price mt-2">Rs. {{ $val->price }}</p>
 					</div>
 				</div>
@@ -306,7 +308,7 @@
 
 									<div class="">
 										<span class="pr-2">Rs. {{ $val->price }}</span>
-										<span class="ratting">
+										<!-- <span class="ratting">
 											@for( $i=1; $i<=5; $i++)
 												@if($val->rating >= $i)
 												<i class="fa-solid fa-star text-warning"></i>
@@ -315,7 +317,7 @@
 												@endif
 												@endfor
 												<span> ({{ $val->review_count }}) </span>
-										</span>
+										</span> -->
 										<span class="float-right">
 											<a href="{{ url('/Products/'.$val->slug) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-cart-shopping pr-2"></i>Shop Now</a>
 										</span>
@@ -440,7 +442,7 @@
 </section> -->
 
 <!-- category -->
- @if(isset($categoty) && !empty($categoty))
+<!-- @if(isset($categoty) && !empty($categoty))
 <section id="">
 	<div class="container section-border pt-5 pb-4 mt-5">
 		<div class="row">
@@ -454,23 +456,10 @@
 				<img loading="lazy" src="{{ $cat->banner_image_url }}" alt="category" style="width: -webkit-fill-available; object-fit: contain; height: auto; border-radius: 20px;" />
 			</div>
 			@endforeach
-
-			<!-- <div class="col-lg-3 col-md-3 col-6 mb-3">
-				<img loading="lazy" src="{{ asset('front/images/category/1.png') }}" alt="category" style="width: -webkit-fill-available; object-fit: contain; height: auto;" />
-			</div>
-			<div class="col-lg-3 col-md-3 col-6 mb-3">
-				<img loading="lazy" src="{{ asset('front/images/category/2.png') }}" alt="category" style="width: -webkit-fill-available; object-fit: contain; height: auto;" />
-			</div>
-			<div class="col-lg-3 col-md-3 col-6 mb-3">
-				<img loading="lazy" src="{{ asset('front/images/category/3.png') }}" alt="category" style="width: -webkit-fill-available; object-fit: contain; height: auto;" />
-			</div>
-			<div class="col-lg-3 col-md-3 col-6 mb-3">
-				<img loading="lazy" src="{{ asset('front/images/category/4.png') }}" alt="category" style="width: -webkit-fill-available; object-fit: contain; height: auto;" />
-			</div> -->
 		</div>
 	</div>
 </section>
-@endif
+@endif -->
 
 @endsection
 
