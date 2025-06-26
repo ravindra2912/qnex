@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-header">
                   <a href="{{ route('product.create') }}" title="Add New Product" class="btn btn-success btn-sm float-right">+ Add new product</a>
-                  <button href="{{ route('product.create') }}" title="Import Product" class="btn btn-success btn-sm float-right mr-2" data-toggle="modal" data-target="#modal-import">Import</button>
+                  <!-- <button href="{{ route('product.create') }}" title="Import Product" class="btn btn-success btn-sm float-right mr-2" data-toggle="modal" data-target="#modal-import">Import</button> -->
                 </div>
               <div class="card-body">
 			  
@@ -92,26 +92,22 @@
                 <table id="example1" class="table table-striped w-100 m-hide">
                   <thead>
                     <tr>
-                      <th>Sr. No</th>
+                      <th>#</th>
 					  <th>Product Name</th>
+                      <th>Price</th>
                       <th>Category Name</th>
-                      <th>Sub Category Name</th>
-                      <th>Sub Category2 Name</th>
-                      
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @php $i=1; @endphp
                     @if(isset($productLists) && !empty($productLists))
                       @foreach($productLists as $productList)
                         <tr>
-                          <td>{{ $i++ }}</td>
+                          <td><img src="{{ $productList->image_url }}" height="100" /></td>
 						  <td>{{ (isset($productList->name) && !empty($productList->name)) ? ucfirst($productList->name) : '' }}</td>
+						  <td>Rs. {{ (isset($productList->price) && !empty($productList->price)) ? ucfirst($productList->price) : '0' }}</td>
                           <td>{{ (isset($productList->category_data) && !empty($productList->category_data) && isset($productList->category_data->name)) ? ucfirst($productList->category_data->name) : '' }}</td>
-                          <td>{{ (isset($productList->sub_category_data) && !empty($productList->sub_category_data) && isset($productList->sub_category_data->name)) ? ucfirst($productList->sub_category_data->name) : '' }}</td>
-                          <td>{{ (isset($productList->sub_category2_data) && !empty($productList->sub_category2_data) && isset($productList->sub_category2_data->name)) ? ucfirst($productList->sub_category2_data->name) : '' }}</td>
                           <td>{{ (isset($productList->status) && !empty($productList->status)) ? ucfirst($productList->status) : '' }}</td>
                           <td>
                             <div class="d-flex justify-content-center">

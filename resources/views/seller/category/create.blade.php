@@ -24,6 +24,16 @@
 					
 						<div class="form-group">
 							<label class="required">Category Name</label>
+							<select name="parent_id" class="form-control">
+								<option value="">Select Perent Categoty</option>
+								@foreach ($categoryLists as $cat)
+									<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+								@endforeach
+							</select>
+						</div>
+						
+						<div class="form-group">
+							<label class="required">Category Name</label>
 							<input type="text" name="category_name" id="category_name" class="form-control" placeholder="Category Name" >
 						</div>
 

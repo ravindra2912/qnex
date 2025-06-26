@@ -29,7 +29,6 @@ class CategorySeeder extends Seeder
         Category::create([
 			'name' => 'T-Shirt',
 			'parent_id' => 1,
-			'level' => 1,
 			'slug' => 't-shirt',
 			'status' => 'Active',
 		]);
@@ -37,7 +36,6 @@ class CategorySeeder extends Seeder
         Category::create([
 			'name' => 'Polo T-Shirt',
 			'parent_id' => 2,
-			'level' => 2,
 			'slug' => 'polo t-shirt',
 			'status' => 'Active',
 		]);

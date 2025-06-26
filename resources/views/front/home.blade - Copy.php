@@ -148,7 +148,7 @@
 					}
 				}
 			?>
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos">
+			<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos">
 				<div class="product">
 				  <div class="product-img">
 						<img class="product__single" src="{{ $product_img }}" alt="{{ $val->name }}">
@@ -293,7 +293,7 @@
           <div class="mb-2">
             <span class="selle-price">$199</span>
             <span class="price">${{ $featured->price }}</span>
-            <a class="btn btn-primary" href="{{ url('/Products/'.$featured->slug) }}" >Buy Now</a>
+            <a class="btn btn-primary" href="{{ url('/products/'.$featured->slug) }}" >Buy Now</a>
           </div>
           <p>End in</p>
           <div class="timer">
@@ -348,7 +348,7 @@
 					}
 				}
 			?>
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos">
+			<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos">
 				<div class="product">
 				  <div class="product-img">
 						<img class="product__single" src="{{ $product_img }}" alt="{{ $val->name }}">

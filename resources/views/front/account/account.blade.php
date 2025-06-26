@@ -65,7 +65,7 @@
 							</div>
 						</a>
 						
-						<a href="{{ route('account.address') }}" class="row pl-2 pr-2 pb-2  pos" >
+						<!-- <a href="{{ route('account.address') }}" class="row pl-2 pr-2 pb-2  pos" >
 							<div class=" col-9 pl-4">
 								<p class="text-2 font-weight-bold mb-0">My Address</p> 
 								<p class="text-1 mb-0">Change Your Address Details</p>
@@ -73,7 +73,7 @@
 							<div class=" col-3 text-right" style="align-self: center;">
 								<i class="fas fa-chevron-right text-primary"></i>
 							</div>
-						</a>
+						</a> -->
 						<a href="{{ route('account.wishlist') }}" class="row pl-2 pr-2 pb-2  pos" >
 							<div class=" col-10 pl-4">
 								<p class="text-2 font-weight-bold mb-0">My Wishlist</p> 

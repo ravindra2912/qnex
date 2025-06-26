@@ -21,11 +21,13 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categoryLists = Category::where('parent_id', null)
-            ->where('level', 0)
+        $categoryLists = Category::select('id', 'name', 'parent_id', 'status')
+            ->with([
+                'parentCategory' => function ($q) {
+                    $q->select('id', 'name');
+                }
+            ])->orderBy('name', 'asc')->get();
 
-            ->orderBy('created_at', 'DESC')
-            ->get();
 
         return view('seller.category.index', compact('categoryLists'));
     }
@@ -37,7 +39,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('seller.category.create');
+        $categoryLists = Category::select('id', 'name')->where('parent_id', null)->orderBy('name', 'asc')->get();
+        return view('seller.category.create', compact('categoryLists'));
     }
 
     /**
@@ -51,56 +54,57 @@ class CategoryController extends Controller
         $success = false;
         $message = __("messages.exception_error");
         $data = array();
+        try {
+            $validator = Validator::make($request->all(), [
+                'category_name' => 'required|max:60',
+                'category_image' => 'required|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
+                'banner_img' => 'nullable|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
+            ]);
 
-        $validator = Validator::make($request->all(), [
-            'category_name' => 'required|max:60',
-            'category_image' => 'required|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
-            'banner_img' => 'nullable|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
-        ]);
+            if ($validator->fails()) { // Validation fails
+                $message = $validator->errors()->first();
+            } else {
+                $name = trim($request->category_name);
+                $slug = Str::slug($name);
 
-        if ($validator->fails()) { // Validation fails
-            $message = $validator->errors()->first();
-        } else {
-            $name = trim($request->category_name);
-            $slug = Str::slug($name);
+                $check_category_name = Category::where('parent_id', null)
+                    ->where('slug', $slug)
+                    ->count();
 
-            $check_category_name = Category::where('parent_id', null)
-                ->where('level', 0)
-                ->where('slug', $slug)
+                if ($check_category_name == 0) { // Same category name not exist so insert it
 
-                ->count();
+                    $imgpath = fileUploadStorage($request->file('category_image'), 'category_image');
 
-            if ($check_category_name == 0) { // Same category name not exist so insert it
+                    $category = new Category();
 
-                $imgpath = fileUploadStorage($request->file('category_image'), 'category_image');
-
-                $category = new Category();
-
-                if ($request->hasfile('banner_img')) {
-                    $bannerimgpath = fileUploadStorage($request->file('banner_img'), 'category_image');
-                    $category->banner_img = $bannerimgpath;
-                }
+                    if ($request->hasfile('banner_img')) {
+                        $bannerimgpath = fileUploadStorage($request->file('banner_img'), 'category_image');
+                        $category->banner_img = $bannerimgpath;
+                    }
 
 
-                // $category->parent_id = 0;
-                $category->level = 0;
-                $category->image = $imgpath;
-                $category->slug = $slug;
-                $category->name = $name;
+                    $category->parent_id = isset($request->parent_id) && !empty($request->parent_id) ? $request->parent_id : null;
+                    $category->image = $imgpath;
+                    $category->slug = $slug;
+                    $category->name = $name;
 
-                try {
+
                     $category->save();
                     $success = true;
                     $message =  __("messages.category_store_success");
-                } catch (\Exception $e) {
-                    $message = $e->getMessage();
-                    $message = $e->getMessage();
-                    // Remove new uploaded image if exist
-                    fileRemoveStorage($imgpath);
-                    fileRemoveStorage($bannerimgpath);
+                } else { // Same category name is exist
+                    $message = __('messages.category_exist');
                 }
-            } else { // Same category name is exist
-                $message = __('messages.category_exist');
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+            // Remove new uploaded image if exist
+            if (isset($imgpath)) {
+                fileRemoveStorage($imgpath);
+            }
+
+            if (isset($bannerimgpath)) {
+                fileRemoveStorage($bannerimgpath);
             }
         }
 
@@ -126,12 +130,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $categoryData = Category::where('id', $id)
-            ->where('parent_id', null)
-            ->where('level', 0)
-            ->first();
+        $categoryData = Category::find($id);
+        $categoryLists = Category::select('id', 'name')->where('parent_id', null)->orderBy('name', 'asc')->get();
 
-        return view('seller.category.edit', compact('categoryData'));
+        return view('seller.category.edit', compact('categoryData', 'categoryLists'));
     }
 
     /**
@@ -148,61 +150,58 @@ class CategoryController extends Controller
         $data = array();
         $redirect = route('category.index');
 
-        $rules = [
-            'category_name' => 'required|max:60',
-            'banner_img' => 'nullable|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
-            'status' => 'required|in:Active,Inactive'
-        ];
+        try {
 
-        // Check category image field is empty or not
-        if (!empty($request->category_image)) {
-            $rules['category_image'] = 'required|mimes:jpg,jpeg,png,svg|max:5120';
-        }
+            $rules = [
+                'category_name' => 'required|max:60',
+                'banner_img' => 'nullable|mimes:jpg,jpeg,png,svg|max:5120', // 5 MB images
+                'status' => 'required|in:Active,Inactive'
+            ];
 
-        $validator = Validator::make($request->all(), $rules);
+            // Check category image field is empty or not
+            if (!empty($request->category_image)) {
+                $rules['category_image'] = 'required|mimes:jpg,jpeg,png,svg|max:5120';
+            }
 
-        if ($validator->fails()) { // Validation fails
-            $message = $validator->errors()->first();
-        } else {
+            $validator = Validator::make($request->all(), $rules);
 
-            $name = trim($request->category_name);
-            $slug = Str::slug($name);
+            if ($validator->fails()) { // Validation fails
+                $message = $validator->errors()->first();
+            } else {
 
-            $check_category_name = Category::where('id', '!=', $id)
-                ->where('parent_id', 0)
-                ->where('level', 0)
-                ->where('slug', $slug)
+                $name = trim($request->category_name);
+                $slug = Str::slug($name);
 
-                ->count();
+                $check_category_name = Category::where('id', '!=', $id)
+                    ->where('slug', $slug)
+                    ->count();
 
-            if ($check_category_name == 0) { // Same category name not exist so update it
+                if ($check_category_name == 0) { // Same category name not exist so update it
 
-                $category = Category::where('id', $id)
-                    ->where('parent_id', null)
-                    ->where('level', 0)
-                    ->first();
+                    $category = Category::find($id);
 
-                if (isset($category) && !empty($category) && isset($category->id)) {
+                    if (isset($category) && !empty($category) && isset($category->id)) {
 
-                    if ($request->hasfile('category_image')) {
-                        $oldimg = $category->image;
-                        $imgpath = fileUploadStorage($request->file('category_image'), 'category_image');
-                        $category->image = $imgpath;
-                    }
+                        if ($request->hasfile('category_image')) {
+                            $oldimg = $category->image;
+                            $imgpath = fileUploadStorage($request->file('category_image'), 'category_image');
+                            $category->image = $imgpath;
+                        }
 
-                    if ($request->hasfile('banner_img')) {
-                        $oldbannerimgpath = $category->banner_img;
-                        $bannerimgpath = fileUploadStorage($request->file('banner_img'), 'category_image');
-                        $category->banner_img = $bannerimgpath;
-                    }
+                        if ($request->hasfile('banner_img')) {
+                            $oldbannerimgpath = $category->banner_img;
+                            $bannerimgpath = fileUploadStorage($request->file('banner_img'), 'category_image');
+                            $category->banner_img = $bannerimgpath;
+                        }
 
-                    $category->name = $name;
-                    $category->slug = $slug;
-                    $category->SEO_description = $request->SEO_description;
-                    $category->SEO_tags = $request->SEO_tags;
-                    $category->status = $request->status;
+                        $category->parent_id = isset($request->parent_id) && !empty($request->parent_id) ? $request->parent_id : null;
+                        $category->name = $name;
+                        $category->slug = $slug;
+                        $category->SEO_description = $request->SEO_description;
+                        $category->SEO_tags = $request->SEO_tags;
+                        $category->status = $request->status;
 
-                    try {
+
                         $category->save();
 
                         // Remove old image from folder if exist
@@ -215,18 +214,22 @@ class CategoryController extends Controller
 
                         $success = true;
                         $message =  __("messages.category_update_success");
-                    } catch (\Exception $e) {
-                        $message = $e->getMessage();
-
-                        // Remove new uploaded image if exist
-                        fileRemoveStorage($imgpath);
-                        fileRemoveStorage($bannerimgpath);
+                    } else {
+                        $message = __('messages.category_invalid');
                     }
-                } else {
-                    $message = __('messages.category_invalid');
+                } else { // Same category name is exist
+                    $message = __('messages.category_exist');
                 }
-            } else { // Same category name is exist
-                $message = __('messages.category_exist');
+            }
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+
+            // Remove new uploaded image if exist
+            if (isset($imgpath)) {
+                fileRemoveStorage($imgpath);
+            }
+            if (isset($bannerimgpath)) {
+                fileRemoveStorage($bannerimgpath);
             }
         }
 
@@ -241,29 +244,13 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $cat = Category::where('id', $id)
-            ->where('parent_id', null)
-            ->where('level', 0)
-            ->first();
+        $cat = Category::find($id);
 
 
         if (isset($cat) && !empty($cat) && isset($cat->id)) {
             try {
 
                 $subcat = Category::where('parent_id', $cat->id)->get();
-
-                if (count($subcat) > 0) {
-                    foreach ($subcat as $val) {
-                        $subcat2 = Category::where('parent_id', $val->id)->get();
-                        if (count($subcat2) > 0) {
-                            foreach ($subcat2 as $val2) {
-                                Category::find($val2->id)->delete();
-                            }
-                        }
-                        Category::find($val->id)->delete();
-                    }
-                }
-
                 // Remove image from folder if exist
                 fileRemoveStorage($cat->image);
                 fileRemoveStorage($cat->banner_img);

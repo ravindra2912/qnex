@@ -1,12 +1,12 @@
 :root {
-	--primary: #4d4d4d;
+	/* --primary: #4d4d4d;
 	--secondary: #dbd8d8;
-	--boxshadow: #dbd8d8;
+	--boxshadow: #dbd8d8; */
 
-	/* --primary: #DC3545;
+	--primary: #DC3545;
   --secondary: #FFECF1; 
   --boxshadow: #FFECF1; 
-  */
+ 
 }
 
 
@@ -35,6 +35,11 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 	background: var(--primary);
+}
+
+a, a:hover{
+	color: #000;
+	text-decoration: unset;
 }
 
 .container {
@@ -351,9 +356,10 @@ nav .nav-icons .shopping-badge {
 
 nav .navbar-nav li a:hover,
 nav .navbar-nav .active a {
-	color: var(--primary);
+	/* color: var(--primary);
 	background: var(--secondary);
-	border-radius: 20px;
+	border-radius: 20px; */
+	border-bottom: 2px solid var(--primary);
 }
 
 /* search */
@@ -477,7 +483,7 @@ nav .search-icon,
 
 #nevigation-header {
 	background: var(--secondary);
-	height: 220px;
+	height: 170px;
 	padding: 10px;
 	color: #525252;
 	background-image: url('../images/nav_bg.png');
@@ -684,7 +690,7 @@ nav .search-icon,
 
 .new-product:hover {
 	background: #fff;
-	box-shadow: 0px 0px 8px 8px var(--secondary);
+	/* box-shadow: 0px 0px 8px 8px var(--secondary); */
 }
 
 .new-product .product-img img {

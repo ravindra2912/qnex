@@ -47,14 +47,14 @@
 <section id="home-category">
 	<div class="container mt-3">
 		<div class="row">
-		<div class="col-lg-12 col-md-12 col-12 mb-3 text-center">
+			<div class="col-lg-12 col-md-12 col-12 mb-3 ">
 				<h4 class="font-weight-bold">Category</h4>
 			</div>
 			@foreach ($categoty as $cat)
-			<div class="col-lg-3 col-md-2 col-6 text-center ">
-				<img src="{{ $cat->image_url }}" alt="{{ $cat->name }}"  class="rounded cat-img" />
+			<a href="{{ route('Products') }}?category={{ $cat->slug }}" class="col-lg-3 col-md-2 col-6 text-center ">
+				<img src="{{ $cat->image_url }}" alt="{{ $cat->name }}" class="rounded cat-img" />
 				<label class="pt-1">{{ $cat->name }}</label>
-			</div>
+			</a>
 			@endforeach
 		</div>
 	</div>
@@ -108,15 +108,15 @@
 </section> -->
 
 <section id="latest-arival ">
-	<div class="container  mt-5 section-border pt-2">
+	<div class="container  mt-5 pt-2">
 		<div class="row header-contaimer ">
-			<div class="col-lg-12 col-md-12 col-12 text-center">
+			<div class="col-lg-12 col-md-12 col-12 d-flex justify-content-between align-items-center">
 				<h4 class="font-weight-bold">Latest Arrival</h4>
-				<p>Showing our latest arrival on this summer</p>
+				<a class="" href="{{ route('Products') }}">View All <i class="fa-solid fa-arrow-right"></i></a>
 			</div>
 
 			@foreach($LatestArrival as $val)
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos p-0">
+			<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-2 col-md-2 col-6 mt-4 pos p-0">
 				<div class="new-product">
 					<div class="product-img">
 						<img loading="lazy" class="product__single" src="{{ getImage(isset($val->images_data[0])?$val->images_data[0]->image:'') }}" alt="{{ $val->name }}">
@@ -237,7 +237,7 @@
           <div class="mb-2">
             <span class="selle-price">$199</span>
             <span class="price">${{ $featured->price }}</span>
-            <a class="btn btn-primary" href="{{ url('/Products/'.$featured->slug) }}" >Buy Now</a>
+            <a class="btn btn-primary" href="{{ url('/products/'.$featured->slug) }}" >Buy Now</a>
           </div>
           <p>End in</p>
           <div class="timer">
@@ -270,7 +270,7 @@
 
 
 <section id="Popular-Product">
-	<div class="container  mt-5 section-border p-2">
+	<div class="container  mt-5 section-border p-2 section-border">
 		<div class="row header-contaimer ">
 			<div class="col-lg-12 col-md-12 col-12 text-center">
 				<h4 class="font-weight-bold">Popular product</h4>
@@ -284,7 +284,7 @@
 					<li class="nav-item">
 						<a class="nav-link {{ ($c == 0)? 'active':'' }} " data-toggle="tab" href="#{{$val->slug }}" role="tab" aria-controls="{{$val->slug }}">
 							<span class="texts">{{$val->name }}</span>
-							<span class="m-hide"><i class="fa-solid fa-shirt"></i></span>
+							<!-- <span class="m-hide"><i class="fa-solid fa-shirt"></i></span> -->
 						</a>
 					</li>
 					@php $c++; @endphp
@@ -319,7 +319,7 @@
 												<span> ({{ $val->review_count }}) </span>
 										</span> -->
 										<span class="float-right">
-											<a href="{{ url('/Products/'.$val->slug) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-cart-shopping pr-2"></i>Shop Now</a>
+											<a href="{{ url('/products/'.$val->slug) }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-cart-shopping pr-2"></i>Shop Now</a>
 										</span>
 									</div>
 								</div>

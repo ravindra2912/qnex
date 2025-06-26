@@ -94,7 +94,7 @@ function systemDetails()
 
 	function check_coupon($coupon_code, $user_id){
 		$data['status'] = false;
-		$data['msg'] = 'coupon_not_exist';
+		$data['msg'] = 'Coupon not exist';
 		$data['discount'] = 0;
 		$data['free_delivery'] = false;
 		$amount = 0;

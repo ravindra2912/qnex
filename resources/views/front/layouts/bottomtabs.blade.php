@@ -46,7 +46,7 @@
 	<div class="home-menu-icon-container">
 		<div class="mobile-icon-section pt-1 pb-1 pr-2 pl-2">
 			<a href="{{ url('/') }}" class="{{ (request()->is('Home') || request()->is('/')) ? 'active' : '' }}" aria-label="Home"><i class="fas fa-home" style="font-size:25px"></i><span> Home</span></a>
-			<a href="{{ url('/Products') }}" class="{{ (request()->is('Products')) ? 'active' : '' }}" aria-label="Shop"><i class="fas fa-store-alt" style="font-size:25px"></i><span> Shop</span></a>
+			<a href="{{ url('/products') }}" class="{{ (request()->is('Products')) ? 'active' : '' }}" aria-label="Shop"><i class="fas fa-store-alt" style="font-size:25px"></i><span> Shop</span></a>
 			<a href="{{ url('/collections') }}" class="{{ (request()->is('collections')) ? 'active' : '' }}" aria-label="Collections"><i class="fas fa-list-ul" style="font-size:25px"></i><span> Collections</span></a>
 			@if(Auth::check())
 				<a href="{{ url('/account') }}" class="{{ (request()->is('account')) ? 'active' : '' }}" aria-label="account"><i class="fa-solid fa-user" style="font-size:25px"></i><span> Account</span></a>

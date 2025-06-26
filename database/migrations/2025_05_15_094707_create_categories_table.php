@@ -17,7 +17,6 @@ class CreateCategoriesTable extends Migration
             $table->id();
 			$table->string('name');
 			$table->unsignedBigInteger('parent_id')->nullable();
-			$table->integer('level')->nullable();
 			$table->string('slug');
 			$table->string('image',250)->nullable();
 			$table->string('banner_img',250)->nullable();

@@ -47,14 +47,14 @@
 			<div class="col-md-12 divider pb-2"></div>
 			
 			<div class="col-md-6 col-6 pt-4 mb-2 ">
-				<div class="form-check">
+				<!-- <div class="form-check">
 					<input class="form-check-input" type="radio" name="payment_type" id="payment1" value="1" checked>
 					<label class="form-check-label" for="payment1"> Online payments</label>
 				</div>
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="payment_type" id="payment2" value="2">
 					<label class="form-check-label" for="payment2"> Cash on delivery </label>
-				</div>
+				</div> -->
 				<!--div class="form-check">
 					<input class="form-check-input" type="radio" name="payment_type" id="payment3" value="3">
 					<label class="form-check-label" for="payment3"> Check payments </label>

@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $response = Http::get('https://dummyjson.com/products?limit=5&skip=0');
+        $response = Http::get('https://dummyjson.com/products?limit=20&skip=0');
 
         // If you want to log or debug the response
         $data = $response->json();

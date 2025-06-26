@@ -274,8 +274,6 @@
 			<div class="col-lg-6 col-md-6 col-12 pl-2">
 				<p class="h5 ">
 					{{ (isset($product->category_data) &&!empty($product->category_data->name))?$product->category_data->name.",":'' }}
-					{{ (isset($product->sub_category_data) &&!empty($product->sub_category_data->name))?$product->sub_category_data->name.",":'' }}
-					{{ (isset($product->sub_category2_data) &&!empty($product->sub_category2_data->name))?$product->sub_category2_data->name:'' }}
 				</p>
 
 
@@ -378,9 +376,6 @@
 					<a class="nav-link waves-light waves-effect active show" id="Description-tab-classic" data-toggle="tab" href="#Description-classic" role="tab" aria-controls="Description-classic" aria-selected="true">Description</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link waves-light waves-effect" id="info-tab-classic" data-toggle="tab" href="#info-classic" role="tab" aria-controls="info-classic" aria-selected="false">Additional Information</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link waves-light waves-effect " id="Reviews-tab-classic" data-toggle="tab" href="#Reviews-classic" role="tab" aria-controls="Reviews-classic" aria-selected="false">Reviews ({{ $product->review_count }})</a>
 				</li>
 
@@ -388,9 +383,6 @@
 			<div class="tab-content pt-3" id="myClassicTabContent">
 				<div class="tab-pane fade active show" id="Description-classic" role="tabpanel" aria-labelledby="Description-tab-classic">
 					{!! $product->description !!}
-				</div>
-				<div class="tab-pane fade" id="info-classic" role="tabpanel" aria-labelledby="info-tab-classic">
-					{!! $product->additional_information !!}
 				</div>
 				<div class="tab-pane fade " name="review_form" id="Reviews-classic" role="tabpanel" aria-labelledby="Reviews-tab-classic">
 					<div class="row ">
@@ -466,7 +458,7 @@
 			</div>
 
 			@foreach($related_product as $val)
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos p-0">
+			<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-4 pos p-0">
 				<div class="new-product">
 					<div class="product-img">
 						<img loading="lazy" class="product__single" src="{{ getImage(isset($val->images_data[0])?$val->images_data[0]->image:'') }}" alt="{{ $val->name }}">
@@ -812,7 +804,7 @@
 
 	function load_review_data() {
 		$.ajax({
-			url: url + '/Products/get_product_review',
+			url: url + '/products/get_product_review',
 			type: "POST",
 			headers: {
 				'X-CSRF-TOKEN': "{{ csrf_token() }}"

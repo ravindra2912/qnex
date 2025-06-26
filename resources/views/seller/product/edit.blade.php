@@ -160,35 +160,11 @@
 							
 							<div class="form-group col-md-4 col-sm-6">
 								<label class="required">Select Category</label>
-								<select class="form-control" name="category" id="category" >
+								<select class="form-control" name="category" >
 									<option value="">Please Select Category</option>
 									@if(isset($categoryData) && !empty($categoryData))
 										@foreach($categoryData as $data)
 											<option value="{{ $data->id }}" {{ ($data->id == $productData->category_id) ? "selected" : '' }} >{{ ucwords($data->name) }}</option>
-										@endforeach
-									@endif
-								</select>
-							</div>
-
-							<div class="form-group col-md-4 col-sm-6">
-								<label >Select Sub Category</label>
-								<select class="form-control" name="sub_category" id="sub_category" >
-									<option value="">Please Select Sub Category</option>
-									@if(isset($subCategoryData) && !empty($subCategoryData))
-										@foreach($subCategoryData as $da)
-											<option value="{{ $da->id }}" {{ ($da->id == $productData->sub_category_id) ? "selected" : '' }} >{{ ucwords($da->name) }}</option>
-										@endforeach
-									@endif
-								</select>
-							</div>
-
-							<div class="form-group col-md-4 col-sm-6">
-								<label >Select Sub Category2</label>
-								<select class="form-control" name="sub_category2" id="sub_category2" >
-									<option value="">Please Select Sub Category</option>
-									@if(isset($subCategory2Data) && !empty($subCategory2Data))
-										@foreach($subCategory2Data as $d)
-											<option value="{{ $d->id }}" {{ ($d->id == $productData->sub_category2_id) ? "selected" : '' }} >{{ ucwords($d->name) }}</option>
 										@endforeach
 									@endif
 								</select>
@@ -210,11 +186,6 @@
 							<div class="form-group col-md-12 col-sm-12">
 								<label class="required">Description</label>
 								<textarea class="form-control" name="description" id="description">{{ isset($productData->description) && !empty($productData->description) ? $productData->description : '' }}</textarea>
-							</div>
-							
-							<div class="form-group col-md-12 col-sm-12">
-								<label class="required">Additional Information</label>
-								<textarea class="form-control" name="additional_information"  id="additional_information" placeholder="Additional Information">{{ $productData->additional_information }}</textarea>
 							</div>
 							
 							<div class="custom-control custom-checkbox col-md-12 col-sm-12">
@@ -369,79 +340,6 @@
             $("#description").summernote({
                 height: 200
             });
-			
-			$("#additional_information").summernote({
-                height: 200
-            });
-
-            $("#category").change(function(){
-
-                $("body").find("#sub_category").find('option').remove();
-                $("body").find("#sub_category2").find('option').remove();
-
-                var category = $(this).val();
-                var url = "{{ route('sub_category_name', ":category") }}";
-                url = url.replace(':category', category);
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
-                    success: function(result){
-                        if(result.success){
-                            var html = "";
-                            if(result.data.length > 0){
-                                html +="<option value=''>Please Select Sub Category</option>";
-                                for(var i = 0; i < result.data.length; i++){
-                                    html +="<option value='"+result.data[i].id+"'>"+result.data[i].name+"</option>";
-                                }
-                            }
-
-                            if(html != ""){
-                                $("#sub_category").append(html);
-                            }
-                        }
-                        else{
-                            toastr.error(result.message);
-                        }
-                    }
-                });
-            });
-
-            $("#sub_category").change(function(){
-
-                $("body").find("#sub_category2").find('option').remove();
-
-                var category = $(this).val();
-                var url = "{{ route('sub_category_name', ":category") }}";
-                url = url.replace(':category', category);
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
-                    success: function(result){
-                        if(result.success){
-                                var html = "";
-                                if(result.data.length > 0){
-                                    html +="<option value=''>Please Select Sub Category2</option>";
-                                    for(var i = 0; i < result.data.length; i++){
-                                        html +="<option value='"+result.data[i].id+"'>"+result.data[i].name+"</option>";
-                                    }
-                                }
-
-                            if(html != ""){
-                                $("#sub_category2").append(html);
-                            }
-                        }
-                        else{
-                            toastr.error(result.message);
-                        }
-                    }
-                });
-            });
 
 			$("#updateform").on('submit',(function(e) {
 			  e.preventDefault();
@@ -480,68 +378,6 @@
 					}           
 				});
 			 }));
-
-            /* $(".submit_button").click(function(){
-
-                $("body").find(".btn_action").hide();
-                $("body").find(".loading").show();
-
-                var category = $("body").find("#category").val();
-                var sub_category = $("body").find("#sub_category").val();
-                var sub_category2 = $("body").find("#sub_category2").val();
-                var product_name = $("body").find("#product_name").val();
-                var price = $("body").find("#price").val();
-                var is_variants = $("body").find("#is_variants").val();
-                var quantity = $("body").find("#quantity").val();
-                var description = $("body").find("#description").val();
-                var status = $("body").find("#status").val();
-				var is_replacement = $("body").find(".is_replacement").prop("checked");
-				var replacement_days = $("body").find("#replacement_days").val();
-				var is_tax_applicable = $("body").find(".is_tax_applicable").prop("checked");
-				var igst = $("body").find("#igst").val();
-				var cgst = $("body").find("#cgst").val();
-				var sgst = $("body").find("#sgst").val();
-
-                if(description === "<p><br></p>"){
-                    description = "";
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: $("body").find("#form_url").val(),
-                    dataType: "json",
-                    headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
-                    data : {
-                        '_method': "PATCH",
-                        'category': category,
-                        'sub_category': sub_category,
-                        'sub_category2': sub_category2,
-                        'product_name': product_name,
-                        'price': price,
-                        'is_variants': is_variants,
-                        'quantity': quantity,
-                        'description': description,
-                        'status': status,
-						'is_replacement': is_replacement,
-						'replacement_days': replacement_days,
-						'is_tax_applicable': is_tax_applicable,
-						'igst': igst,
-						'cgst': cgst,
-						'sgst': sgst,
-                    },
-                    success: function(result){
-                        if(result.success){
-                            toastr.success(result.message);
-                            setTimeout(function(){window.location.href = window.location.origin+'/seller/product'}, 1000);
-                        }
-                        else{
-                            toastr.error(result.message);
-                            $("body").find(".btn_action").show();
-                            $("body").find(".loading").hide();
-                        }
-                    }
-                });
-            }); */
 			
 			$("input[id='images']").change(function(){
 				var fileUpload = $("input[id='images']");

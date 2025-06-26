@@ -29,13 +29,13 @@ Route::post('/reset_password', [App\Http\Controllers\Api\AuthController::class, 
 
 // front
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
-Route::get('/Home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/Products', [App\Http\Controllers\ProductController::class, 'index'])->name('Products');
-Route::get('/Products/render_product_list', [App\Http\Controllers\ProductController::class, 'render_product_list'])->name('Products.render_product_list');
-Route::post('/Products/submit_review', [App\Http\Controllers\ProductController::class, 'store_review'])->name('Products.submit_review');
-Route::get('/Products/{id}', [App\Http\Controllers\ProductController::class, 'product_details']);
-Route::post('/Products/get_product_review', [App\Http\Controllers\ProductController::class, 'get_product_review']);
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('Products');
+Route::post('/products/render_product_list', [App\Http\Controllers\ProductController::class, 'render_product_list'])->name('Products.render_product_list');
+Route::post('/products/submit_review', [App\Http\Controllers\ProductController::class, 'store_review'])->name('Products.submit_review');
+Route::get('/products/{id}', [App\Http\Controllers\ProductController::class, 'product_details']);
+Route::post('/products/get_product_review', [App\Http\Controllers\ProductController::class, 'get_product_review']);
 
 //cart
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'cart_list'])->name('cart');
@@ -122,12 +122,6 @@ Route::prefix('seller')->middleware(['auth'])->group(function() {
 	Route::middleware(['IsAdmin'])->group(function(){
        // Category
 		Route::resource('category', App\Http\Controllers\Seller\CategoryController::class);
-		
-		// Sub Category
-		Route::resource('subcategory', App\Http\Controllers\Seller\SubCategoryController::class);
-		
-		// Sub Category2
-		Route::resource('subcategory2', App\Http\Controllers\Seller\SubCategory2Controller::class);
 
 		
 		
@@ -149,13 +143,6 @@ Route::prefix('seller')->middleware(['auth'])->group(function() {
     // Category
     Route::get('/category_name', [App\Http\Controllers\Seller\CategoryController::class, 'category_name'])->name('category_name');
 	
-	
-	
-	// Sub Category
-    Route::get('/sub_category_name/{id}', [App\Http\Controllers\Seller\SubCategoryController::class, 'sub_category_name'])->name('sub_category_name');
-
-    // Sub Category2
-    Route::get('/sub_category2_name/{id}', [App\Http\Controllers\Seller\SubCategory2Controller::class, 'sub_category2_name'])->name('sub_category2_name');
 
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\Seller\DashboardController::class, 'index'])->name('seller.dashboard');

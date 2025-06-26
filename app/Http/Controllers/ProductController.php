@@ -25,10 +25,8 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-		$Categoreis = Category::where('level',0)->get();
-		foreach($Categoreis as $cat){
-			$cat->sub_cat = Category::with(['children'])->where('parent_id',$cat->id)->get();
-		}
+		$Categoreis = Category::where('parent_id',null)->get();
+		
 		
 		$brands = [];
 		$colors = [];
@@ -55,19 +53,18 @@ class ProductController extends Controller
 	
 	function render_product_list(Request $request){
 		
-		//$request->offset = 0;
-		//$request->limite = 10;
+		$limite = 12;
 		//$request->size = 'S';
 		//$request->color = 'GREEN';
 		
 		//$request->user_id = Auth::user()->id;
 		
-		$productLists = Product::select('products.*')->with(['category_data','sub_category_data','sub_category2_data','images_data'])
+		$productLists = Product::select('products.*')->with(['images_data'])
 								->whereNull('products.deleted_at')
 								->where('products.status', 'Active')
-								->groupBy('products.id');
-								//->skip($request->offset)
-								//->take($request->limite);
+								->groupBy('products.id')
+								->skip($request->page * $limite)
+								->take($limite);
 								
 		
 		
@@ -110,31 +107,24 @@ class ProductController extends Controller
 			$productLists = $productLists->orderBy('products.created_at','ASC');
 		}
 		
-		$productLists = $productLists->paginate(12);
+		$productLists = $productLists->get();
 		
 		
 		foreach($productLists as $pdata){
 			$pdata->review_count = ProductReview::where('product_id', $pdata->id)->count();
 		}
 		
-		$counts['total'] = $productLists->total();
-		$counts['from'] = ($productLists->perPage() * ($productLists->currentPage() - 1)) + 1;
-		$counts['to'] = $productLists->perPage() * $productLists->currentPage();
-		if($counts['to'] > $counts['total']){
-			$counts['to'] =  $counts['total'];
-		}
-		//dd($productLists);
 		
         $html = view('front.product.RenderProductList', compact('productLists'))->render();
 		
 		
 		
-		return response()->json(['success' => true, 'data' => $html, 'counts' => $counts ]);
+		return response()->json(['success' => true, 'data' => $html, ]);
 	}
 	
 	public function product_details(Request $request, $slug)
     {
-		$product = Product::with(['category_data','sub_category_data','sub_category2_data', 'images_data'])->where('slug',$slug)->first();
+		$product = Product::with(['category_data', 'images_data'])->where('slug',$slug)->first();
 				
 		//check stock available
 		$product->stock = 0;
@@ -174,9 +164,9 @@ class ProductController extends Controller
 		}
 		
 		$related_product = Product::where('id','!=', $product->id)->whereNull('deleted_at')->where('status', 'Active')->inRandomOrder()->limit(4)->get();
-		foreach($related_product as $rel){
-			$rel->review_count = ProductReview::where('product_id', $rel->id)->count();
-		}
+		// foreach($related_product as $rel){
+		// 	$rel->review_count = ProductReview::where('product_id', $rel->id)->count();
+		// }
 		
         return view('front.product.productdetails', compact('product', 'related_product'));
     }

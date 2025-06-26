@@ -35,13 +35,6 @@ class Product extends Model
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
-    public function sub_category_data(){
-        return $this->hasOne(Category::class, 'id', 'sub_category_id');
-    } 
-
-	public function sub_category2_data(){
-        return $this->hasOne(Category::class, 'id', 'sub_category2_id');
-    } 
 	public function images_data(){
         return $this->hasMany(ProductImages::class, 'product_id', 'id')->orderBy('id', 'asc');
     } 

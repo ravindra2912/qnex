@@ -54,7 +54,7 @@
 									<i class="fa-solid fa-cart-shopping"></i>
 								</a>
 							@else
-								<a href="{{ url('/Products/'.$val->slug) }}" class="btn btn-primary btn-round">
+								<a href="{{ url('/products/'.$val->slug) }}" class="btn btn-primary btn-round">
 									ADD TO CART
 								</a>
 							@endif

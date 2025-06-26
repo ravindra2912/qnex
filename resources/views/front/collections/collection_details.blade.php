@@ -99,9 +99,9 @@
 				@endif
 				@foreach($productLists as $val)
 					@if(isset($banner_img) && !empty($banner_img))
-						<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-6 col-md-6 col-12 mt-4 pos">
+						<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-6 col-md-6 col-12 mt-4 pos">
 					@else
-						<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
+						<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
 					@endif
 						<div class="new-product">
 						  <div class="product-img">

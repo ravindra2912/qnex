@@ -43,7 +43,7 @@ class CommonController extends Controller
 			foreach($Product as $val){
 				$url = url('/collections/'.$val->slug);
 				if($val->getTable() == 'products'){
-					$url = url('/Products/'.$val->slug);
+					$url = url('/products/'.$val->slug);
 				}
 				$html .= '
 					<div class="item">

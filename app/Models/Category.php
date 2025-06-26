@@ -31,12 +31,12 @@ class Category extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function children(){
-        return $this->hasMany(Category::class, 'parent_id', 'id');
+    public function parentCategory(){
+        return $this->hasOne(Category::class, 'id', 'parent_id');
     }
 
     public function category_data(){
-        return $this->hasOne(Category::class, 'id', 'parent_id')->whereNull('deleted_at');
+        return $this->hasOne(Category::class, 'id', 'parent_id');
     }
 	
 }

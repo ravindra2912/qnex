@@ -40,8 +40,16 @@ class OrderController extends Controller
 		$redirect_url = '';
 
 		$validator = Validator::make($request->all(), [
-			'address' => 'required|exists:addresses,id',
-			'payment_type' => 'required',
+			// 'address' => 'required|exists:addresses,id',
+			'name' => 'required',
+			'contact' => 'required|numeric|digits:10',
+			'address' => 'required',
+			'address2' => 'required',
+			'country' => 'required',
+			'state' => 'required',
+			'city' => 'required',
+			'zipcode' => 'required|numeric|digits_between:1,10',
+			// 'payment_type' => 'required',
 		]);
 
 		if ($validator->fails()) { // validation fails
@@ -51,28 +59,24 @@ class OrderController extends Controller
 		} elseif (check_cart()['changes']) {
 			$message = 'Your Cart Is Updated, Please Check Your Cart!';
 		} else {
-
+			$request->payment_type = 1;
 			$request->user_id = Auth::user()->id;
 			$cart_list = AddToCart::where('user_id', $request->user_id)->with(['product_data'])->get();
 			//$data = $cart_list;
 
 			if (isset($cart_list) && $cart_list->isNotEmpty()) {
 
-				$address = Address::find($request->address);
-
-
-
 				$Orders = new Orders();
 				$Orders->user_id = $request->user_id;
-				$Orders->address_id = $request->address;
-				$Orders->name = $address->name;
-				$Orders->contact = $address->contact;
-				$Orders->address = $address->address;
-				$Orders->address2 = $address->address2;
-				$Orders->country = $address->country;
-				$Orders->state = $address->state;
-				$Orders->city = $address->city;
-				$Orders->zipcode = $address->zipcode;
+				$Orders->address_id = null;
+				$Orders->name = $request->name;
+				$Orders->contact = $request->contact;
+				$Orders->address = $request->address;
+				$Orders->address2 = $request->address2;
+				$Orders->country = $request->country;
+				$Orders->state = $request->state;
+				$Orders->city = $request->city;
+				$Orders->zipcode = $request->zipcode;
 				$Orders->payment_type = $request->payment_type;
 
 				try {
@@ -137,8 +141,8 @@ class OrderController extends Controller
 					}
 
 
-					if (!empty($address)) {
-						if (strtoupper(trim($address->country)) == 'INDIA' || strtoupper(trim($address->country)) == 'IN') {
+					if (!empty($request)) {
+						if (strtoupper(trim($request->country)) == 'INDIA' || strtoupper(trim($request->country)) == 'IN') {
 							$Orders->shipping = 90;
 						} else {
 							$Orders->shipping = 160;

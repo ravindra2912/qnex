@@ -33,7 +33,7 @@
 			</div>
 
 			@foreach($cat->collection_data as $val)
-			<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
+			<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-12 mt-4 pos">
 				<div class="new-product">
 					<div class="product-img">
 						@if (isset($val->images_data) && count($val->images_data) > 0)

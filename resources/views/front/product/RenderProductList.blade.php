@@ -1,6 +1,6 @@
 	@foreach($productLists as $val)
-	<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-3 pos p-0">
-		<!-- <a href="{{ url('/Products/'.$val->slug) }}" class="col-lg-4 col-md-4 col-6 mt-3 pos"> -->
+	<a href="{{ url('/products/'.$val->slug) }}" class="col-lg-3 col-md-3 col-6 mt-3 pos p-0">
+		<!-- <a href="{{ url('/products/'.$val->slug) }}" class="col-lg-4 col-md-4 col-6 mt-3 pos"> -->
 		<div class="new-product">
 			<div class="product-img">
 				<img loading="lazy" class="product__single" src="{{ getImage(isset($val->images_data[0])?$val->images_data[0]->image:'') }}" alt="{{ $val->name }}">
@@ -33,7 +33,3 @@
 		</div>
 	</a>
 	@endforeach
-
-	<div class="col-lg-12 col-md-12 col-12 mt-4">
-		{!! $productLists->links() !!}
-		<div>

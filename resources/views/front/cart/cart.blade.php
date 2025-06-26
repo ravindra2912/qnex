@@ -129,7 +129,7 @@
 				
 				<div class="row">
 					<div class="col-md-6 col-6 mb-4">
-						<a class="btn btn-primary btn-round" href="{{ url('/Products') }}" alt="Go To Shop"> GO TO SHOP </a>
+						<a class="btn btn-primary btn-round" href="{{ url('/products') }}" alt="Go To Shop"> GO TO SHOP </a>
 					</div>
 					<div class="col-md-6 col-6 text-right mb-4">
 						<button class="btn btn-primary-line btn-round" title="Clear Cart" onclick="remove_cart(1,1)"> Clear all </button>

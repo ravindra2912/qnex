@@ -99,7 +99,7 @@
 							}
 						}
 					?>
-					<a href="{{ url('/Products/'.$val->slug) }}" class="col-lg- col-md-3 col-12 mt-4 pos">
+					<a href="{{ url('/products/'.$val->slug) }}" class="col-lg- col-md-3 col-12 mt-4 pos">
 						<div class="new-product">
 						  <div class="product-img">
 								<img class="product__single" src="{{ $product_img }}" alt="{{ $val->name }}">

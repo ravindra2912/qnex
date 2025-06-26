@@ -22,13 +22,10 @@ class ChechOutController extends Controller
         }
 		$carts = AddToCart::where('user_id', Auth::user()->id)->get();
 		if(isset($carts) && !empty($carts) && count($carts) > 0){
-			$Address = Address::with(['user_data'])->where('user_id',Auth::user()->id)->get();
-			return view('front.checkout.checkout', compact('Address'));
+			return view('front.checkout.checkout');
 		}else{
 			 return redirect('/');
-		}	
-        
-		
+		}		
     }
 	
 	public function render_summary(Request $request){

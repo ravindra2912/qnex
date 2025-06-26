@@ -22,12 +22,9 @@ class CreateProductsTable extends Migration
 			$table->string('brand')->nullable();
 			$table->unsignedBigInteger('coupon_id')->nullable();
 			$table->unsignedBigInteger('category_id')->nullable();
-			$table->unsignedBigInteger('sub_category_id')->nullable();
-			$table->unsignedBigInteger('sub_category2_id')->nullable();
 			$table->bigInteger('price')->default(0);
 			$table->bigInteger('quantity')->default(0);
 			$table->text('short_description')->nullable();
-			$table->text('additional_information')->nullable();
 			$table->text('description')->nullable();
 			$table->text('SEO_description')->nullable();
 			$table->string('SEO_tags')->nullable();

@@ -27,7 +27,7 @@
    </url>
    @foreach($product as $val)
 		<url>
-		  <loc>{{ url('/Products/'. $val->slug) }}</loc>
+		  <loc>{{ url('/products/'. $val->slug) }}</loc>
 		  <lastmod>{{ $date }}</lastmod>
 		  <changefreq>daily</changefreq>
 		  <priority>0.8</priority>

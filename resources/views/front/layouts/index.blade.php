@@ -146,7 +146,7 @@
 						<a class="dropdown-item" href="{{ route('account.change_password') }}">Change Password</a>
 						<a class="dropdown-item" href="{{ route('account.order') }}">Orders</a>
 						<a class="dropdown-item" href="{{ route('account.wishlist') }}">Wishlist</a>
-						<a class="dropdown-item" href="{{ route('account.address') }}">Address</a>
+						<!-- <a class="dropdown-item" href="{{ route('account.address') }}">Address</a> -->
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" onclick="$('#logout-form').submit()" href="#">LogOut</a>
 					</div>
@@ -175,7 +175,7 @@
 		<div class="collapse navbar-collapse" id="ftco-nav">
 			<ul class="navbar-nav ml-auto mr-md-3">
 				<li class="nav-item {{ (request()->is('Home') || request()->is('/')) ? 'active' : '' }}"><a href="{{ url('/') }}" class="nav-link text-center">Home</a></li>
-				<li class="nav-item {{ (request()->is('Products')) ? 'active' : '' }}"><a href="{{ url('/Products') }}" class="nav-link text-center">Product</a></li>
+				<li class="nav-item {{ (request()->is('products')) ? 'active' : '' }}"><a href="{{ url('/products') }}" class="nav-link text-center">Product</a></li>
 				<!-- <li class="nav-item {{ (request()->is('Home') || request()->is('collections')) ? 'active' : '' }}"><a href="{{ url('/collections') }}" class="nav-link text-center">Collections</a></li> -->
 				<li class="nav-item {{ (request()->is('AboutUs')) ? 'active' : '' }}"><a href="{{ url('/AboutUs') }}" class="nav-link text-center">About Us</a></li>
 				<li class="nav-item {{ (request()->is('ContactUs')) ? 'active' : '' }}"><a href="{{ url('/ContactUs') }}" class="nav-link text-center">Contact Us</a></li>
@@ -380,7 +380,7 @@
 			<div class="col-lg-2 col-md-6 mb-4 mb-lg-0  links">
 				<h5 class="text-uppercase mb-4 font-weight-bold h6">Popular Categories</h5>
 				@php
-				$footer_cat = App\Models\Category::where('status','Active')->where('level', 0)->take(8)->get();
+				$footer_cat = App\Models\Category::where('status','Active')->where('parent_id', null)->take(8)->get();
 				@endphp
 				<ul class="list-unstyled">
 					@if(isset($footer_cat) && !empty($footer_cat))
