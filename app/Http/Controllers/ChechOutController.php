@@ -38,7 +38,7 @@ class ChechOutController extends Controller
 			check_cart();
 			
 			$success = true;
-			$message = __("messages.exception_error");
+			$message = "Some error occurred. Please try again after sometime";
 			$data = array();
 			
 			$summary['subtotle'] = 0;

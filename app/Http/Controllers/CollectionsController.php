@@ -27,7 +27,7 @@ class CollectionsController extends Controller
 
 		$Category = Category::where('status', 'Active')->where('level', '0')->get();
 		foreach ($Category as $cat) {
-			$cat->collection_data = Product::with(['category_data', 'sub_category_data', 'sub_category2_data', 'images_data'])
+			$cat->collection_data = Product::with(['images_data'])
 				->whereNull('deleted_at')
 				->where('status', 'Active')
 				->Where('category_id', $cat->id)
@@ -49,7 +49,7 @@ class CollectionsController extends Controller
 		$Category = Category::where('status', 'Active')->where('slug', $slug)->first();
 
 		if ($Category) {
-			$productLists = Product::with(['category_data', 'sub_category_data', 'sub_category2_data', 'images_data'])
+			$productLists = Product::with(['images_data'])
 				->whereNull('deleted_at')
 				->where('status', 'Active')
 				->Where('category_id', $Category->id)

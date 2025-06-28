@@ -31,7 +31,7 @@ class ProfileController extends Controller
     {
         $auth = true;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -51,41 +51,31 @@ class ProfileController extends Controller
             $auth = false;
         } else {
 
-            $check_existing_email = User::where('id', '!=', Auth::user()->id)
-                ->where('email', $request->email)
-                //->where('role_id', '3')
-                ->count();
+            $user = User::find(Auth::user()->id);
 
-            if ($check_existing_email == 0) {
+            if ($request->hasfile('image')) {
+                $oldimg = $user->image;
+                $imgpath = fileUploadStorage($request->file('image'), 'user_images');
+                $user->image = $imgpath;
+            }
 
-                $user = User::find(Auth::user()->id);
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->mobile = $request->mobile_no;
+            $user->email = $request->email;
 
-                if ($request->hasfile('image')) {
-                    $oldimg = $user->image;
-                    $imgpath = fileUploadStorage($request->file('image'), 'user_images');
-                    $user->image = $imgpath;
+            try {
+                $user->save();
+
+                if (isset($oldimg) && !empty($oldimg)) {
+                    fileRemoveStorage($oldimg);
                 }
 
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->mobile = $request->mobile_no;
-                $user->email = $request->email;
-
-                try {
-                    $user->save();
-
-                    if (isset($oldimg) && !empty($oldimg)) {
-                        fileRemoveStorage($oldimg);
-                    }
-
-                    $success = true;
-                    $message = __("messages.profile_update_success");
-                    $data = $user;
-                } catch (\Exception $e) {
-                    fileRemoveStorage($imgpath);
-                }
-            } else {
-                $message = __("messages.profile_user_exist");
+                $success = true;
+                $message = "Profile has been updated successfully";
+                $data = $user;
+            } catch (\Exception $e) {
+                fileRemoveStorage($imgpath);
             }
         }
 
@@ -105,7 +95,7 @@ class ProfileController extends Controller
     {
         $auth = true;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -137,7 +127,7 @@ class ProfileController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [

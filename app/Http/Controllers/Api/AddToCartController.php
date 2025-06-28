@@ -15,7 +15,7 @@ class AddToCartController extends Controller
 	public function cart_list(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 		try {
 			$summary['subtotle'] = 0;
@@ -62,11 +62,11 @@ class AddToCartController extends Controller
 			$summary['totle'] = ($summary['subtotle'] - $summary['discount']) + $summary['tax'];
 			if (isset($add_to_cart) && $add_to_cart->isNotEmpty()) {
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data['cart'] = $add_to_cart;
 				$data['summary'] = $summary;
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		} catch (\Exception $e) {
 			$message = $e->getMessage();
@@ -79,7 +79,7 @@ class AddToCartController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -118,10 +118,10 @@ class AddToCartController extends Controller
 						$add_to_cart->save();
 
 						$success = true;
-						$message = __("messages.add_to_cart_add_success");
+						$message ="Product has been added to cart successfully";
 					} else {
 						$success = false;
-						$message = __("messages.Only " . $chack_variant->qty . " Vailable For Add To Cart");
+						$message = "Only " . $chack_variant->qty . " Available For Add To Cart";
 					}
 					return response()->json(["success" => $success, "message" => $message, "data" => $data]);
 				} else {
@@ -150,7 +150,7 @@ class AddToCartController extends Controller
 					$add_to_cart->save();
 
 					$success = true;
-					$message = __("messages.add_to_cart_add_success");
+					$message = "Product has been added to cart successfully";
 				}
 			}
 
@@ -165,7 +165,7 @@ class AddToCartController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -209,7 +209,7 @@ class AddToCartController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -231,9 +231,9 @@ class AddToCartController extends Controller
 				$check_cart->save();
 
 				$success = true;
-				$message = __("messages.add_to_cart_update_success");
+				$message = "Cart has been updated successfully";
 			} else {
-				$message = __("messages.add_to_cart_product_not_exist");
+				$message = "Product not exist in cart so please add it first in the cart";
 			}
 		}
 
@@ -244,7 +244,7 @@ class AddToCartController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -257,7 +257,7 @@ class AddToCartController extends Controller
 
 			$cart_count = AddToCart::where('user_id', $request->user_id)->count();
 			$success = true;
-			$message = __("messages.data_found");
+			$message = "Data found";
 		}
 
 		return response()->json(["success" => $success, "message" => $message, "data" => $data, "cart_count" => $cart_count]);
@@ -267,7 +267,7 @@ class AddToCartController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -287,11 +287,11 @@ class AddToCartController extends Controller
 					$cart->delete();
 
 					$success = true;
-					$message = __("messages.add_to_cart_remove_success");
+					$message = "Product has been removed from cart successfully";
 				} catch (\Exception $e) {
 				}
 			} else {
-				$message = __("messages.add_to_cart_invalid_data");
+				$message = "Invalid cart data";
 			}
 		}
 

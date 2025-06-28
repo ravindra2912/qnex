@@ -18,7 +18,7 @@ class AddressController extends Controller
 	public function add_and_update_address(Request $request) {
 		
 		 $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -56,7 +56,7 @@ class AddressController extends Controller
                     $Address->save();
 					
 					$success = true;
-					$message = __("messages.address_add_success");
+					$message = "Address added successfully";
                 }
                 catch(\Exception $e){
 					//dd($e);
@@ -68,7 +68,7 @@ class AddressController extends Controller
     public function address_list(Request $request) {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$validator = Validator::make($request->all(), [
@@ -87,11 +87,11 @@ class AddressController extends Controller
 
 			if(isset($Address) && $Address->isNotEmpty()){
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data = $Address;
 			}
 			else{
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -101,7 +101,7 @@ class AddressController extends Controller
 	public function remove_address(Request $request) {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$validator = Validator::make($request->all(), [
@@ -118,7 +118,7 @@ class AddressController extends Controller
 				$Address->delete();
 				
 				$success = true;
-				$message = __("messages.address_remove_success");
+				$message = "Address removed successfully";
 			}
 			catch(\Exception $e){
 				//dd($e);

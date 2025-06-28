@@ -44,7 +44,7 @@ class FaqController extends Controller
     public function store(Request $request)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -61,7 +61,7 @@ class FaqController extends Controller
                 $insert->question = $request->question;
                 $insert->save();
                 $success = true;
-                $message =  __("messages.sub_faq_store_success");
+                $message =  'Faq has been created successfully';
             }
         } catch (\Exception $e) {
             //$message = $e->getMessage();
@@ -105,7 +105,7 @@ class FaqController extends Controller
     public function update(Request $request, $id)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -123,7 +123,7 @@ class FaqController extends Controller
                 $update->question = $request->question;
                 $update->save();
                 $success = true;
-                $message = __('messages.sub_faq_update_success');
+                $message = "FAQ has been updated successfully";
             }
         } catch (\Exception $e) {
         }
@@ -145,12 +145,12 @@ class FaqController extends Controller
             try {
 
                 $faq->delete();
-                return redirect()->back()->with('success', __('messages.sub_faq_delete_success'));
+                return redirect()->back()->with('success', 'FAQ has been removed successfully');
             } catch (\Exception $e) {
-                return redirect()->back()->with('danger', __('messages.exception_error'));
+                return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
             }
         } else {
-            return redirect()->back()->with('danger', __('messages.sub_faq_invalid'));
+            return redirect()->back()->with('danger', 'FAQ invalid');
         }
     }
 

@@ -52,7 +52,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
         try {
             $validator = Validator::make($request->all(), [
@@ -91,9 +91,9 @@ class CategoryController extends Controller
 
                     $category->save();
                     $success = true;
-                    $message =  __("messages.category_store_success");
+                    $message =  'Category has been created successfully';
                 } else { // Same category name is exist
-                    $message = __('messages.category_exist');
+                    $message = "Category with this name already exist";
                 }
             }
         } catch (\Exception $e) {
@@ -146,7 +146,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
         $redirect = route('category.index');
 
@@ -213,12 +213,12 @@ class CategoryController extends Controller
                         }
 
                         $success = true;
-                        $message =  __("messages.category_update_success");
+                        $message =  'Category has been updated successfully';
                     } else {
-                        $message = __('messages.category_invalid');
+                        $message = 'Invalid category';
                     }
                 } else { // Same category name is exist
-                    $message = __('messages.category_exist');
+                    $message = "Category with this name already exist";
                 }
             }
         } catch (\Exception $e) {
@@ -256,14 +256,13 @@ class CategoryController extends Controller
                 fileRemoveStorage($cat->banner_img);
 
                 $cat->delete();
-                return redirect()->back()->with('success', __('messages.category_delete_success'));
+                return redirect()->back()->with('success', 'Category has been deleted successfully');
             } catch (\Exception $e) {
                 $message = $e->getMessage();
-                //return redirect()->back()->with('danger', __('messages.exception_error'));
                 return redirect()->back()->with('danger', $e->getMessage());
             }
         } else {
-            return redirect()->back()->with('danger', __('messages.category_invalid'));
+            return redirect()->back()->with('danger', 'Invalid category');
         }
     }
 
@@ -271,7 +270,7 @@ class CategoryController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $categoryData = Category::select('id', 'name')
@@ -284,10 +283,10 @@ class CategoryController extends Controller
 
         if (isset($categoryData) && !empty($categoryData) && $categoryData->isNotEmpty()) {
             $success = true;
-            $message = __("messages.data_found");
+            $message = "Data found";
             $data = $categoryData;
         } else {
-            $message = __("messages.category_data_not_found");
+            $message = 'Category data not found';
         }
 
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);

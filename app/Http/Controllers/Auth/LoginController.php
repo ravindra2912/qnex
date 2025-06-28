@@ -44,7 +44,8 @@ class LoginController extends Controller
         // $this->middleware('guest')->except('logout');
     }
 
-    function showLoginForm(){
+    function showLoginForm()
+    {
         return view('auth.login');
     }
 
@@ -52,7 +53,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -60,75 +61,59 @@ class LoginController extends Controller
             'password' => 'required|min:8|max:15',
         ]);
 
-        if($validator->fails()){ // Validation fails
+        if ($validator->fails()) { // Validation fails
             $message = $validator->errors()->first();
-        }
-        else{
-            if(auth()->attempt(array('email' => $request->email, 'password' => $request->password))){
-                if(Auth::user()->role_id == "2" || Auth::user()->role_id == "1"){ // logged in user is seller
-                    $success = true;
-                    $message = __("messages.sign_in_success");
+        } else {
+            if (auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
+                if (Auth::user()->role_id == "2" || Auth::user()->role_id == "1") { // logged in user is seller
                     $data = array('redirect_url' => route('seller.dashboard'));
+                } else {
+                    $data = array('redirect_url' => route('home'));
                 }
-                else{
-                    $success = true;
-                    $message = __("messages.sign_in_success");
-					$data = array('redirect_url' => route('home'));
-                }
-            }
-            else{
-                $message = __('messages.invalid_credentials');
+                $success = true;
+                $message = "Sign in successfully";
+            } else {
+                $message = "Invalid credentials";
             }
         }
 
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);
     }
-	
-	 public function register(Request $request){
+
+    public function register(Request $request)
+    {
         $this->middleware('guest')->except('logout');
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
-		
+
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'mobile_no' => 'required|max:15',
-            'email' => 'required|email:filter|max:100',
+            'mobile_no' => 'required|unique:users,mobile|max:15',
+            'email' => 'required|email:filter|unique:users,email|max:100',
             'password' => 'required|min:8|max:15',
             'confirm_password' => 'required|min:8|max:15|same:password',
         ]);
 
         if ($validator->fails()) { // validation fails
             $message = $validator->errors()->first();
-        }
-        else{
+        } else {
 
-            $check_existing_email = User::where('email', $request->email)
-                                        ->where('role_id', '3')
-                                        ->count();
+            $user = new User();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->mobile = $request->mobile_no;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
 
-            if($check_existing_email == 0){
-
-                $user = new User();
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->mobile = $request->mobile_no;
-                $user->email = $request->email;
-                $user->password = Hash::make($request->password);
-
-                try{
-                    $user->save();
-                    $success = true;
-                    $message = __("messages.sign_up_success");
-                }
-                catch(\Exception $e){
-                    $message = __("messages.exception_error");
-					$message = $e->getMessage();
-                }
-            }
-            else{
-                $message = __("messages.profile_user_exist");
+            try {
+                $user->save();
+                $success = true;
+                $message = "Sign up successfully";
+            } catch (\Exception $e) {
+                $message = "Some error occurred. Please try again after sometime";
+                $message = $e->getMessage();
             }
         }
 

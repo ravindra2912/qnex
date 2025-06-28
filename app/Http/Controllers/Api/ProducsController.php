@@ -22,7 +22,7 @@ class ProducsController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -35,10 +35,6 @@ class ProducsController extends Controller
 		} else {
 			$productLists = Product::select('id', 'name', 'slug', 'price', 'brand', 'status', 'is_variants')
 				->with(['getFavourite:id,product_id,user_id'])
-				// ->with(['category_data'])
-				// ->with(['sub_category_data'])
-				// ->with(['sub_category2_data'])
-				// ->with(['images_data:id,image,product_id'])
 				->whereNull('deleted_at')
 				->where('status', 'Active')
 				->skip($request->offset)
@@ -93,10 +89,10 @@ class ProducsController extends Controller
 
 			if (isset($productLists) && $productLists->isNotEmpty()) {
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data = $productLists;
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -107,7 +103,7 @@ class ProducsController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -165,10 +161,10 @@ class ProducsController extends Controller
 
 
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data = $product;
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 

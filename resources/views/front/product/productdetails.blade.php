@@ -273,7 +273,11 @@
 			</div>
 			<div class="col-lg-6 col-md-6 col-12 pl-2">
 				<p class="h5 ">
-					{{ (isset($product->category_data) &&!empty($product->category_data->name))?$product->category_data->name.",":'' }}
+					@if (!empty($product->categories) && count($product->categories) > 0)
+					{{ $product->categories->pluck('name')->map(function ($name) {
+												return ucfirst($name);
+											})->implode(', ') }}
+					@endif
 				</p>
 
 

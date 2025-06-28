@@ -32,7 +32,7 @@ class SettingController extends Controller
     public function update_site_seo(Request $request, $id)
     {
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -73,7 +73,7 @@ class SettingController extends Controller
 	public function update_social_links(Request $request, $id)
     {
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [

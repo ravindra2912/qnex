@@ -96,7 +96,7 @@ class CartController extends Controller
 		$cart_count = 0;
 		$auth = true;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
         $rules = [
@@ -159,7 +159,7 @@ class CartController extends Controller
 							$message = "Product Added To Cart SuccessFully";
 						}else{
 							$success = false;
-							$message = __("messages.Only ".$chack_variant->qty." Available For Add To Cart");
+							$message = "Only ".$chack_variant->qty." Available For Add To Cart";
 						}
 					}else{
 						$success = false;
@@ -198,7 +198,7 @@ class CartController extends Controller
 	public function check_variant(Request $request) {
 		
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -244,7 +244,7 @@ class CartController extends Controller
 		$auth = true;
         $delete = false;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -322,7 +322,7 @@ class CartController extends Controller
 	public function cart_count(Request $request) {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -336,7 +336,7 @@ class CartController extends Controller
 			
              $cart_count = AddToCart::where('user_id', $request->user_id)->count();
 			  $success = true;
-              $message = __("messages.data_found");
+              $message = "Data found";
             
         }
 
@@ -346,7 +346,7 @@ class CartController extends Controller
     public function remove_from_cart(Request $request){
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
 		$rules = array();
@@ -374,7 +374,7 @@ class CartController extends Controller
                 catch(\Exception $e){
                 }
             }else{
-                $message = __("messages.add_to_cart_invalid_data");
+                $message = "Invalid cart data";
             }
         }
 

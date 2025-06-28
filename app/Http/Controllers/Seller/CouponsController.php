@@ -28,7 +28,7 @@ class CouponsController extends Controller
     public function store(Request $request){
 		
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$val = [
@@ -102,7 +102,7 @@ class CouponsController extends Controller
 				$Coupon->save();
 				
 				$success = true;
-                $message =  __("messages.Coupon_store_success");
+                $message =  "Coupon has been created successfully";
 			} catch(\Illuminate\Database\QueryException $e){ 
 				$message = $e->getMessage();
 			}
@@ -115,7 +115,7 @@ class CouponsController extends Controller
          $Coupons = Coupon::find($id);
 		 $discounted_products = Product::where('user_id', Auth::user()->id)->where('coupon_id', $Coupons->id)->whereNull('deleted_at')->orderBy('created_at','ASC')->get();
          
-		$categoryData = Category::where('level',0)->get(); 
+		$categoryData = Category::get(); 
 		$data = compact('Coupons','discounted_products','categoryData');
          return view('seller/Coupons/edit')->with($data);
      }
@@ -123,7 +123,7 @@ class CouponsController extends Controller
      public function updates(Request $request, $id){
 		 
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		 
         $val = [
@@ -201,7 +201,7 @@ class CouponsController extends Controller
 				$Coupon->save();
 				
 				$success = true;
-                $message =  __("messages.Coupon_store_success");
+                $message =  "Coupon has been created successfully";
 			} catch(\Illuminate\Database\QueryException $e){ 
 				$message = $e->getMessage();
 			}
@@ -221,20 +221,20 @@ class CouponsController extends Controller
         if(isset($Coupon) && !empty($Coupon) && isset($Coupon->id)){
             try{
                 $Coupon->delete();
-                return redirect()->back()->with('success', __('messages.coupon_delete_success'));
+                return redirect()->back()->with('success', 'Coupon has been removed from cart successfully');
             }
             catch(\Exception $e){
-                return redirect()->back()->with('danger', __('messages.exception_error'));
+                return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
             }
         }
         else{
-            return redirect()->back()->with('danger', __('messages.product_invalid'));
+            return redirect()->back()->with('danger', 'Invalid product');
         }
     }
 	
 	public function add_product(Request $request){
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		
@@ -262,7 +262,7 @@ class CouponsController extends Controller
 			}
 			
 				$success = true;
-                $message =  __("messages.product_add_success");
+                $message =  "Product has been created successfully";
 			
 		}
 		 //$message = $request['active_date'];
@@ -271,7 +271,7 @@ class CouponsController extends Controller
 	
 	public function remove_product(Request $request){
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$validator = Validator::make($request->all(), 
@@ -290,7 +290,7 @@ class CouponsController extends Controller
 				$Product->save();
 				
 				$success = true;
-                $message =  __("messages.product_remove_success");
+                $message =  "Product has been removed successfully";
 			} catch(\Illuminate\Database\QueryException $e){ 
 				$message = $e->getMessage();
 			}

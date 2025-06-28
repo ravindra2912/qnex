@@ -77,7 +77,7 @@ class ContactUsController extends Controller
     public function update(Request $request, $id)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -139,13 +139,13 @@ class ContactUsController extends Controller
                 try{
                     $product->save();
                     $success = true;
-                    $message =  __("messages.product_update_success");
+                    $message =  'Product has been updated successfully';
                 }
                 catch(\Exception $e){
                 }
             }
             else{ // Same product name is exist with same category, sub category and sub category2
-                $message = __('messages.product_exist');
+                $message = 'Product already exist';
             }
         }
 
@@ -161,21 +161,21 @@ class ContactUsController extends Controller
         if(isset($product) && !empty($product) && isset($product->id)){
             try{
                 $product->delete();
-                return redirect()->back()->with('success', __('messages.product_delete_success'));
+                return redirect()->back()->with('success', 'Product has been deleted successfully');
             }
             catch(\Exception $e){
-                return redirect()->back()->with('danger', __('messages.exception_error'));
+                return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
             }
         }
         else{
-            return redirect()->back()->with('danger', __('messages.product_invalid'));
+            return redirect()->back()->with('danger', 'Invalid product');
         }
     }
 
 	 public function change_order_status(Request $request)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [

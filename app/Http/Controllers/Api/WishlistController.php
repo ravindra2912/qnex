@@ -16,7 +16,7 @@ class WishlistController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -42,7 +42,7 @@ class WishlistController extends Controller
             }
 
             $success = true;
-            $message = __("messages.data_found");
+            $message = "Data found";
             $data = $Wishlist_data;
         }
 
@@ -53,7 +53,7 @@ class WishlistController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data['is_fevourit'] = false;
 
         $validator = Validator::make($request->all(), [

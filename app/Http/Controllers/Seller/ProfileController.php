@@ -33,7 +33,7 @@ class ProfileController extends Controller
     public function updateprofile(Request $request, $id)
     {
          $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -112,14 +112,14 @@ class ProfileController extends Controller
         if(isset($product) && !empty($product) && isset($product->id)){
             try{
                 $product->delete();
-                return redirect()->back()->with('success', __('messages.product_delete_success'));
+                return redirect()->back()->with('success', 'Product has been deleted successfully');
             }
             catch(\Exception $e){
-                return redirect()->back()->with('danger', __('messages.exception_error'));
+                return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
             }
         }
         else{
-            return redirect()->back()->with('danger', __('messages.product_invalid'));
+            return redirect()->back()->with('danger', 'Invalid product');
         }
     }
 

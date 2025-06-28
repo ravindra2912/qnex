@@ -14,7 +14,7 @@ class CategoriesController extends Controller
     public function categories(Request $request) {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$validator = Validator::make($request->all(), [
@@ -44,11 +44,11 @@ class CategoriesController extends Controller
 
 				if(isset($category_list) && $category_list->isNotEmpty()){
 					$success = true;
-					$message = __("messages.data_found");
+					$message = "Data found";
 					$data = $category_list;
 				}
 				else{
-					$message = __("messages.no_data_found");
+					$message = "No data found";
 				}
 			
 		}

@@ -24,7 +24,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -44,7 +44,7 @@ class OrderController extends Controller
 
 				$success = true;
 			}
-			$message = __("messages." . $check['msg']);
+			$message = $check['msg'];
 		}
 		return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);
 	}
@@ -139,7 +139,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -278,7 +278,7 @@ class OrderController extends Controller
 	public function coupon_list(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$coupon_data = Coupon::where('status', 'Active')->get();
@@ -289,10 +289,10 @@ class OrderController extends Controller
 				$cdata->active_time = date_format(date_create($cdata->active_time), 'Y-m-d');
 			}
 			$success = true;
-			$message = __("messages.data_found");
+			$message = "Data found";
 			$data = $coupon_data;
 		} else {
-			$message = __("messages.no_data_found");
+			$message = "No data found";
 		}
 
 
@@ -303,7 +303,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -323,10 +323,10 @@ class OrderController extends Controller
 
 			if (isset($order_data) && $order_data->isNotEmpty()) {
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data = $order_data;
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -337,7 +337,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -376,10 +376,10 @@ class OrderController extends Controller
 			if (isset($order_data) && !empty($order_data)) {
 
 				$success = true;
-				$message = __("messages.data_found");
+				$message = "Data found";
 				$data = $order_data;
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -390,7 +390,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -425,7 +425,7 @@ class OrderController extends Controller
 					$message = "Payment Failed";
 				}
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -435,7 +435,7 @@ class OrderController extends Controller
 	public function replace_product(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -470,7 +470,7 @@ class OrderController extends Controller
 	public function order_return(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -523,7 +523,7 @@ class OrderController extends Controller
 	public function order_cancel(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [

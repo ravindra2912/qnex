@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         try{
@@ -61,7 +61,7 @@ class HomeController extends Controller
 
 
         $success = true;
-        $message = __("messages.data_found");
+        $message = "Data found";
         }catch(\Exception $e){
             $message = $e->getMessage();
         }
@@ -73,7 +73,7 @@ class HomeController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $user = User::select('id', 'first_name', 'last_name', 'mobile', 'image', 'email')
@@ -83,10 +83,10 @@ class HomeController extends Controller
             $user->image = getImage($user->image);
 
             $success = true;
-            $message = __("messages.data_found");
+            $message = "Data found";
             $data = $user;
         } else {
-            $message = __("messages.no_data_found");
+            $message = "No data found";
         }
 
 
@@ -97,7 +97,7 @@ class HomeController extends Controller
     {
         $userId = Auth::user()->id;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -119,7 +119,7 @@ class HomeController extends Controller
             try {
                 $user->save();
                 $success = true;
-                $message = __("messages.profile_update_success");
+                $message = "Profile updated successfully";
                 $data = $user;
             } catch (\Exception $e) {
             }
@@ -132,7 +132,7 @@ class HomeController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -173,7 +173,7 @@ class HomeController extends Controller
     {
         try {
             $success = false;
-            $message = __("messages.exception_error");
+            $message = "Some error occurred. Please try again after sometime";
             $data = array();
 
             $validator = Validator::make($request->all(), [
@@ -209,7 +209,7 @@ class HomeController extends Controller
     {
 
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $faqData = Faq::select('id', 'question', 'answer')
@@ -218,10 +218,10 @@ class HomeController extends Controller
 
         if (isset($faqData) && !empty($faqData) && $faqData->isNotEmpty()) {
             $success = true;
-            $message = __("messages.data_found");
+            $message = "Data found";
             $data = $faqData;
         } else {
-            $message = __("messages.no_data_found");
+            $message = "No data found";
         }
 
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);
@@ -229,7 +229,7 @@ class HomeController extends Controller
 
     public function contactUs(Request $request){
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make(request()->all(), [

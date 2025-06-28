@@ -25,7 +25,7 @@ class ContactUsController extends Controller
 	
 	public function store(Request $request){
 		 $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [

@@ -2,28 +2,30 @@
 
 namespace app\Http\Controllers\seller;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use App\Exports\ProductExport;
-use App\Imports\ImportProduct;
-use Maatwebsite\Excel\Facades\Excel;
-
-use Auth;
-use Validator;
 use Str;
-use Redirect;
+use Auth;
+
 use File;
 use Image;
-use App\Models\Category;
-use App\Models\SubCategory;
+use Redirect;
+
+use Validator;
 use App\Models\Product;
-use App\Models\VariantName;
+use App\Models\Category;
 use App\Models\Variants;
-use App\Models\ProductVariants;
-use App\Models\ProductInventoryLog;
+use App\Models\SubCategory;
+use App\Models\VariantName;
+use Illuminate\Http\Request;
 use App\Models\ProductImages;
 use App\Models\ProductReview;
+use App\Exports\ProductExport;
+use App\Imports\ImportProduct;
+use App\Models\ProductVariants;
+use Illuminate\Support\Facades\DB;
+use App\Models\ProductInventoryLog;
+use App\Http\Controllers\Controller;
+use App\Models\ProductCategory;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -47,7 +49,7 @@ class ProductController extends Controller
 			return Excel::download(new ProductExport($user_id, $start_date, $end_date, $status,  $search), 'Products.xlsx');
 		}
 
-		$productLists = Product::with(['category_data', 'images_data']);
+		$productLists = Product::with(['categories', 'images_data']);
 		if (Auth::user()->role_id != 1) {
 			$productLists = $productLists->where('user_id', Auth::user()->id);
 		}
@@ -86,99 +88,102 @@ class ProductController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$redirect = route('product.index');
 		$data = array();
 
-		$rules = [
-			'product_name' => 'required|max:256',
-			'brand' => 'required|max:256',
-			'price' => 'required|numeric|gt:0|between:1,9999999999.99',
-			'category' => 'required|exists:categories,id',
-			'short_description' => 'required|max:250',
-			'description' => 'required',
-			'SEO_description' => 'required|max:250',
-			'SEO_tags' => 'required|max:250',
-		];
+		DB::beginTransaction();
+		try {
+
+			$rules = [
+				'product_name' => 'required|max:256',
+				'brand' => 'required|max:256',
+				'price' => 'required|numeric|gt:0|between:1,9999999999.99',
+				'category' => 'required',
+				'short_description' => 'required|max:250',
+				'description' => 'required',
+				'SEO_description' => 'required|max:250',
+				'SEO_tags' => 'required|max:250',
+			];
 
 
-		if ($request->is_variants == 0) {
-			$rules['quantity'] = 'required|numeric|gt:0';
-		}
+			if ($request->is_variants == 0) {
+				$rules['quantity'] = 'required|numeric|gt:0';
+			}
 
-		// $request->is_tax_applicable = false;
-		if ($request->is_tax_applicable == 'on') {
-			$rules['igst'] = 'required|numeric|gt:0';
-			$rules['cgst'] = 'required|numeric|gt:0';
-			$rules['sgst'] = 'required|numeric|gt:0';
-			// $request->is_tax_applicable = true;
-		}
+			// $request->is_tax_applicable = false;
+			if ($request->is_tax_applicable == 'on') {
+				$rules['igst'] = 'required|numeric|gt:0';
+				$rules['cgst'] = 'required|numeric|gt:0';
+				$rules['sgst'] = 'required|numeric|gt:0';
+				// $request->is_tax_applicable = true;
+			}
 
-		// $request->is_replacement = false;
-		if ($request->is_replacement == 'on') {
-			$rules['replacement_days'] = 'required|numeric|gt:0';
-			// $request->is_replacement = true;
-		}
+			// $request->is_replacement = false;
+			if ($request->is_replacement == 'on') {
+				$rules['replacement_days'] = 'required|numeric|gt:0';
+				// $request->is_replacement = true;
+			}
 
 
 
-		$validator = Validator::make($request->all(), $rules);
+			$validator = Validator::make($request->all(), $rules);
 
-		if ($validator->fails()) { // Validation fails
-			$message = $validator->errors()->first();
-		} else {
+			if ($validator->fails()) { // Validation fails
+				$message = $validator->errors()->first();
+			} else {
 
-			$category_id = $request->category;
-			$sub_category_id = $request->sub_category;
-			$sub_category2_id = $request->sub_category2;
-			$name = trim($request->product_name);
-			$slug = Str::slug($name);
+				$name = trim($request->product_name);
+				$slug = Str::slug($name);
 
-			$check_product_name = Product::where('user_id', Auth::user()->id)
-				->where('slug', $slug)
-				->where('category_id', $category_id)
-				->count();
+				$check_product_name = Product::where('user_id', Auth::user()->id)
+					->where('slug', $slug)
+					->count();
 
-			if ($check_product_name == 0) { // Same name product is not exist with same category, sub category and sub category2 so insert it
+				if ($check_product_name == 0) { // Same name product is not exist with same category, sub category and sub category2 so insert it
 
-				$product = new Product();
-				$product->user_id = Auth::user()->id;
-				$product->category_id = $category_id;
-				$product->name = $name;
-				$product->is_variants = $request->is_variants;
-				$product->brand = $request->brand;
-				$product->short_description = $request->short_description;
-				$product->slug = $slug;
-				$product->price = $request->price;
-				$product->description = $request->description;
-				$product->SEO_description = $request->SEO_description;
-				$product->SEO_tags = $request->SEO_tags;
-				$product->is_tax_applicable = $request->is_tax_applicable == 'on' ? true : false;
-				if ($request->is_tax_applicable == 'on') {
-					$product->igst = $request->igst;
-					$product->cgst = $request->cgst;
-					$product->sgst = $request->sgst;
-				}
-				$product->is_replacement = $request->is_replacement == 'on' ? true : false;
-				if ($request->is_replacement == 'on') {
-					$product->replacement_days = $request->replacement_days;
-				}
-				if ($request->is_variants == 0) {
-					$product->quantity = $request->quantity;
-				}
+					$product = new Product();
+					$product->user_id = Auth::user()->id;
+					// $product->category_id = $category_id;
+					$product->name = $name;
+					$product->is_variants = $request->is_variants;
+					$product->brand = $request->brand;
+					$product->short_description = $request->short_description;
+					$product->slug = $slug;
+					$product->price = $request->price;
+					$product->description = $request->description;
+					$product->SEO_description = $request->SEO_description;
+					$product->SEO_tags = $request->SEO_tags;
+					$product->is_tax_applicable = $request->is_tax_applicable == 'on' ? true : false;
+					if ($request->is_tax_applicable == 'on') {
+						$product->igst = $request->igst;
+						$product->cgst = $request->cgst;
+						$product->sgst = $request->sgst;
+					}
+					$product->is_replacement = $request->is_replacement == 'on' ? true : false;
+					if ($request->is_replacement == 'on') {
+						$product->replacement_days = $request->replacement_days;
+					}
+					if ($request->is_variants == 0) {
+						$product->quantity = $request->quantity;
+					}
 
-				try {
+
 					$product->save();
+					$product->categories()->sync($request->category); // attaches category IDs
+
 					$success = true;
-					$message =  __("messages.product_store_success");
+					$message =  'Product has been created successfully';
 
 					$redirect = route('product.edit', $product->id);
-				} catch (\Exception $e) {
-					$message = $e->getMessage();
+					DB::commit();
+				} else { // Same product name is exist with same category, sub category and sub category2
+					$message = 'Product already exist';
 				}
-			} else { // Same product name is exist with same category, sub category and sub category2
-				$message = __('messages.product_exist');
 			}
+		} catch (\Exception $e) {
+			$message = $e->getMessage();
+			DB::rollback();
 		}
 
 		return response()->json(['success' => $success, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
@@ -191,9 +196,12 @@ class ProductController extends Controller
 
 	public function edit($id)
 	{
-		$categoryData = $subCategoryData = $subCategory2Data = array();
+		$categoryData = array();
 
-		$productData = Product::where('id', $id);
+		$productData = Product::with([
+			'images_data',
+			'categories'
+		])->where('id', $id);
 		if (Auth::user()->role_id != 1) {
 			$productData = $productData->where('user_id', Auth::user()->id);
 		}
@@ -201,18 +209,14 @@ class ProductController extends Controller
 
 		if (isset($productData) && isset($productData->id)) {
 
-			$categoryData = Category::where('status', 'Active')
+			$categoryData = Category::select('id', 'name')->where('status', 'Active')
 				->orderBy('name', 'ASC')
-				->get();
-
-			$ProductImages = ProductImages::where('product_id', $id)
-				->orderBy('id', 'ASC')
 				->get();
 
 			//$variants = ProductVariants::where('product_id', $id)->get();
 		}
 
-		return view('seller.product.edit', compact('productData', 'categoryData', 'subCategoryData', 'subCategory2Data', 'ProductImages'));
+		return view('seller.product.edit', compact('productData', 'categoryData'));
 	}
 
 	public function upload_images(Request $request, $id)
@@ -240,7 +244,7 @@ class ProductController extends Controller
 	public function deleteimage(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make(
@@ -269,102 +273,105 @@ class ProductController extends Controller
 	public function update(Request $request, $id)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$redirect = route('product.index');
 		$data = array();
 
-		$validate = [
-			'product_name' => 'required|max:256',
-			'brand' => 'required|max:256',
-			'price' => 'required|numeric|gt:0|between:1,9999999999.99',
-			'category' => 'required|exists:categories,id',
-			'short_description' => 'required|max:250',
-			'description' => 'required',
-			'SEO_description' => 'required|max:250',
-			'SEO_tags' => 'required|max:250',
-			'status' => 'required|In:Active,Inactive',
-		];
+		DB::beginTransaction();
+
+		try {
+
+			$validate = [
+				'product_name' => 'required|max:256',
+				'brand' => 'required|max:256',
+				'price' => 'required|numeric|gt:0|between:1,9999999999.99',
+				'category' => 'required',
+				'short_description' => 'required|max:250',
+				'description' => 'required',
+				'SEO_description' => 'required|max:250',
+				'SEO_tags' => 'required|max:250',
+				'status' => 'required|In:Active,Inactive',
+			];
 
 
 
-		if ($request->is_tax_applicable == 'on') {
-			$validate['igst'] = 'required|numeric|gt:0';
-			$validate['cgst'] = 'required|numeric|gt:0';
-			$validate['sgst'] = 'required|numeric|gt:0';
-		}
-
-		if ($request->is_replacement == 'on') {
-			$validate['replacement_days'] = 'required|numeric|gt:0';
-		}
-
-		if ($request->is_featured == 'on') {
-			$validate['featured_date'] = 'required|date';
-		}
-
-		if ($request->is_variants == 0) {
-			$validate['quantity'] = 'required|numeric|gt:0';
-		}
-
-		$validator = Validator::make($request->all(), $validate);
-
-		if ($validator->fails()) { // Validation fails
-			$message = $validator->errors()->first();
-		} else {
-
-			$category_id = $request->category;
-			$sub_category_id = $request->sub_category;
-			$sub_category2_id = $request->sub_category2;
-			$name = trim($request->product_name);
-			$slug = Str::slug($name);
-
-			$check_product_name = Product::where('id', '!=', $id)
-				->where('user_id', Auth::user()->id)
-				->where('slug', $slug)
-				->where('category_id', $category_id)
-				->count();
-
-			if ($check_product_name == 0) { // Same name product is not exist with same category, sub category and sub category2 so insert it
-
-				$product = Product::whereNull('deleted_at')->find($id);
-				$product->category_id = $category_id;
-				$product->name = $name;
-				$product->slug = $slug;
-				$product->brand = $request->brand;
-				$product->short_description = $request->short_description;
-				$product->price = trim($request->price);
-				$product->is_variants = $request->is_variants;
-				$product->description = $request->description;
-				$product->SEO_description = $request->SEO_description;
-				$product->SEO_tags = $request->SEO_tags;
-				$product->is_featured = $request->is_featured == 'on' ? true : false;
-				$product->status = $request->status;
-				$product->is_tax_applicable = $request->is_tax_applicable == 'on' ? true : false;
-				if ($request->is_tax_applicable == 'on') {
-					$product->igst = $request->igst;
-					$product->cgst = $request->cgst;
-					$product->sgst = $request->sgst;
-				}
-				$product->is_replacement = $request->is_replacement == 'on' ? true : false;
-				if ($request->is_replacement == 'on') {
-					$product->replacement_days = $request->replacement_days;
-				}
-				if ($request->is_featured == 'on') {
-					$product->featured_date = $request->featured_date;
-				}
-				if ($request->is_variants == 0) {
-					$product->quantity = $request->quantity;
-				}
-
-				try {
-					$product->save();
-					$success = true;
-					$message =  __("messages.product_update_success");
-				} catch (\Exception $e) {
-					$message = $e->getMessage();
-				}
-			} else { // Same product name is exist with same category, sub category and sub category2
-				$message = __('messages.product_exist');
+			if ($request->is_tax_applicable == 'on') {
+				$validate['igst'] = 'required|numeric|gt:0';
+				$validate['cgst'] = 'required|numeric|gt:0';
+				$validate['sgst'] = 'required|numeric|gt:0';
 			}
+
+			if ($request->is_replacement == 'on') {
+				$validate['replacement_days'] = 'required|numeric|gt:0';
+			}
+
+			if ($request->is_featured == 'on') {
+				$validate['featured_date'] = 'required|date';
+			}
+
+			if ($request->is_variants == 0) {
+				$validate['quantity'] = 'required|numeric|gt:0';
+			}
+
+			$validator = Validator::make($request->all(), $validate);
+
+			if ($validator->fails()) { // Validation fails
+				$message = $validator->errors()->first();
+			} else {
+				$name = trim($request->product_name);
+				$slug = Str::slug($name);
+
+				$check_product_name = Product::where('id', '!=', $id)
+					->where('user_id', Auth::user()->id)
+					->where('slug', $slug)
+					->count();
+
+				if ($check_product_name == 0) { // Same name product is not exist with same category, sub category and sub category2 so insert it
+
+					$product = Product::whereNull('deleted_at')->find($id);
+					// $product->category_id = $category_id;
+					$product->name = $name;
+					$product->slug = $slug;
+					$product->brand = $request->brand;
+					$product->short_description = $request->short_description;
+					$product->price = trim($request->price);
+					$product->is_variants = $request->is_variants;
+					$product->description = $request->description;
+					$product->SEO_description = $request->SEO_description;
+					$product->SEO_tags = $request->SEO_tags;
+					$product->is_featured = $request->is_featured == 'on' ? true : false;
+					$product->status = $request->status;
+					$product->is_tax_applicable = $request->is_tax_applicable == 'on' ? true : false;
+					if ($request->is_tax_applicable == 'on') {
+						$product->igst = $request->igst;
+						$product->cgst = $request->cgst;
+						$product->sgst = $request->sgst;
+					}
+					$product->is_replacement = $request->is_replacement == 'on' ? true : false;
+					if ($request->is_replacement == 'on') {
+						$product->replacement_days = $request->replacement_days;
+					}
+					if ($request->is_featured == 'on') {
+						$product->featured_date = $request->featured_date;
+					}
+					if ($request->is_variants == 0) {
+						$product->quantity = $request->quantity;
+					}
+
+					$product->save();
+
+					$product->categories()->sync($request->category); // attaches category IDs
+
+					$success = true;
+					$message =  'Product has been updated successfully';
+					DB::commit();
+				} else { // Same product name is exist with same category, sub category and sub category2
+					$message = 'Product already exist';
+				}
+			}
+		} catch (\Exception $e) {
+			$message = $e->getMessage();
+			DB::rollBack();
 		}
 
 		return response()->json(['success' => $success, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
@@ -381,19 +388,19 @@ class ProductController extends Controller
 				$product->deleted_at = date('Y-m-d H:i:s');
 				$product->status = 'Inactive';
 				$product->save();
-				return redirect()->back()->with('success', __('messages.product_delete_success'));
+				return redirect()->back()->with('success', 'Product has been deleted successfully');
 			} catch (\Exception $e) {
-				return redirect()->back()->with('danger', __('messages.exception_error'));
+				return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
 			}
 		} else {
-			return redirect()->back()->with('danger', __('messages.product_invalid'));
+			return redirect()->back()->with('danger', 'Invalid product');
 		}
 	}
 
 	public function import(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$rules = [
@@ -565,7 +572,7 @@ class ProductController extends Controller
 	public function change_variant_amount(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -582,7 +589,7 @@ class ProductController extends Controller
 			try {
 				$ProductVariants->save();
 				$success = true;
-				$message =  __("messages.Price Changed SuccessFully");
+				$message =  "Price Changed Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -592,7 +599,7 @@ class ProductController extends Controller
 	public function change_variant_status(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -609,7 +616,7 @@ class ProductController extends Controller
 			try {
 				$ProductVariants->save();
 				$success = true;
-				$message =  __("messages.Status Changed SuccessFully");
+				$message =  "Status Changed Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -619,7 +626,7 @@ class ProductController extends Controller
 	public function change_alert_qty(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -636,7 +643,7 @@ class ProductController extends Controller
 			try {
 				$ProductVariants->save();
 				$success = true;
-				$message =  __("messages.Price Changed SuccessFully");
+				$message =  "Price Changed Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -646,7 +653,7 @@ class ProductController extends Controller
 	public function change_variant_qty(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -681,7 +688,7 @@ class ProductController extends Controller
 				$ProductVariants->save();
 				$ProductInventoryLog->save();
 				$success = true;
-				$message =  __("messages.QTY Changed SuccessFully");
+				$message = "QTY Changed Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -691,7 +698,7 @@ class ProductController extends Controller
 	public function delete_product_variant(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -706,7 +713,7 @@ class ProductController extends Controller
 			try {
 				$ProductVariants->delete();
 				$success = true;
-				$message =  __("messages.Variant Delete SuccessFully");
+				$message =  "Variant Deleted Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -716,7 +723,7 @@ class ProductController extends Controller
 	public function delete_all_product_variant(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -733,7 +740,7 @@ class ProductController extends Controller
 				$VariantName = VariantName::where('product_id', $request->product_id)->delete();
 				$ProductVariants = ProductVariants::where('product_id', $request->product_id)->delete();
 				$success = true;
-				$message =  __("messages.All Variant Delete SuccessFully");
+				$message =  "All Variant Deleted Successfully";
 			} catch (\Exception $e) {
 			}
 		}
@@ -747,22 +754,20 @@ class ProductController extends Controller
 	public function get_product_by_category(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
 			'category' => 'required|exists:categories,id',
-			'sub_category' => 'required|exists:categories,id',
-			'sub_category2' => 'required|exists:categories,id',
 		]);
 
 		if ($validator->fails()) { // Validation fails
 			$message = $validator->errors()->first();
 		} else {
 			$Product_data = Product::select('id', 'name')
-				->where('category_id', $request->category)
-				->where('sub_category_id', $request->sub_category)
-				->where('sub_category2_id', $request->sub_category2)
+				->whereHas('categories', function ($q) use ($request) {
+					$q->where('category_id', $request->category); // Match category ID
+				})
 				->where('user_id', Auth::user()->id)
 				->where('status', 'Active')
 				->whereNull('deleted_at')
@@ -774,10 +779,10 @@ class ProductController extends Controller
 
 		if (isset($Product_data) && !empty($Product_data) && $Product_data->isNotEmpty()) {
 			$success = true;
-			$message = __("messages.data_found");
+			$message = "Data found";
 			$data = $Product_data;
 		} else {
-			$message = __("messages.sub_category2_data_not_found");
+			$message = "Data not found";
 		}
 
 		return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);

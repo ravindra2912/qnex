@@ -35,7 +35,7 @@ class HomeBannerController extends Controller
     public function store(Request $request)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -56,7 +56,7 @@ class HomeBannerController extends Controller
             try {
                 $HomeBanner->save();
                 $success = true;
-                $message =  __("messages.category_store_success");
+                $message =  'Category has been created successfully';
             } catch (\Exception $e) {
                 $message = $e->getMessage();
                 // Remove new uploaded image if exist
@@ -83,7 +83,7 @@ class HomeBannerController extends Controller
     public function update(Request $request, $id)
     {
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $rules = [
@@ -124,14 +124,14 @@ class HomeBannerController extends Controller
                     }
 
                     $success = true;
-                    $message =  __("messages.Banner_update_success");
+                    $message =  "Banner has been updated successfully";
                 } catch (\Exception $e) {
 
                     // Remove new uploaded image if exist
                     fileRemoveStorage($imgpath);
                 }
             } else {
-                $message = __('messages.Banner_invalid');
+                $message = "Banner not found";
             }
         }
 
@@ -156,13 +156,13 @@ class HomeBannerController extends Controller
                 fileRemoveStorage($cat->image);
 
                 $cat->delete();
-                return redirect()->back()->with('success', __('messages.Banner_delete_success'));
+                return redirect()->back()->with('success', 'Banner has been removed successfully');
             } catch (\Exception $e) {
-                //return redirect()->back()->with('danger', __('messages.exception_error'));
+                //return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
                 return redirect()->back()->with('danger', $e->getMessage());
             }
         } else {
-            return redirect()->back()->with('danger', __('messages.Banner_invalid'));
+            return redirect()->back()->with('danger', 'Banner invalid');
         }
     }
 }

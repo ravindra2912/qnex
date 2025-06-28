@@ -35,7 +35,7 @@ class OrderController extends Controller
 
 		$auth = true;
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 		$redirect_url = '';
 
@@ -237,7 +237,7 @@ class OrderController extends Controller
 	{
 
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 		$redirect = route('order.order_responce', Crypt::encrypt($request->order));
 
@@ -286,7 +286,7 @@ class OrderController extends Controller
 					dd($e);
 				}
 			} else {
-				$message = __("messages.no_data_found");
+				$message = "No data found";
 			}
 		}
 
@@ -304,7 +304,7 @@ class OrderController extends Controller
 	public function coupon_list(Request $request)
 	{
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$coupon_data = Coupon::where('status', 'Active')->get();
@@ -315,10 +315,10 @@ class OrderController extends Controller
 				$cdata->active_time = date_format(date_create($cdata->active_time), 'Y-m-d');
 			}
 			$success = true;
-			$message = __("messages.data_found");
+			$message = "Data found";
 			$data = $coupon_data;
 		} else {
-			$message = __("messages.no_data_found");
+			$message = "No data found";
 		}
 
 
@@ -378,7 +378,7 @@ class OrderController extends Controller
 	{
 		$auth = true;
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [
@@ -430,7 +430,7 @@ class OrderController extends Controller
 	{
 		$auth = true;
 		$success = false;
-		$message = __("messages.exception_error");
+		$message = "Some error occurred. Please try again after sometime";
 		$data = array();
 
 		$validator = Validator::make($request->all(), [

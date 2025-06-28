@@ -15,7 +15,7 @@ class AddressController extends Controller
 		
 		$auth = true;
 		$success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 
         $validator = Validator::make($request->all(), [
@@ -81,7 +81,7 @@ class AddressController extends Controller
 	public function remove_address(Request $request) {
 		$auth = true;
         $success = false;
-        $message = __("messages.exception_error");
+        $message = "Some error occurred. Please try again after sometime";
         $data = array();
 		
 		$validator = Validator::make($request->all(), [
@@ -99,7 +99,7 @@ class AddressController extends Controller
 				$Address->delete();
 				
 				$success = true;
-				$message = __("messages.address_remove_success");
+				$message = "Address remove successfully";
 			}
 			catch(\Exception $e){
 				//dd($e);

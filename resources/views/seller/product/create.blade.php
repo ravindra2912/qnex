@@ -1,6 +1,8 @@
 @extends('seller.layouts.index')
 
 @section('custom_css')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('admin_theme/plugins/select2/css/select2.min.css') }}">
 <style>
   .right-wrapper {
     background: #fff !important;
@@ -9,6 +11,11 @@
 
   .note-editing-area {
     background: whitesmoke;
+  }
+
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #007bff !important;
+    border-color: #006fe6 !important;
   }
 </style>
 
@@ -66,8 +73,7 @@
 
           <div class="form-group col-md-4 col-sm-6">
             <label class="required">Select Category</label>
-            <select class="form-control" name="category">
-              <option value="">Please Select Category</option>
+            <select class="form-control select2" style="width: 100%;" data-placeholder="Select category" name="category[]" multiple="multiple">
               @if(isset($categoryData) && !empty($categoryData))
               @foreach($categoryData as $data)
               <option value="{{ $data->id }}">{{ ucwords($data->name) }}</option>
@@ -156,7 +162,14 @@
 @endsection
 
 @section('custom_js')
+<!-- Select2 -->
+<script src="{{ asset('admin_theme/plugins/select2/js/select2.full.min.js') }}"></script>
 <script type="text/javascript">
+  $(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+  });
+
   function isNumberKey(evt, element) {
     var charCode = (evt.which) ? evt.which : event.keyCode
     if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
