@@ -54,6 +54,7 @@ class CategoryController extends Controller
         $success = false;
         $message = "Some error occurred. Please try again after sometime";
         $data = array();
+        $redirect = route('category.index');
         try {
             $validator = Validator::make($request->all(), [
                 'category_name' => 'required|max:60',
@@ -108,7 +109,7 @@ class CategoryController extends Controller
             }
         }
 
-        return response()->json(['success' => $success, 'message' => $message, 'data' => $data]);
+        return response()->json(['success' => $success, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
     }
 
     /**
