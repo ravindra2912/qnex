@@ -63,7 +63,8 @@ class ProductController extends Controller
 		$productLists = Product::select('products.*')->with(['images_data'])
 			->whereNull('products.deleted_at')
 			->where('products.status', 'Active')
-			->groupBy('products.id')
+			// ->groupBy('products.id')
+			->distinct()
 			->skip($request->page * $limite)
 			->take($limite);
 
