@@ -15,25 +15,25 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        Category::create([
+	/**
+	 * Run the database seeds.
+	 */
+	public function run(): void
+	{
+		Category::create([
 			'name' => 'Man',
-            'slug' => 'man',
+			'slug' => 'man',
 			'status' => 'Active',
 		]);
-        
-        Category::create([
+
+		Category::create([
 			'name' => 'T-Shirt',
 			'parent_id' => 1,
 			'slug' => 't-shirt',
 			'status' => 'Active',
 		]);
-        
-        Category::create([
+
+		Category::create([
 			'name' => 'Polo T-Shirt',
 			'parent_id' => 2,
 			'slug' => 'polo t-shirt',
@@ -42,18 +42,12 @@ class CategorySeeder extends Seeder
 
 
 
-		$orderstatus = ['Pending', 'accepted', 'Ready for Shiping', 'Shipped', 'Out for Delivery', 'Delivered', 'Completed', 'Return Requested', 'Returned'];
+		$orderstatus = ['Pending', 'Accepted', 'Ready for Shiping', 'Shipped', 'Out for Delivery', 'Delivered', 'Canceled', 'Return Requested', 'Returned'];
 
-       foreach($orderstatus as $status){
-		OrderStatus::create([
-			'name' => $status
-		]);
-	   }
-
-
-    }
+		foreach ($orderstatus as $status) {
+			OrderStatus::create([
+				'name' => $status
+			]);
+		}
+	}
 }
-
-
-
-

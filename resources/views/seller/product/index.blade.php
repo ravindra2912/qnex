@@ -4,10 +4,16 @@
 
 <!-- Sweet Alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <link rel="stylesheet" type="text/css" href="{{ asset('admin_theme/dist/css/jquery.dataTables.css') }}" /> -->
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
 
 <style>
-	.m-hide {
-		display: table;
+	.filter input,
+	.filter select {
+		width: max-content;
+		margin-right: 5px;
 	}
 </style>
 @endsection
@@ -35,61 +41,15 @@
 							<!-- <button href="{{ route('product.create') }}" title="Import Product" class="btn btn-success btn-sm float-right mr-2" data-toggle="modal" data-target="#modal-import">Import</button> -->
 						</div>
 						<div class="card-body">
+							<div class="row filter mb-3 ">
+								<select class="form-control" name="status" id="status">
+									<option value="">All </option>
+									<option value="Active">Active </option>
+									<option value="Inactive">Inactive </option>
+								</select>
+							</div>
 
-							<form action="{{ route('product.index') }}" method="get" enctype="multipart/form-data">
-								<div class="row filter-div">
-									<div class="col-sm-1">
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label>From Date</label>
-											<input type="date" name="start_date" value="{{$request['start_date']}}" class="form-control">
-										</div>
-									</div>
-
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label>To Date</label>
-											<input type="date" name="end_date" value="{{$request['end_date']}}" class="form-control">
-										</div>
-									</div>
-
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label for="category">Status</label>
-											<select class="form-control" name="status" id="status">
-												<option value="">All </option>
-												<option value="Active" @if($request['status']=='Active' ) selected @endif>Active </option>
-												<option value="Inactive" @if($request['status']=='Inactive' ) selected @endif>Inactive </option>
-
-											</select>
-										</div>
-									</div>
-
-									<div class="col-sm-3">
-										<div class="form-group">
-											<label for="bundle_name">Search</label>
-											<input type="search" name="search" value="{{$request['search']}}" class="form-control" placeholder="Search">
-										</div>
-									</div>
-									<div class="col-sm-2">
-										<div class="form-group">
-											<label for="bundle_name" style="margin-top: 35px;">&nbsp;</label>
-											<button class="btn btn-primary" name="action" value="submit" title="Search" type="submit">Search</button>
-											<button class="btn btn-primary" name="action" value="export" title="Product Report" type="submit">Export</button>
-										</div>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-12">
-					<div class="card table-card">
-						<div class="card-body">
-							@if(isset($productLists) && !empty($productLists) && count($productLists) > 0)
-							<table id="example1" class="table table-striped w-100 m-hide">
+							<table id="example1" class="table table-striped w-100">
 								<thead>
 									<tr>
 										<th>#</th>
@@ -101,129 +61,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@if(isset($productLists) && !empty($productLists))
-									@foreach($productLists as $productList)
-									<tr>
-										<td><img src="{{ $productList->image_url }}" height="100" /></td>
-										<td>{{ (isset($productList->name) && !empty($productList->name)) ? ucfirst($productList->name) : '' }}</td>
-										<td>Rs. {{ (isset($productList->price) && !empty($productList->price)) ? ucfirst($productList->price) : '0' }}</td>
-										<td>@if (!empty($productList->categories) && count($productList->categories) > 0)
-											{{ $productList->categories->pluck('name')->map(function ($name) {
-												return ucfirst($name);
-											})->implode(', ') }}
-											@endif
-										</td>
-										<td>{{ (isset($productList->status) && !empty($productList->status)) ? ucfirst($productList->status) : '' }}</td>
-										<td>
-											<div class="d-flex justify-content-center">
-												<a href="{{ route('product.edit',$productList->id) }}" class="btn btn-primary tableActionBtn editBtn" title="Edit Product"><i class="right fas fa-edit"></i></a>
-												<a href="{{ route('product.product_review',$productList->id) }}" class="btn btn-primary tableActionBtn ml-1" title="Product Reviews"><i class="right fas fa-star"></i></a>
-												@if($productList->is_variants == 1)
-												<a href="{{ route('products_variants',$productList->id) }}" class="btn btn-warning tableActionBtn editBtn ml-1" title="Product variants"><i class="right fas fa-sitemap"></i></a>
-												@endif
-												<form action="{{ route('product.destroy', $productList->id) }}" id="deleteForm" method="POST">
-													@csrf
-													@method('DELETE')
-													<a class="btn btn-danger tableActionBtn deleteBtn" title="Delete Product"><i class="right fas fa-trash"></i></a>
-												</form>
-											</div>
-										</td>
-									</tr>
-									@endforeach
-									@endif
+
 								</tbody>
 							</table>
-
-							<style>
-								.pimg {
-									height: 140px;
-									width: 120px;
-									object-fit: contain;
-								}
-
-								.p-name {
-									font-size: 15px;
-									color: #000;
-									text-transform: none;
-									width: auto;
-									display: -webkit-box;
-									-webkit-line-clamp: 2;
-									-webkit-box-orient: vertical;
-									overflow: hidden;
-									text-overflow: ellipsis;
-									height: 40px;
-								}
-
-								.dropdown-toggle::after {
-									display: none;
-									margin-left: .255em;
-									vertical-align: .255em;
-									content: "";
-									border-top: .3em solid;
-									border-right: .3em solid transparent;
-									border-bottom: 0;
-									border-left: .3em solid transparent;
-								}
-
-								.dropdown-menu.show {
-									transform: translate3d(-120px, 31px, 0px) !important;
-								}
-
-								.p-list .card {
-									padding: 1.0rem !important;
-								}
-							</style>
-							<div class="m-show p-list">
-								<div class="row px-2 py-2">
-									@if(isset($productLists) && !empty($productLists))
-									@foreach($productLists as $productList)
-									<div class="col-6 ">
-										<div class="card">
-											<div class="card-header py-1">
-												<p class="mb-0 float-left">{{ (isset($productList->status) && !empty($productList->status)) ? ucfirst($productList->status) : '' }}</p>
-												<div class="btn-group float-right">
-													<button type="button" class="btn  btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-														<i class="fas fa-ellipsis-v"></i></button>
-													<div class="dropdown-menu float-right" role="menu" style="">
-														<a href="{{ route('product.edit',$productList->id) }}" class="dropdown-item">Edit</a>
-														<a href="{{ route('product.product_review',$productList->id) }}" class="dropdown-item">Reviews</a>
-														@if($productList->is_variants == 1)
-														<a href="{{ route('products_variants',$productList->id) }}" class="dropdown-item">variants</a>
-														@endif
-														<div class="dropdown-divider"></div>
-														<form action="{{ route('product.destroy', $productList->id) }}" id="deleteForm" method="POST">
-															@csrf
-															@method('DELETE')
-															<div class="dropdown-item text-danger deleteBtn">Delete</div>
-														</form>
-
-													</div>
-												</div>
-											</div>
-											<div class="card-body">
-												<img class="pimg" src="{{ (isset($productList->images_data[0]->small_image) )? getImage($productList->images_data[0]->small_image) : getImage('') }}" />
-												<p class="p-name mb-1 ">{{ (isset($productList->name) && !empty($productList->name)) ? ucfirst($productList->name) : '' }}</p>
-												<p class="mb-0 font-weight-bold">₹{{ (isset($productList->price) && !empty($productList->price)) ? ucfirst($productList->price) : '' }}</p>
-											</div>
-										</div>
-									</div>
-									@endforeach
-									@endif
-								</div>
-							</div>
-
-							<div class="d-flax align-self-end">
-								{{ $productLists->appends(request()->except('page'))->links() }}
-							</div>
-
-							@else
-							<div class="my-3">
-								<h4 class="font-weight-bold text-center">No Data Found!</h4>
-							</div>
-							@endif
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -258,8 +99,79 @@
 
 @section('custom_js')
 <!-- DataTables -->
+<!-- <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script> -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
 
 <script type="text/javascript">
+	$(function() {
+		var table = $('#example1').DataTable({
+			processing: true,
+			serverSide: true,
+			responsive: true,
+			// ajax: "",
+			ajax: {
+				url: "{{ route('product.index') }}",
+				data: function(d) {
+					d.status = $('#status').val();
+				}
+			},
+			columns: [{
+					data: 'img',
+					name: 'img',
+					searchable: false,
+				}, {
+					data: 'name',
+					name: 'name',
+				}, {
+					data: 'price',
+					name: 'price',
+					render: function(data, type, row) {
+						return 'Rs. ' + parseFloat(data).toFixed(2);
+					}
+				},
+				{
+					data: 'category',
+					name: 'categories.name',
+					orderable: false,
+				}, {
+					data: 'status',
+					name: 'status',
+					searchable: false,
+					orderable: false,
+				},
+				{
+					data: 'action',
+					name: 'action',
+					orderable: false,
+					searchable: false
+				},
+			],
+			initComplete: function() {
+				// Move the status filter beside the search box
+				$("#status")
+					.appendTo("#example1_length")
+					.show()
+					.css({
+						display: "inline-block",
+						width: "auto",
+						marginLeft: '5px'
+					});
+			},
+			drawCallback: function() {
+				// Scroll to the first row
+				$('html, body').animate({
+					scrollTop: $('#example1').offset().top - 100 // optional offset
+				}, 300);
+			}
+		});
+
+		$('#status').on('change', function() {
+			table.ajax.reload()
+		})
+	})
+
+
 	// Display sweet alert while deleting
 	$(".deleteBtn").click(function() {
 		Swal.fire({

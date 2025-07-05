@@ -26,6 +26,7 @@ use App\Models\ProductInventoryLog;
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
 use Maatwebsite\Excel\Facades\Excel;
+use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
@@ -37,6 +38,45 @@ class ProductController extends Controller
 
 	public function index(Request $request)
 	{
+		if ($request->ajax()) {
+			$data = Product::with(['categories', 'images_data']);
+			if (Auth::user()->role_id != 1) {
+				$data = $data->where('user_id', Auth::user()->id);
+			}
+
+			if ($request['status'] != null) {
+				$data = $data->where('status', $request['status']);
+			}
+
+			return Datatables::of($data)
+				->addIndexColumn()
+				->addColumn('img', function ($row) {
+					return '<img src="' . $row->image_url . '" height="100" />';
+				})
+				->addColumn('category', function ($row) {
+					if (!empty($row->categories) && count($row->categories) > 0) {
+						return $row->categories->pluck('name')->map(function ($name) {
+							return ucfirst($name);
+						})->implode(', ');
+					}
+				})
+
+				->addColumn('action', function ($row) {
+					$html = ' 	<div class="d-flex justify-content-center">
+									<a href="' . route('product.edit', $row->id) . '" class="btn btn-primary tableActionBtn editBtn" title="Edit Product"><i class="right fas fa-edit"></i></a>
+									<a href="' . route('product.product_review', $row->id) . '" class="btn btn-primary tableActionBtn ml-1" title="Product Reviews"><i class="right fas fa-star"></i></a>';
+					if ($row->is_variants == 1) {
+						$html .= '<a href="' . route('products_variants', $row->id) . '" class="btn btn-warning tableActionBtn editBtn ml-1" title="Product variants"><i class="right fas fa-sitemap"></i></a>';
+					}
+					$html .= '		<form action="' . route('product.destroy', $row->id) . '" id="deleteForm" method="POST">
+										<a class="btn btn-danger tableActionBtn deleteBtn" title="Delete Product"><i class="right fas fa-trash"></i></a>
+									</form>
+								</div>';
+					return $html;
+				})
+				->rawColumns(['action', 'img', 'category'])
+				->make(true);
+		}
 
 		if (isset($request->action) && $request->action == 'export') {
 			$user_id = null;
@@ -49,30 +89,12 @@ class ProductController extends Controller
 			return Excel::download(new ProductExport($user_id, $start_date, $end_date, $status,  $search), 'Products.xlsx');
 		}
 
-		$productLists = Product::with(['categories', 'images_data']);
-		if (Auth::user()->role_id != 1) {
-			$productLists = $productLists->where('user_id', Auth::user()->id);
-		}
+		
 
-		$productLists = $productLists->orderBy('created_at', 'desc');
 
-		//filters 
-		if ($request['search'] != null) {
-			$productLists = $productLists->where('id', 'LIKE', '%' . $request['search'] . '%')->orwhere('name', 'LIKE', '%' . $request['search'] . '%');
-		}
-		if ($request['start_date'] != null) {
-			$productLists = $productLists->where('created_at', '>=', $request['start_date']);
-		}
-		if ($request['end_date'] != null) {
-			$productLists = $productLists->where('created_at', '<=', date('Y-m-d', strtotime('+1 day', strtotime($request['end_date']))));
-		}
-		if ($request['status'] != null) {
-			$productLists = $productLists->where('status', $request['status']);
-		}
 
-		$productLists = $productLists->paginate(10);
 
-		return view('seller.product.index', compact('productLists', 'request'));
+		return view('seller.product.index');
 	}
 
 	public function create()
@@ -379,15 +401,15 @@ class ProductController extends Controller
 
 	public function destroy($id)
 	{
-		$product = Product::where('id', $id)
-			->where('user_id', Auth::user()->id)
-			->first();
+		$product = Product::where('id', $id);
+		if (Auth::user()->role_id != 1) {
+			$product = $product->where('user_id', Auth::user()->id);
+		}
+		$product = $product->first();
 
 		if (isset($product) && !empty($product) && isset($product->id)) {
 			try {
-				$product->deleted_at = date('Y-m-d H:i:s');
-				$product->status = 'Inactive';
-				$product->save();
+				$product->remove();
 				return redirect()->back()->with('success', 'Product has been deleted successfully');
 			} catch (\Exception $e) {
 				return redirect()->back()->with('danger', 'Some error occurred. Please try again after sometime');
