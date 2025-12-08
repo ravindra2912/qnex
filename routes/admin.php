@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\LocationMasterController;
 use App\Http\Controllers\Admin\BusinessCategoryController;
 use App\Http\Controllers\Admin\RouteTripController;
 use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\VihicleController;
 use App\Http\Controllers\front\TripController;
 
@@ -58,5 +59,9 @@ Route::name('admin.')->group(function () {
         Route::controller(AuthController::class)->group(function () {
             Route::get('logout', 'destroy')->name('logout');
         });
+
+        Route::resource('staff', StaffController::class);
+        Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
+        Route::resource('clients', \App\Http\Controllers\Admin\ClientController::class);
     });
 });

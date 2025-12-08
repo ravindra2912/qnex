@@ -153,27 +153,28 @@
               'X-CSRF-TOKEN': "{{ csrf_token() }}"
             },
             beforeSend: function() {
-              $('.btn_delete-'+id+' #buttonText').addClass('d-none');
-              $('.btn_delete-'+id+' #loader').removeClass('d-none');
-              $('.btn_delete-'+id).prop('disabled', true);
+              $('.btn_delete-' + id + ' #buttonText').addClass('d-none');
+              $('.btn_delete-' + id + ' #loader').removeClass('d-none');
+              $('.btn_delete-' + id).prop('disabled', true);
             },
             success: function(result) {
               if (result.success) {
                 toastr.success(result.message);
-                location.reload()
+                // location.reload()
+                $('#data-table').DataTable().ajax.reload(null, false);
               } else {
                 toastr.error(result.message);
               }
-              $('.btn_action-'+id+' #buttonText').removeClass('d-none');
-              $('.btn_action-'+id+' #loader').addClass('d-none');
-              $('.btn_action-'+id).prop('disabled', false);
+              $('.btn_action-' + id + ' #buttonText').removeClass('d-none');
+              $('.btn_action-' + id + ' #loader').addClass('d-none');
+              $('.btn_action-' + id).prop('disabled', false);
             },
             error: function(e) {
               toastr.error('Somthing Wrong');
               console.log(e);
-              $('.btn_action-'+id+' #buttonText').removeClass('d-none');
-              $('.btn_action-'+id+' #loader').addClass('d-none');
-              $('.btn_action-'+id).prop('disabled', false);
+              $('.btn_action-' + id + ' #buttonText').removeClass('d-none');
+              $('.btn_action-' + id + ' #loader').addClass('d-none');
+              $('.btn_action-' + id).prop('disabled', false);
             }
           });
         }

@@ -28,6 +28,30 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route('admin.staff.index') }}"
+            class="nav-link {{ request()->routeIs('admin.staff*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user-tie"></i>
+            <p> Staff </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.testimonials.index') }}"
+            class="nav-link {{ request()->routeIs('admin.testimonials*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-comments"></i>
+            <p> Testimonials </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.clients.index') }}"
+            class="nav-link {{ request()->routeIs('admin.clients*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-handshake"></i>
+            <p> Clients </p>
+          </a>
+        </li>
+
 
 
 

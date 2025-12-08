@@ -18,7 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call(LegalPageSeeder::class);
         $this->call(FaqSeeder::class);
         $this->call(ReviewSeeder::class);
-        
+        $this->call(BlogSeeder::class);
+        $this->call(StaffSeeder::class);
+        $this->call(TestimonialSeeder::class);
+        $this->call(ClientSeeder::class);
+
         // User::factory(10)->create();
 
         // User::factory()->create([

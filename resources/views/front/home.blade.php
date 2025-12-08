@@ -7,6 +7,29 @@
 'position' => ''
 ]
 ])
+@push('style')
+<style>
+    /* Mimic ajax.js error styling if not already global */
+    .text-danger.errors {
+        display: block;
+        /* Ensure it is visible */
+        width: 100%;
+        margin-top: .25rem;
+        font-size: 80%;
+        color: #dc3545;
+    }
+
+    .form-control.is-invalid {
+        border-color: #dc3545 !important;
+        padding-right: calc(1.5em + .75rem);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5zM6 8.2a.3.3 0 000 .6.3.3 0 000-.6z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
+</style>
+@endpush
+
 @section('content')
 <!-- @section('title', 'About Us') -->
 
@@ -17,7 +40,7 @@
 <!--Slider Start-->
 <section class="p-0 no-transition cursor-light" id="home">
     <h2 class="d-none">hidden</h2>
-    <div class="rev_slider_wrapper fullscreen-container" data-alias="megaone-agency-1" data-source="gallery"
+    <div class="rev_slider_wrapper fullscreen-container" data-alias="agency-1" data-source="gallery"
         id="rev_slider_17_1_wrapper" style="background:transparent;padding:0px;">
         <!-- START REVOLUTION SLIDER 5.4.8.1 fullscreen mode -->
         <div class="rev_slider fullscreenbanner" data-version="5.4.8.1" id="rev_slider_17_1" style="display:none;">
@@ -363,7 +386,7 @@
         <div class="row">
             <div class="col-lg-6 wow fadeInLeft">
                 <div class="heading-area">
-                    <span class="sub-title">We are megaone company</span>
+                    <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title">We are making <span class="alt-color js-rotating">design, ideas</span> better for
                         everyone</h2>
                     <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
@@ -431,7 +454,7 @@
         <div class="row">
             <div class="col-lg-6 pl-lg-4 order-lg-2 wow fadeInRight">
                 <div class="heading-area">
-                    <span class="sub-title text-white">We are megaone company</span>
+                    <span class="sub-title text-white">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title text-white">We have done some great <span class="js-rotating">stuff, idea</span>.
                     </h2>
                     <p class="para text-white">There are many variations of passages of Lorem Ipsum available, but the
@@ -472,7 +495,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="heading-area mx-570 mb-5">
-                    <span class="sub-title">We are megaone company</span>
+                    <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title">We have some <span class="alt-color js-rotating">great, ideal</span> talented
                         staff</h2>
                     <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
@@ -482,66 +505,33 @@
         </div>
         <!--Row-->
         <div class="row wow fadeInUp">
+            @foreach($staffs as $staff)
             <div class="col-md-4">
                 <div class="team-item">
                     <!--Team Image-->
-                    <img alt="image" class="team-image" src="{{ asset('assets/front/agency/img/team-img1.png') }}">
+                    <img alt="{{ $staff->name }}" class="team-image" src="{{ getImage($staff->image) }}">
                     <!--Name-->
                     <div class="name">
-                        <img alt="shape" src="{{ asset('assets/front/agency/img/shape-10.png') }}">
-                        <h6>David Joe</h6>
+                        <img alt="shape" src="{{ asset('assets/front/agency/img/shape-'.rand(9,11).'.png') }}">
+                        <h6>{{ $staff->name }}</h6>
                     </div>
                     <!--Designation-->
-                    <p class="designation mb-2">Director</p>
+                    <p class="designation mb-2">{{ $staff->position }}</p>
                     <!--Team Social-->
                     <div class="team-social social-icon-bg-hvr">
-                        <a href="#"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-x-twitter"></i></a>
+                        @if($staff->facebook_url)
+                        <a href="{{ $staff->facebook_url }}" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
+                        @endif
+                        @if($staff->linkedin_url)
+                        <a href="{{ $staff->linkedin_url }}" target="_blank"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
+                        @endif
+                        @if($staff->x_url)
+                        <a href="{{ $staff->x_url }}" target="_blank"><i aria-hidden="true" class="fab fa-x-twitter"></i></a>
+                        @endif
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="team-item">
-                    <!--Team Image-->
-                    <img alt="image" class="team-image" src="{{ asset('assets/front/agency/img/team-img2.png') }}">
-                    <!--Name-->
-                    <div class="name">
-                        <img alt="shape" src="{{ asset('assets/front/agency/img/shape-9.png') }}">
-                        <h6>Natalie Roy</h6>
-                    </div>
-                    <!--Designation-->
-                    <p class="designation mb-2">Director</p>
-
-                    <!--Team Social-->
-                    <div class="team-social social-icon-bg-hvr">
-                        <a href="#"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-x-twitter"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="team-item">
-                    <!--Team Image-->
-                    <img alt="image" class="team-image" src="{{ asset('assets/front/agency/img/team-img3.png') }}">
-                    <!--Name-->
-                    <!--Name-->
-                    <div class="name">
-                        <img alt="shape" src="{{ asset('assets/front/agency/img/shape-11.png') }}">
-                        <h6>Jhon Wok</h6>
-                    </div>
-                    <!--Designation-->
-                    <p class="designation mb-2">Director</p>
-
-                    <!--Team Social-->
-                    <div class="team-social social-icon-bg-hvr">
-                        <a href="#"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i aria-hidden="true" class="fab fa-x-twitter"></i></a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
@@ -553,7 +543,7 @@
         <div class="row">
             <div class="col-lg-6 wow fadeInLeft">
                 <div class="heading-area">
-                    <span class="sub-title">We are megaone company</span>
+                    <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title"><span class="main-color js-rotating">Robust Design, Creative Idea</span> and
                         Development Solutions</h2>
                     <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
@@ -589,7 +579,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="heading-area mx-570 mb-lg-4 mb-3">
-                    <span class="sub-title">We are megaone company</span>
+                    <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title">We have <span class="alt-color js-rotating">designed, developed</span> some great
                         projects</h2>
                     <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
@@ -765,126 +755,22 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="owl-carousel wow zoomIn" id="testimonial-slider">
+                    @foreach($testimonials as $testimonial)
                     <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
+                        <p class="para">{{ $testimonial->review }}</p>
+                        <h5 class="name gradient-text1">{{ $testimonial->name }}</h5>
+                        <span class="designation">{{ $testimonial->designation }}</span>
                         <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
+                            @for($i = 1; $i <= 5; $i++)
+                                @if($i <=$testimonial->rating)
+                                <li><i aria-hidden="true" class="fas fa-star"></i></li>
+                                @else
+                                <li><i aria-hidden="true" class="far fa-star"></i></li>
+                                @endif
+                                @endfor
                         </ul>
                     </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
-                    <div class="item">
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt
-                            egestas nunc, at pellentesque arcu sollicitudin et. Aliquam hendrerit diam quis ipsum
-                            ultricies, quis ultricies arcu suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Fusce ut diam quis nulla faucibus venenatis. </p>
-                        <h5 class="name gradient-text1">David Villas</h5>
-                        <span class="designation">Designer, Company Name</span>
-                        <ul class="ratings list-unstyled">
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                            <li><i aria-hidden="true" class="fas fa-star"></i></li>
-                        </ul>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -892,23 +778,24 @@
         <!--Testimonial Thumbs-->
         <div class="owl-dots" id="testimonials-avatar">
             <!--data-position[top,right,bottom,left]-->
-            <button class="owl-dot active" data-position="22%,auto,auto,5%">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-1.png') }}"></button>
-            <button class="owl-dot active" data-position="30%,auto,auto,16%">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-2.png') }}"></button>
-            <button class="owl-dot active" data-position="auto,auto,38%,7%">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-3.png') }}"></button>
-            <button class="owl-dot active" data-position="auto,auto,23%,18%">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-7.png') }}"></button>
-            <!--data-position[top,right,bottom,left]-->
-            <button class="owl-dot active" data-position="20%,19%,auto,auto">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-5.png') }}"></button>
-            <button class="owl-dot active" data-position="28%,6%,auto,auto">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-6.png') }}"></button>
-            <button class="owl-dot active" data-position="40%,15%,auto,auto">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-4.png') }}"></button>
-            <button class="owl-dot active" data-position="auto,21%,22%,auto">
-                <img alt="image" src="{{ asset('assets/front/agency/img/avatar-2.png') }}"></button>
+            @php
+            $positions = [
+            '22%,auto,auto,5%',
+            '30%,auto,auto,16%',
+            'auto,auto,38%,7%',
+            'auto,auto,23%,18%',
+            '20%,19%,auto,auto',
+            '28%,6%,auto,auto',
+            '40%,15%,auto,auto',
+            'auto,21%,22%,auto'
+            ];
+            @endphp
+            @foreach($testimonials as $key => $testimonial)
+            @if(isset($positions[$key]))
+            <button class="owl-dot active" data-position="{{ $positions[$key] }}">
+                <img alt="{{ $testimonial->name }}" src="{{ getImage($testimonial->image) }}"></button>
+            @endif
+            @endforeach
         </div>
     </div>
 </section>
@@ -921,7 +808,7 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <div class="heading-area mx-570 pb-lg-5 mb-5">
-                    <span class="sub-title">We are megaone company</span>
+                    <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
                     <h2 class="title mb-0">Our <span class="alt-color js-rotating">latest blogs,recent news</span> will
                         keep
                         everyone updated</h2>
@@ -931,56 +818,25 @@
         <!--Row-->
         <div class="row wow fadeInUp">
             <!--News Item-->
+            @foreach ($latestBlogs as $blog)
             <div class="col-lg-4">
                 <div class="news-item">
-                    <img alt="image" class="news-img" src="{{ asset('assets/front/agency/img/blog-news-1.jpg') }}">
+                    <img alt="image" class="news-img" src="{{ getImage($blog->image) }}" alt="{{ $blog->title }}">
                     <div class="news-text-box">
-                        <span class="date main-color">October 29, 2023</span>
-                        <a href="agency/blog-list.html">
-                            <h4 class="news-title">Web design is fun</h4>
+                        <span class="date main-color">{{ $blog->published_at->format('M d, Y') }}</span>
+                        <a href="{{ route('blog.show', $blog->slug) }}">
+                            <h4 class="news-title">{{ $blog->title }}</h4>
                         </a>
-                        <p class="para">Lorem ipsum dolor sit amet consectetur adipiscing elit ipsum dolor sit am...</p>
-                        <a class="author d-flex align-items-center" href="javascript:void(0);">
+                        <p class="para">{{ Str::limit($blog->short_description, 100) }}</p>
+                        <!-- <a class="author d-flex align-items-center" href="javascript:void(0);">
                             <img alt="image" class="author-img bg-blue" src="{{ asset('assets/front/agency/img/avatar-1.png') }}">
                             <h5 class="author-name">Hena Sword</h5>
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
-            <!--News Item-->
-            <div class="col-lg-4">
-                <div class="news-item">
-                    <img alt="image" class="news-img" src="{{ asset('assets/front/agency/img/blog-news-2.jpg') }}">
-                    <div class="news-text-box">
-                        <span class="date main-color">October 29, 2023</span>
-                        <a href="agency/blog-list.html">
-                            <h4 class="news-title">Future of websites</h4>
-                        </a>
-                        <p class="para">Lorem ipsum dolor sit amet consectetur adipiscing elit ipsum dolor sit am...</p>
-                        <a class="author d-flex align-items-center" href="javascript:void(0);">
-                            <img alt="image" class="author-img bg-purple" src="{{ asset('assets/front/agency/img/avatar-2.png') }}">
-                            <h5 class="author-name">David Villas</h5>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <!--News Item-->
-            <div class="col-lg-4">
-                <div class="news-item">
-                    <img alt="image" class="news-img" src="{{ asset('assets/front/agency/img/blog-news-3.jpg') }}">
-                    <div class="news-text-box">
-                        <span class="date main-color">October 29, 2023</span>
-                        <a href="javascript:void(0);">
-                            <h4 class="news-title">Digital marketing</h4>
-                        </a>
-                        <p class="para">Lorem ipsum dolor sit amet consectetur adipiscing elit ipsum dolor sit am...</p>
-                        <a class="author d-flex align-items-center" href="javascript:void(0);">
-                            <img alt="image" class="author-img bg-pink" src="{{ asset('assets/front/agency/img/avatar-5.png') }}">
-                            <h5 class="author-name">Jhon Walker</h5>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
+
         </div>
     </div>
 </section>
@@ -994,14 +850,10 @@
             <div class="col-md-12">
                 <!--Client Slider-->
                 <div class="owl-carousel partners-slider">
+                    @foreach($clients as $client)
                     <!--Item-->
-                    <div class="logo-item"><img alt="client-logo" src="{{ asset('assets/front/agency/img/client-1.png') }}"></div>
-                    <!--Item-->
-                    <div class="logo-item"><img alt="client-logo" src="{{ asset('assets/front/agency/img/client-2.png') }}"></div>
-                    <!--Item-->
-                    <div class="logo-item"><img alt="client-logo" src="{{ asset('assets/front/agency/img/client-3.png') }}"></div>
-                    <!--Item-->
-                    <div class="logo-item"><img alt="client-logo" src="{{ asset('assets/front/agency/img/client-4.png') }}"></div>
+                    <div class="logo-item"><img alt="{{ $client->name }}" src="{{ getImage($client->image) }}"></div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -1013,7 +865,7 @@
 <div class="p-0 gradient-bg2 map-area">
     <div class="container">
         <!--Map Initialize-->
-        <div class="full-map" id="map"></div>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.512046631849!2d72.8641712!3d21.211534500000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04f0d77f6ffff%3A0x6a0ca367a5d1d697!2sQnex!5e0!3m2!1sen!2sin!4v1765187653444!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </div>
 <!--Map End-->
@@ -1040,19 +892,23 @@
                         <li>
                             <span class="address-icon gradient-text2"><i aria-hidden="true"
                                     class="fas fa-map-marker-alt"></i></span>
-                            <span class="address-text">123 Park Avenue, New York,United States</span>
+                            <span class="address-text">{{ config('const.contactUs.address') }}</span>
                         </li>
                         <li>
                             <span class="address-icon gradient-text2"><i aria-hidden="true"
                                     class="fas fa-phone-volume"></i></span>
-                            <span class="address-text"><a class="mr-3" href="javascript:void(0)">+1 631 1234 5678</a><a
-                                    href="javascript:void(0)">+1 631 1234 5678</a></span>
+                            <span class="address-text">
+                                @foreach (config('const.contactUs.contact') as $contact)
+                                <a class="mr-3" href="tel:+91{{ $contact }}">+91 {{ $contact }}</a>
+                                @endforeach
+                            </span>
                         </li>
                         <li>
                             <span class="address-icon gradient-text2"><i aria-hidden="true"
                                     class="fas fa-paper-plane"></i></span>
-                            <span class="address-text"><a class="mr-3 alt-color" href="javascript:void(0)">email@website.com</a><a
-                                    class="mr-3 alt-color" href="javascript:void(0)">abc@website.com</a></span>
+                            <span class="address-text">
+                                <a class="mr-3 alt-color" href="mailto:{{ config('const.contactUs.email') }}">{{ config('const.contactUs.email') }}</a>
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -1066,21 +922,18 @@
                 <!--Contact Form-->
                 <form class="contact-form" id="contact-form-data">
                     <div class="row">
-                        <!--Result-->
-                        <div class="col-12" id="result"></div>
-
                         <!--Left Column-->
                         <div class="col-md-5">
                             <div class="form-group">
-                                <input class="form-control" id="your_name" name="userName" placeholder="Name" required=""
+                                <input class="form-control mb-0 required" id="your_name" name="userName" placeholder="Name" required=""
                                     type="text">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" id="your_email" name="userEmail" placeholder="Email" required=""
+                                <input class="form-control mb-0 required" id="your_email" name="userEmail" placeholder="Email" required=""
                                     type="email">
                             </div>
                             <div class="form-group">
-                                <input class="form-control" id="subject" name="userSubject" placeholder="Subject" required=""
+                                <input class="form-control mb-0 required" id="subject" name="userSubject" placeholder="Subject" required=""
                                     type="text">
                             </div>
                         </div>
@@ -1088,7 +941,7 @@
                         <!--Right Column-->
                         <div class="col-md-7">
                             <div class="form-group">
-                                <textarea class="form-control" id="message" name="userMessage"
+                                <textarea class="form-control required" id="message" name="userMessage"
                                     placeholder="Message"></textarea>
                             </div>
                         </div>
@@ -1120,11 +973,86 @@
 <!--Contact End-->
 
 @push('js')
-
 <script>
+    $(document).ready(function() {
+        // Remove error on input change (mimicking ajax.js)
+        $("#contact-form-data input, #contact-form-data textarea").on('change keyup', function() {
+            $(this).removeClass("is-invalid");
+            $(this).siblings(".errors").remove();
+        });
 
+        $('#submit_btn').on('click', function(e) {
+            e.preventDefault();
+
+            // Remove existing errors
+            $(".form-control").removeClass("is-invalid");
+            $(".errors").remove();
+
+            var form = $('#contact-form-data');
+            var nameInput = $('#your_name');
+            var emailInput = $('#your_email');
+            var subjectInput = $('#subject');
+            var messageInput = $('#message');
+
+            var isValid = true;
+
+            // Validate Name
+            if (!nameInput.val().trim()) {
+                isValid = false;
+                nameInput.addClass('is-invalid');
+                nameInput.after('<div class="text-danger errors">The Name field is required.</div>');
+            }
+
+            // Validate Email
+            var emailValue = emailInput.val().trim();
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailValue) {
+                isValid = false;
+                emailInput.addClass('is-invalid');
+                emailInput.after('<div class="text-danger errors">The Email field is required.</div>');
+            } else if (!emailPattern.test(emailValue)) {
+                isValid = false;
+                emailInput.addClass('is-invalid');
+                emailInput.after('<div class="text-danger errors">Please enter a valid email address.</div>');
+            }
+
+            // Validate Subject
+            if (!subjectInput.val().trim()) {
+                isValid = false;
+                subjectInput.addClass('is-invalid');
+                subjectInput.after('<div class="text-danger errors">The Subject field is required.</div>');
+            }
+
+            // Validate Message
+            if (!messageInput.val().trim()) {
+                isValid = false;
+                messageInput.addClass('is-invalid');
+                messageInput.after('<div class="text-danger errors">The Message field is required.</div>');
+            }
+
+            if (isValid) {
+                // WhatsApp Number from Config
+                var phoneNumber = "91{{ config('const.contactUs.whatsapp') }}";
+
+                // Add Title to Message
+                var title = "*New Inquiry from Website*";
+
+                var text = title + "%0a%0a" +
+                    "*Name:* " + nameInput.val().trim() + "%0a" +
+                    "*Email:* " + emailValue + "%0a" +
+                    "*Subject:* " + subjectInput.val().trim() + "%0a" +
+                    "*Message:* " + messageInput.val().trim();
+
+                var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + text;
+
+                window.open(whatsappUrl, '_blank');
+
+                // Optional: Clear form after sending
+                form[0].reset();
+            }
+        });
+    });
 </script>
-
 @endpush
 
 @endsection

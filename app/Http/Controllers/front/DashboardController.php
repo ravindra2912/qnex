@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers\front;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use App\Models\City;
 use App\Models\ContactUs;
 use App\Models\DailyInquiry;
-use App\Models\Faq;
-use App\Models\Review;
 use App\Models\Route;
 use Carbon\Carbon;
-use Illuminate\Http\RedirectResponse;
 use App\Models\Blog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\View\View;
+
+use App\Models\Staff;
+use App\Models\Testimonial;
+use App\Models\Client;
 
 class DashboardController
 {
@@ -26,7 +22,10 @@ class DashboardController
     public function index()
     {
         $latestBlogs = Blog::where('status', 'active')->latest('published_at')->take(3)->get();
-        return view('front.home', compact('latestBlogs'));
+        $staffs = Staff::where('status', 'active')->get();
+        $testimonials = Testimonial::where('status', 'active')->get();
+        $clients = Client::where('status', 'active')->get();
+        return view('front.home', compact('latestBlogs', 'staffs', 'testimonials', 'clients'));
     }
 
     public function getRoutes(Request $request)

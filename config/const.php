@@ -4,27 +4,28 @@
 return [
 
     "site_setting" => [
-        "name" => "Quietly",
-        "logo" => env('APP_URL') . '/assets/images/footer-logo.webp',
+        "name" => "Qnex",
+        "logo" => env('APP_URL') . '/assets/images/logo.png',
         "footer_logo" => env('APP_URL') . '/assets/images/footer-logo.webp',
-        "fevicon" => env('APP_URL') . '/assets/images/fevicon-icon.webp',
+        "fevicon" => env('APP_URL') . '/assets/images/fevicon-icon.png',
     ],
 
     "admin_notify_emails" => ['goswamirvi@gmail.com', 'bhargav@gmail.com'],
 
     "contactUs" => [
-        "address" => "12/4, SWAMI PRMANAND SOCIETY, Bungalow Area Road, Kuber Nagar, Bhavnagar, Gujarat, 382340",
-        "contact" => 8320857096,
-        "email" => 'quietly@gmail.com',
+        "address" => "Office No 3-4 (1st Floor) Madhav Park, Opp. Tirupati Balaji Complex, Near Maruti Chowk, L. H. Road, Hirabaugh, Surat, Gujarat 395006",
+        "contact" => ['8128121857', '9099101246'],
+        "whatsapp" => 8128121857,
+        "email" => 'Salesqnex@gmail.com',
     ],
 
     "socialMedia" => [
-        "facebook" => "https://www.facebook.com",
-        "instagram" => "https://www.instagram.com",
-        "linkedin" => "https://www.linkedin.com",
-        "pinterest" => "https://www.pinterest.com",
-        "youtube" => "https://www.youtube.com",
-        "geolocation" => "https://maps.app.goo.gl/jhRP3FB36GXA1Jno8",
+        "facebook" => "https://www.facebook.com/Qnex.in",
+        "instagram" => "https://www.instagram.com/qnex.in",
+        "linkedin" => "https://www.linkedin.com/company/qnexofficial",
+        "threads" => "https://www.threads.com/@qnex.in",
+        "google_business" => "https://share.google/AyO7Rx10sxbUdP7Z5",
+        "youtube" => "https://www.youtube.com/@Qnexofficial",
     ],
 
     "common_status" => ["active", "in-active"],

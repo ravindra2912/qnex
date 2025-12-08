@@ -86,6 +86,16 @@
 
 
 
+
+	<style>
+		/* Hide fullnav-toggler on desktop */
+		@media screen and (min-width: 992px) {
+			.fullnav-toggler {
+				display: none !important;
+			}
+		}
+	</style>
+
 	@stack('style')
 </head>
 
@@ -108,24 +118,24 @@
 		<!--Navigation-->
 		<nav class="navbar navbar-top-default navbar-expand-lg navbar-gradient nav-icon alt-font">
 			<div class="container">
-				<a class="logo link scroll" href="javascript:void(0)" title="Logo">
+				<a class="logo link" href="{{ route('home') }}" title="Logo">
 					<!--Logo Default-->
-					<img alt="logo" class="logo-dark default" src="{{ asset('assets/front/agency/img/logo-white.png') }}">
+					<img alt="logo" class="logo-dark default" src="{{ config('const.site_setting.logo') }}">
 				</a>
 
 
 				<!--Nav Links-->
 				<div class="collapse navbar-collapse" id="agency">
 					<div class="navbar-nav ml-auto">
-						<a class="nav-link link scroll active" href="#home">Home</a>
-						<a class="nav-link link scroll" href="#about-us">About Us</a>
-						<a class="nav-link link scroll" href="#portfolio">Our Work</a>
-						<a class="nav-link link scroll" href="#clients">Clients</a>
-						<a class="nav-link link scroll" href="#blog">Our Blog</a>
-						<a class="nav-link link scroll" href="#contact">Contact Us</a>
+						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll active' : '' }}" href="{{ route('home') }}#home">Home</a>
+						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#about-us">About Us</a>
+						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#portfolio">Our Work</a>
+						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#clients">Clients</a>
+						<a class="nav-link link {{ request()->routeIs('blog.index') ? 'active' : '' }}" href="{{ route('blog.index') }}">Our Blog</a>
+						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#contact">Contact Us</a>
 						<span class="menu-line"><i aria-hidden="true" class="fa fa-angle-down"></i></span>
 					</div>
-					<a class="btn btn-medium btn-rounded btn-transparent-white btn-hvr-white ml-3" data-animation-duration="500" data-fancybox data-src="#animatedModal"
+					<!-- <a class="btn btn-medium btn-rounded btn-transparent-white btn-hvr-white ml-3" data-animation-duration="500" data-fancybox data-src="#animatedModal"
 						href="javascript:void(0);">Get A Quote
 						<div class="btn-hvr-setting">
 							<ul class="btn-hvr-setting-inner">
@@ -135,7 +145,7 @@
 								<li class="btn-hvr-effect"></li>
 							</ul>
 						</div>
-					</a>
+					</a> -->
 				</div>
 
 				<!--Menu Button-->
@@ -148,12 +158,18 @@
 				<!--Slider Social-->
 				<div class="slider-social">
 					<ul class="list-unstyled">
-						<li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
+						@if(config('const.socialMedia.facebook'))
+						<li class="animated-wrap"><a class="animated-element" href="{{config('const.socialMedia.facebook')}}"><i
 									aria-hidden="true" class="fab fa-facebook-f"></i></a></li>
-						<li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
+						@endif
+						@if(config('const.socialMedia.instagram'))
+						<li class="animated-wrap"><a class="animated-element" href="{{config('const.socialMedia.instagram')}}"><i
 									aria-hidden="true" class="fab fa-instagram"></i></a></li>
-						<li class="animated-wrap"><a class="animated-element" href="javascript:void(0);"><i
-									aria-hidden="true" class="fab fa-x-twitter"></i></a></li>
+						@endif
+						@if(config('const.socialMedia.linkedin'))
+						<li class="animated-wrap"><a class="animated-element" href="{{config('const.socialMedia.linkedin')}}"><i
+									aria-hidden="true" class="fab fa-linkedin-in"></i></a></li>
+						@endif
 					</ul>
 				</div>
 
@@ -162,39 +178,36 @@
 
 		<!--Full menu-->
 		<div class="nav-holder main style-2 alt-font">
-
-			<!--Menu Button-->
 			<button class="fullnav-close link" type="button">
 				<span class="line"></span>
 				<span class="line"></span>
 				<span class="line"></span>
 			</button>
-
 			<div class="container">
 				<div class="shape-left">
 					<nav class="navbar full-menu-navigation left">
 						<ul class="list-unstyled">
-							<li><a class="link scroll" href="#home">
+							<li><a class="link {{ request()->routeIs('home') ? 'scroll active' : '' }}" href="{{ route('home') }}#home">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">Home</span>
 								</a></li>
-							<li><a class="link scroll" href="#about-us">
+							<li><a class="link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#about-us">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">About</span>
 								</a></li>
-							<li><a class="link scroll" href="#portfolio">
+							<li><a class="link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#portfolio">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">Work</span>
 								</a></li>
-							<li><a class="link scroll" href="#clients">
+							<li><a class="link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#clients">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">Clients</span>
 								</a></li>
-							<li><a class="link scroll" href="#blog">
+							<li><a class="link " href="{{ route('blog.index') }}">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">Blog</span>
 								</a></li>
-							<li><a class="link scroll" href="#contact">
+							<li><a class="link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#contact">
 									<span class="anchor-circle"></span>
 									<span class="anchor-text">Contact</span>
 								</a></li>
@@ -204,12 +217,6 @@
 					<img alt="shape" src="{{ asset('assets/front/agency/img/shape-8.png') }}">
 				</div>
 				<div class="shape-right">
-					<div class="full-menu-detail hide-cursor">
-						<h6 class="title">Press Contact</h6>
-						<p><i class="fas fa-user-alt"></i>David Warrior</p>
-						<p><i class="fas fa-mobile-alt"></i>+97 53 49 24 78 36</p>
-						<p><i class="fas fa-envelope"></i>contact@megaone.com</p>
-					</div>
 					<img alt="shape" src="{{ asset('assets/front/agency/img/shape-7.png') }}">
 				</div>
 			</div>
@@ -219,7 +226,7 @@
 		<div class="animated-modal hidden quote-content" id="animatedModal">
 			<!--Heading-->
 			<div class="heading-area pb-2 mx-570">
-				<span class="sub-title">Welcome to {{ config('app.name') }}</span>
+				<span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
 				<h2 class="title mt-2">Lets start your <span class="alt-color js-rotating">project, website</span></h2>
 			</div>
 			<!--Contact Form-->
@@ -306,24 +313,30 @@
 				<div class="col-md-6">
 					<div class="footer-social">
 						<ul class="list-unstyled">
-							<li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-facebook-f"></i></a></li>
-							<li><a class="wow fadeInDown" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-x-twitter"></i></a></li>
-							<li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-google-plus-g"></i></a></li>
-							<li><a class="wow fadeInDown" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-linkedin-in"></i></a></li>
-							<li><a class="wow fadeInUp" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-instagram"></i></a></li>
-							<li><a class="wow fadeInDown" href="javascript:void(0);"><i aria-hidden="true"
-										class="fab fa-pinterest-p"></i></a></li>
+							@if(config('const.socialMedia.facebook'))
+							<li><a class="wow fadeInUp" href="{{config('const.socialMedia.facebook')}}"><i aria-hidden="true" class="fab fa-facebook-f"></i></a></li>
+							@endif
+							@if(config('const.socialMedia.instagram'))
+							<li><a class="wow fadeInUp" href="{{config('const.socialMedia.instagram')}}"><i aria-hidden="true" class="fab fa-instagram"></i></a></li>
+							@endif
+							@if(config('const.socialMedia.linkedin'))
+							<li><a class="wow fadeInDown" href="{{config('const.socialMedia.linkedin')}}"><i aria-hidden="true" class="fab fa-linkedin-in"></i></a></li>
+							@endif
+							@if(config('const.socialMedia.threads'))
+							<li><a class="wow fadeInDown" href="{{config('const.socialMedia.threads')}}"><i aria-hidden="true" class="fab fa-threads"></i></a></li>
+							@endif
+							@if(config('const.socialMedia.google_business'))
+							<li><a class="wow fadeInUp" href="{{config('const.socialMedia.google_business')}}"><i aria-hidden="true" class="fab fa-google"></i></a></li>
+							@endif
+							@if(config('const.socialMedia.youtube'))
+							<li><a class="wow fadeInDown" href="{{config('const.socialMedia.youtube')}}"><i aria-hidden="true" class="fab fa-youtube"></i></a></li>
+							@endif
 						</ul>
 					</div>
 				</div>
 				<!--Text-->
 				<div class="col-md-6 text-md-right">
-					<p class="company-about fadeIn">&copy; {{ date('Y') }} {{ config('app.name') }}. All Rights Reserved.
+					<p class="company-about fadeIn">&copy; {{ date('Y') }} {{ config('const.site_setting.name') }}. All Rights Reserved.
 					</p>
 				</div>
 			</div>
@@ -367,11 +380,8 @@
 	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.parallax.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.video.min.js') }}"></script>
-	<!-- google map -->
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRG4KqGVNvAPY4UcVDLcLNXMXk2ktNfY"></script>
-	<script src="{{ asset('assets/front/agency/js/map.js') }}"></script>
 	<!-- custom script -->
-	<script src="{{ asset('assets/front/vendor/js/contact_us.js') }}"></script>
+	<!-- <script src="{{ asset('assets/front/vendor/js/contact_us.js') }}"></script> -->
 	<script src="{{ asset('assets/front/agency/js/script.js') }}"></script>
 
 	<!--Toastr -->
