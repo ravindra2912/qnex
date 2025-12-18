@@ -79,7 +79,7 @@
 	<link href="{{ asset('assets/front/vendor/css/swiper.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/front/vendor/css/cubeportfolio.min.css') }}" rel="stylesheet">
 	<!--Toastr -->
-	<link href="{{ asset('assets/ajax/toastr.css') }}" rel="stylesheet" />
+
 	<!-- Style Sheet -->
 	<link href="{{ asset('assets/front/agency/css/style.css') }}" rel="stylesheet">
 
@@ -102,14 +102,14 @@
 <body data-offset="90" data-spy="scroll" data-target=".navbar">
 
 	<!-- Preloader -->
-	<div class="preloader">
+	<!-- <div class="preloader">
 		<div class="box"></div>
-	</div>
+	</div> -->
 
 	<!-- Ink Transition -->
-	<div class="cd-transition-layer visible opening">
+	<!-- <div class="cd-transition-layer visible opening">
 		<div class="bg-layer"></div>
-	</div>
+	</div> -->
 	<!--/Preloader -->
 
 	<!--Header Start-->
@@ -135,17 +135,7 @@
 						<a class="nav-link link {{ request()->routeIs('home') ? 'scroll' : '' }}" href="{{ route('home') }}#contact">Contact Us</a>
 						<span class="menu-line"><i aria-hidden="true" class="fa fa-angle-down"></i></span>
 					</div>
-					<!-- <a class="btn btn-medium btn-rounded btn-transparent-white btn-hvr-white ml-3" data-animation-duration="500" data-fancybox data-src="#animatedModal"
-						href="javascript:void(0);">Get A Quote
-						<div class="btn-hvr-setting">
-							<ul class="btn-hvr-setting-inner">
-								<li class="btn-hvr-effect"></li>
-								<li class="btn-hvr-effect"></li>
-								<li class="btn-hvr-effect"></li>
-								<li class="btn-hvr-effect"></li>
-							</ul>
-						</div>
-					</a> -->
+
 				</div>
 
 				<!--Menu Button-->
@@ -222,85 +212,7 @@
 			</div>
 		</div>
 
-		<!--Get Quote Model Popup-->
-		<div class="animated-modal hidden quote-content" id="animatedModal">
-			<!--Heading-->
-			<div class="heading-area pb-2 mx-570">
-				<span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
-				<h2 class="title mt-2">Lets start your <span class="alt-color js-rotating">project, website</span></h2>
-			</div>
-			<!--Contact Form-->
-			<form class="contact-form" id="modal-contact-form-data">
-				<div class="row">
-					<!--Result-->
-					<div class="col-12" id="quote_result"></div>
 
-					<!--Left Column-->
-					<div class="col-md-6">
-						<div class="form-group">
-							<input class="form-control" id="quote_name" name="quoteName" placeholder="Name" required=""
-								type="text">
-						</div>
-						<div class="form-group">
-							<input class="form-control" id="quote_contact" name="userPhone" placeholder="Contact #" required=""
-								type="text">
-						</div>
-						<div class="form-group">
-							<input class="form-control" id="quote_type" name="projectType" placeholder="Project type" required=""
-								type="text">
-						</div>
-					</div>
-
-					<!--Right Column-->
-					<div class="col-md-6">
-						<div class="form-group">
-							<input class="form-control" id="quote_email" name="userEmail" placeholder="Email" required=""
-								type="email">
-						</div>
-						<div class="form-group">
-							<input class="form-control" id="quote_address" name="userAddress" placeholder="City / Country"
-								required="" type="text">
-						</div>
-						<div class="form-group">
-							<input class="form-control" id="quote_budget" name="quoteBudget" placeholder="Budget" required=""
-								type="text">
-						</div>
-					</div>
-
-					<!--Full Column-->
-					<div class="col-md-12">
-						<div class="form-group">
-							<textarea class="form-control" id="quote_message"
-								name="userMessage" placeholder="Please explain your project in detail."></textarea>
-						</div>
-					</div>
-
-					<!--Button-->
-					<div class="col-md-12">
-
-						<div class="form-check">
-							<label class="checkbox-lable">Contact by phone ins preffered
-								<input type="checkbox">
-								<span class="checkmark"></span>
-							</label>
-						</div>
-
-						<a class="btn btn-large btn-rounded btn-blue btn-hvr-pink modal_contact_btn" href="javascript:void(0);"
-							id="quote_submit_btn"><i class="fa fa-spinner fa-spin mr-2 d-none" aria-hidden="true"></i><b>Send Message</b>
-							<div class="btn-hvr-setting">
-								<ul class="btn-hvr-setting-inner">
-									<li class="btn-hvr-effect"></li>
-									<li class="btn-hvr-effect"></li>
-									<li class="btn-hvr-effect"></li>
-									<li class="btn-hvr-effect"></li>
-								</ul>
-							</div>
-						</a>
-					</div>
-
-				</div>
-			</form>
-		</div>
 
 	</header>
 	<!--Header End-->
@@ -381,12 +293,7 @@
 	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.video.min.js') }}"></script>
 	<!-- custom script -->
-	<!-- <script src="{{ asset('assets/front/vendor/js/contact_us.js') }}"></script> -->
 	<script src="{{ asset('assets/front/agency/js/script.js') }}"></script>
-
-	<!--Toastr -->
-	<script src="{{asset('assets/ajax/toastr.min.js')}}"></script>
-	<script src="{{ asset('assets/ajax/ajax.js') }}"></script>
 
 	@stack('js')
 

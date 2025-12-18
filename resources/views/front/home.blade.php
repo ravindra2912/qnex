@@ -31,11 +31,7 @@
 @endpush
 
 @section('content')
-<!-- @section('title', 'About Us') -->
 
-<!-- @push('style')
-
-@endpush -->
 
 <!--Slider Start-->
 <section class="p-0 no-transition cursor-light" id="home">
@@ -238,7 +234,7 @@
                         id="slide-43-layer-13"
 
                         style="z-index: 13; min-width: 650px; max-width: 650px; white-space: nowrap; font-size: 70px; line-height: 80px; font-weight: 800; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
-                        Creative
+                        Qnex
                     </div>
 
                     <!-- LAYER NR. 10 -->
@@ -263,7 +259,7 @@
                         id="slide-43-layer-11"
 
                         style="z-index: 14; min-width: 650px; max-width: 650px; white-space: nowrap; font-size: 70px; line-height: 70px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
-                        Digital Agency
+                        is a Wholesaler
                     </div>
 
                     <!-- LAYER NR. 11 -->
@@ -287,8 +283,8 @@
                         id="slide-43-layer-14"
 
                         style="z-index: 15; min-width: 651px; max-width: 651px; white-space: normal; font-size: 20px; line-height: 30px; font-weight: 300; color: #ffffff; letter-spacing: 0px;font-family:Roboto;">
-                        Lorem ipsum is simply dummy text of the printing and typesetting. Lorem Ipsum has been the
-                        industry’s standard dummy. Lorem Ipsum has been the industry’s standard dummy.
+                        We supply reliable and affordable products for PCB Repairing Labs and Spare Part Shops across India.
+                        Our focus is to provide quality parts, fast availability and smooth repair solutions — making your work easier and business stronger.
                     </div>
 
                     <!-- LAYER NR. 12 -->
@@ -309,8 +305,7 @@
                         id="slide-43-layer-15"
 
                         style="z-index: 16; white-space: nowrap;">
-                        <a class="btn btn-slider btn-rounded btn-blue btn-hvr-white" href="javascript:void(0);">Learn
-                            More
+                        <a class="btn btn-slider btn-rounded btn-blue btn-hvr-white" href="javascript:void(0);">Trusted Since 2012
                             <div class="btn-hvr-setting">
                                 <ul class="btn-hvr-setting-inner">
                                     <li class="btn-hvr-effect"></li>
@@ -346,7 +341,7 @@
                         <div class="rs-looped rs-slideloop" data-easing="" data-speed="5" data-xe="15" data-xs="-10"
                             data-ye="0" data-ys="0"><img alt="" data-hh="['604px','510','510','510']"
                                 data-no-retina
-                                data-ww="['434px','350','350','350']" src="{{ asset('assets/front/agency/img/vector-art-1.png') }}"></div>
+                                data-ww="['434px','350','350','350']" src="{{ asset('assets/front/agency/img/vector-art-1.webp') }}"></div>
                     </div>
 
                     <!-- LAYER NR. 14 -->
@@ -387,12 +382,20 @@
             <div class="col-lg-6 wow fadeInLeft">
                 <div class="heading-area">
                     <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
-                    <h2 class="title">We are making <span class="alt-color js-rotating">design, ideas</span> better for
-                        everyone</h2>
-                    <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
-                        have suffered alteration in some form, by injected humour, or randomised words which don't look
-                        even slightly believable. If you are going to use a passage of Lorem Ipsum.</p>
-                    <a class="btn btn-large btn-rounded btn-pink btn-hvr-blue mt-3" href="javascript:void(0);">Learn
+                    <h2 class="title">Empowering Excellence in Every AC <span class="alt-color js-rotating">Solution, Manufacturer</span></h2>
+
+                    <p class="para">
+                    <h2>Mission</h2>
+                    To serve our customers with the best products, quick support,
+                    honest guidance, and technical expertise, ensuring timely delivery,
+                    fair prices, and care in every interaction, while continuously Innovating
+                    to meet their needs.
+
+                    <h2 class="mt-3">Vision</h2>
+                    To become a trusted name loved by our customers and
+                    partners for quality, reliability, technical expertise, and innovation,|
+                    creating long-lasting relationships built on trust and care.</p>
+                    <!-- <a class="btn btn-large btn-rounded btn-pink btn-hvr-blue mt-3" href="javascript:void(0);">Learn
                         More
                         <div class="btn-hvr-setting">
                             <ul class="btn-hvr-setting-inner">
@@ -402,12 +405,21 @@
                                 <li class="btn-hvr-effect"></li>
                             </ul>
                         </div>
-                    </a>
+                    </a> -->
                 </div>
             </div>
             <div class="col-lg-6 wow fadeInRight">
                 <div class="half-img mt-5 pt-4 mt-lg-0 pt-lg-0">
-                    <img alt="vector" src="{{ asset('assets/front/agency/img/vector-art-2.png') }}">
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                        <iframe
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/embed/7_44YAz5HXs"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </div>
@@ -418,29 +430,35 @@
 <!--Services Start-->
 <section id="services">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row justify-content-center">
+            <div class="col-lg col-md-4 col-sm-6 mb-4 mb-lg-0">
                 <div class="process-wrapp">
-                    <span class="pro-step blue"><i aria-hidden="true" class="fas fa-folder-open"></i></span>
-                    <h4 class="service-heading">World leader in consulting and finance</h4>
+                    <span class="pro-step blue"><i aria-hidden="true" class="fas fa-headset"></i></span>
+                    <h4 class="service-heading">Technical Support</h4>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg col-md-4 col-sm-6 mb-4 mb-lg-0">
                 <div class="process-wrapp">
-                    <span class="pro-step midnight"><i aria-hidden="true" class="fas fa-code"></i></span>
-                    <h4 class="service-heading">A focused team with a specialized skill</h4>
+                    <span class="pro-step midnight"><i aria-hidden="true" class="fas fa-truck-fast"></i></span>
+                    <h4 class="service-heading">Same Day Dispatch</h4>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg col-md-4 col-sm-6 mb-4 mb-lg-0">
                 <div class="process-wrapp">
-                    <span class="pro-step purple"><i aria-hidden="true" class="fas fa-cog"></i></span>
-                    <h4 class="service-heading">Trusted and professional advisors for you</h4>
+                    <span class="pro-step purple"><i aria-hidden="true" class="fas fa-flask"></i></span>
+                    <h4 class="service-heading">Lab Tested Products</h4>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg col-md-4 col-sm-6 mb-4 mb-lg-0">
                 <div class="process-wrapp">
-                    <span class="pro-step pink"><i aria-hidden="true" class="fas fa-edit"></i></span>
-                    <h4 class="service-heading">Experience to give you a better results</h4>
+                    <span class="pro-step pink"><i aria-hidden="true" class="fas fa-tags"></i></span>
+                    <h4 class="service-heading">Affordable Price</h4>
+                </div>
+            </div>
+            <div class="col-lg col-md-4 col-sm-6 mb-4 mb-lg-0">
+                <div class="process-wrapp">
+                    <span class="pro-step blue"><i aria-hidden="true" class="fas fa-shipping-fast"></i></span>
+                    <h4 class="service-heading">Fast Safe Delivery</h4>
                 </div>
             </div>
         </div>
@@ -454,33 +472,32 @@
         <div class="row">
             <div class="col-lg-6 pl-lg-4 order-lg-2 wow fadeInRight">
                 <div class="heading-area">
-                    <span class="sub-title text-white">Welcome to {{ config('const.site_setting.name') }}</span>
-                    <h2 class="title text-white">We have done some great <span class="js-rotating">stuff, idea</span>.
+                    <span class="sub-title text-white">Growing Every Day. Expanding Every City.</span>
+                    <h2 class="title text-white">Our Strong Network Across <span class="js-rotating">India, World</span>.
                     </h2>
-                    <p class="para text-white">There are many variations of passages of Lorem Ipsum available, but the
-                        majority have suffered alteration in some form, by injected.</p>
+                    <p class="para text-white">Qnex is trusted by businesses all over India. Our wide distribution network helps Technicians get quality AC electronic spare parts on time, every time.</p>
                 </div>
                 <ul class="counter-list list-unstyled">
                     <li class="counter-item">
-                        <i aria-hidden="true" class="fas fa-users text-white"></i>
-                        <h6 class="counter-number text-white"><span class="count">500</span>+</h6>
-                        <p class="sub-title text-white">Happy Clients</p>
+                        <i aria-hidden="true" class="fas fa-store text-white"></i>
+                        <h6 class="counter-number text-white"><span class="count">7153</span>+</h6>
+                        <p class="sub-title text-white">Spare Part Shops served</p>
                     </li>
                     <li class="counter-item">
-                        <i aria-hidden="true" class="fas fa-list-alt text-white"></i>
-                        <h6 class="counter-number text-white"><span class="count">1074</span>+</h6>
-                        <p class="sub-title text-white">Lines Of Code</p>
+                        <i aria-hidden="true" class="fas fa-microchip text-white"></i>
+                        <h6 class="counter-number text-white"><span class="count">927</span>+</h6>
+                        <p class="sub-title text-white">PCB Repair Shops connected</p>
                     </li>
                     <li class="counter-item">
-                        <i aria-hidden="true" class="fas fa-award text-white"></i>
-                        <h6 class="counter-number text-white"><span class="count">600</span>+</h6>
-                        <p class="sub-title text-white">Project Completed</p>
+                        <i aria-hidden="true" class="fas fa-map-marked-alt text-white"></i>
+                        <h6 class="counter-number text-white"><span class="count">384</span>+</h6>
+                        <p class="sub-title text-white">Dealers across major cities</p>
                     </li>
                 </ul>
             </div>
             <div class="col-lg-6 wow fadeInLeft">
                 <div class="half-img mt-5 pt-4 mt-lg-0 pt-lg-0">
-                    <img alt="vector" src="{{ asset('assets/front/agency/img/vector-art-3.png') }}">
+                    <img alt="vector" src="{{ asset('assets/front/agency/img/vector-art-3.webp') }}">
                 </div>
             </div>
         </div>
@@ -496,10 +513,8 @@
             <div class="col-md-12">
                 <div class="heading-area mx-570 mb-5">
                     <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
-                    <h2 class="title">We have some <span class="alt-color js-rotating">great, ideal</span> talented
-                        staff</h2>
-                    <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
-                        have suffered alteration in some form, by injected.</p>
+                    <h2 class="title">India’s Most Reliable Support <span class="alt-color js-rotating">Teams, Family</span> for AC Spare Parts</h2>
+                    <p class="para">Our experienced Team members handle Sales, Technical Support, Manufacturing, R&D, and Logistics — so you get fast service, every time.</p>
                 </div>
             </div>
         </div>
@@ -544,13 +559,9 @@
             <div class="col-lg-6 wow fadeInLeft">
                 <div class="heading-area">
                     <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
-                    <h2 class="title"><span class="main-color js-rotating">Robust Design, Creative Idea</span> and
-                        Development Solutions</h2>
-                    <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
-                        have suffered alteration in some form, by injected humour, or randomised words which don't look
-                        even slightly believable. If you are going to use a passage of Lorem Ipsum.</p>
-                    <a class="btn btn-large btn-rounded btn-blue btn-hvr-pink mt-3" href="javascript:void(0);">Learn
-                        More
+                    <h2 class="title"><span class="main-color js-rotating">Innovation, Revolution</span> That Elevates the Quality of Every AC Spare Part</h2>
+                    <p class="para">Our R&D team combines advanced testing, smart diagnostics, and modern engineering to refine PCBs, motors, sensors, and every critical AC component. We innovate with one goal in mind—delivering parts that perform better, last longer, and create real value for our customers.</p>
+                    <a class="btn btn-large btn-rounded btn-blue btn-hvr-pink mt-3" href="https://forms.gle/155b1skMaEuhCELD6">Your Input
                         <div class="btn-hvr-setting">
                             <ul class="btn-hvr-setting-inner">
                                 <li class="btn-hvr-effect"></li>
@@ -564,7 +575,7 @@
             </div>
             <div class="col-lg-6 wow fadeInRight">
                 <div class="half-img mt-5 pt-4 mt-lg-0 pt-lg-0">
-                    <img alt="image" src="{{ asset('assets/front/agency/img/vector-art-4.png') }}">
+                    <img alt="image" src="{{ asset('assets/front/agency/img/vector-art-4.webp') }}">
                 </div>
             </div>
         </div>
@@ -580,10 +591,8 @@
             <div class="col-md-12">
                 <div class="heading-area mx-570 mb-lg-4 mb-3">
                     <span class="sub-title">Welcome to {{ config('const.site_setting.name') }}</span>
-                    <h2 class="title">We have <span class="alt-color js-rotating">designed, developed</span> some great
-                        projects</h2>
-                    <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
-                        have suffered alteration in some form, by injected.</p>
+                    <h2 class="title">Qnex choose karo, business grow karo</h2>
+                    <p class="para">Low-quality spare parts cause breakdowns, customer complaints, and loss of trust for PCB repairing shop and spare part shops. Qnex solves this with lab-tested, ISO 9001:2015 certified AC electronic spare parts made from the best raw materials.</p>
                 </div>
             </div>
         </div>
@@ -828,10 +837,7 @@
                             <h4 class="news-title">{{ $blog->title }}</h4>
                         </a>
                         <p class="para">{{ Str::limit($blog->short_description, 100) }}</p>
-                        <!-- <a class="author d-flex align-items-center" href="javascript:void(0);">
-                            <img alt="image" class="author-img bg-blue" src="{{ asset('assets/front/agency/img/avatar-1.png') }}">
-                            <h5 class="author-name">Hena Sword</h5>
-                        </a> -->
+
                     </div>
                 </div>
             </div>
@@ -848,6 +854,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <h2 class="title mb-5 text-white">Trusted By Prominent Brands</h2>
                 <!--Client Slider-->
                 <div class="owl-carousel partners-slider">
                     @foreach($clients as $client)
