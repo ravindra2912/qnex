@@ -27,6 +27,87 @@
         background-position: right calc(.375em + .1875rem) center;
         background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
+
+    /* Portfolio Grid Styles */
+    .portfolio-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portfolio-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .portfolio-item img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .portfolio-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .portfolio-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(155, 89, 182, 0.9));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .portfolio-item:hover .portfolio-overlay {
+        opacity: 1;
+    }
+
+    .portfolio-content {
+        text-align: center;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    .portfolio-item:hover .portfolio-content {
+        transform: translateY(0);
+    }
+
+    .portfolio-content .plus {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 15px;
+        position: relative;
+    }
+
+    .portfolio-content .plus:before,
+    .portfolio-content .plus:after {
+        content: '';
+        position: absolute;
+        background: #fff;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .portfolio-content .plus:before {
+        width: 30px;
+        height: 3px;
+    }
+
+    .portfolio-content .plus:after {
+        width: 3px;
+        height: 30px;
+    }
 </style>
 @endpush
 
@@ -598,147 +679,130 @@
         </div>
         <!--Row-->
         <div class="row wow fadeIn">
-            <div class="col-md-12">
-
-                <!--Portfolio Filters-->
-                <div class="cbp-l-filters-button" id="js-filters-mosaic-flat">
-
-                    <div class="cbp-filter-item-active cbp-filter-item" data-filter="*">All</div>
-                    <span class="text-blue">/</span>
-                    <div class="cbp-filter-item" data-filter=".graphic">Graphic Design</div>
-                    <span class="text-blue"> / </span>
-                    <div class="cbp-filter-item" data-filter=".web-design">Web design</div>
-                    <span class="text-blue"> / </span>
-                    <div class="cbp-filter-item" data-filter=".graphic">SEO</div>
-                    <span class="text-blue"> / </span>
-                    <div class="cbp-filter-item" data-filter=".marketing">Marketing</div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/1.webp') }}">
+                        <img alt="Product 1" class="img-fluid" src="{{ asset('assets/front/agency/img/products/1.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-
-                <!--Portfolio Items-->
-                <div class="cbp cbp-l-grid-mosaic-flat" id="js-grid-mosaic-flat">
-
-                    <div class="cbp-item web-design graphic">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-1.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-1" src="{{ asset('assets/front/agency/img/work-1.jpg') }}">
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/2.webp') }}">
+                        <img alt="Product 2" class="img-fluid" src="{{ asset('assets/front/agency/img/products/2.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/3.webp') }}">
+                        <img alt="Product 3" class="img-fluid" src="{{ asset('assets/front/agency/img/products/3.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-
-                        </a>
-                    </div>
-                    <div class="cbp-item seo marketing">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-2.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-2" src="{{ asset('assets/front/agency/img/work-2.jpg') }}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/4.webp') }}">
+                        <img alt="Product 4" class="img-fluid" src="{{ asset('assets/front/agency/img/products/4.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/5.webp') }}">
+                        <img alt="Product 5" class="img-fluid" src="{{ asset('assets/front/agency/img/products/5.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item seo marketing">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-3.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-4" src="{{ asset('assets/front/agency/img/work-3.jpg') }}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/6-converted-from-png.webp') }}">
+                        <img alt="Product 6" class="img-fluid" src="{{ asset('assets/front/agency/img/products/6-converted-from-png.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/7-converted-from-jpg.webp') }}">
+                        <img alt="Product 7" class="img-fluid" src="{{ asset('assets/front/agency/img/products/7-converted-from-jpg.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item graphic seo marketing">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-4.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-3" src="{{ asset('assets/front/agency/img/work-4.jpg') }}">
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/8-converted-from-png.webp') }}">
+                        <img alt="Product 8" class="img-fluid" src="{{ asset('assets/front/agency/img/products/8-converted-from-png.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="portfolio-item">
+                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/9-converted-from-jpg.webp') }}">
+                        <img alt="Product 9" class="img-fluid" src="{{ asset('assets/front/agency/img/products/9-converted-from-jpg.webp') }}">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-content">
+                                <div class="plus"></div>
+                                <h5 class="text-white mb-1">Our Products</h5>
+                                <p class="text-white">Quality AC Spare Parts</p>
                             </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item web-design graphic">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-5.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-5" src="{{ asset('assets/front/agency/img/work-5.jpg') }}">
-                            </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item seo marketing graphic ">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-6.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-6" src="{{ asset('assets/front/agency/img/work-6.jpg') }}">
-                            </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item web-design seo">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-7.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-7" src="{{ asset('assets/front/agency/img/work-7.jpg') }}">
-                            </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="cbp-item web-design graphic">
-                        <a class="cbp-caption cbp-lightbox" href="agency/img/work-8.jpg">
-                            <div class="cbp-caption-defaultWrap">
-                                <img alt="port-8" src="{{ asset('assets/front/agency/img/work-8.jpg') }}">
-                            </div>
-                            <div class="cbp-caption-activeWrap"></div>
-                            <div class="cbp-l-caption-alignCenter center-block">
-                                <div class="cbp-l-caption-body">
-                                    <div class="plus"></div>
-                                    <h5 class="text-white mb-1">Latest Work</h5>
-                                    <p class="text-white">See Our Amazing Work</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
