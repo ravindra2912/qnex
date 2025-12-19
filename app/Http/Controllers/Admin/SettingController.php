@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Artisan;
+
 class SettingController extends Controller
 {
     /**
@@ -39,8 +42,8 @@ class SettingController extends Controller
                 'profile' => 'nullable|mimes:jpg,jpeg,png,webp|',
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'email' => 'required|email|unique:users,email,'.$id,
-                'contact' => 'required|numeric|unique:users,phone,'.$id,
+                'email' => 'required|email|unique:users,email,' . $id,
+                'contact' => 'required|numeric|unique:users,phone,' . $id,
                 'password' => 'nullable|min:6'
             ];
 
@@ -63,10 +66,10 @@ class SettingController extends Controller
                 $update->last_name = $request->last_name;
                 $update->email = $request->email;
                 $update->phone = $request->contact;
-                if(!empty($request->password)){
+                if (!empty($request->password)) {
                     $update->password = Hash::make($request->password);
                 }
-                
+
                 $update->save();
 
                 // Remove old uploaded image if exist
@@ -85,7 +88,35 @@ class SettingController extends Controller
         }
         return response()->json(['success' => $success, 'message' => $message, 'data' => $data, 'redirect' => $redirect]);
     }
-    
 
-    
+    public function editConst()
+    {
+        $path = config_path('const.php');
+        $content = File::get($path);
+        return view('admin.setting.const_edit', compact('content'));
+    }
+
+    public function updateConst(Request $request)
+    {
+        $success = false;
+        $message = 'Something Wrong!';
+        $redirect = '';
+
+        try {
+            $path = config_path('const.php');
+
+            // Save the raw content from the textarea
+            File::put($path, $request->content);
+
+            // Clear config cache
+            Artisan::call('config:clear');
+
+            $success = true;
+            $message = 'Settings updated successfully';
+        } catch (\Exception $e) {
+            $message = $e->getMessage();
+        }
+
+        return response()->json(['success' => $success, 'message' => $message, 'redirect' => $redirect]);
+    }
 }

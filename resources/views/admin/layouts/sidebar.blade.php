@@ -52,6 +52,14 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route('admin.products.index') }}"
+            class="nav-link {{ request()->routeIs('admin.products*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-box-open"></i>
+            <p> Products </p>
+          </a>
+        </li>
+
 
 
 
@@ -111,6 +119,13 @@
                 class="nav-link {{ request()->routeIs('admin.setting.profile*') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Profile</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.setting.const') }}"
+                class="nav-link {{ request()->routeIs('admin.setting.const*') ? 'active' : '' }}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Site Setting</p>
               </a>
             </li>
 

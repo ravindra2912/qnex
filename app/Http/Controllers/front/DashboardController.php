@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Staff;
 use App\Models\Testimonial;
 use App\Models\Client;
+use App\Models\Product;
 
 class DashboardController
 {
@@ -25,7 +26,8 @@ class DashboardController
         $staffs = Staff::where('status', 'active')->get();
         $testimonials = Testimonial::where('status', 'active')->get();
         $clients = Client::where('status', 'active')->get();
-        return view('front.home', compact('latestBlogs', 'staffs', 'testimonials', 'clients'));
+        $products = Product::where('status', 'active')->get();
+        return view('front.home', compact('latestBlogs', 'staffs', 'testimonials', 'clients', 'products'));
     }
 
     public function getRoutes(Request $request)

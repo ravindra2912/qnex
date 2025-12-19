@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\RouteTripController;
 use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\VihicleController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\front\TripController;
 
 Route::name('admin.')->group(function () {
@@ -52,6 +53,8 @@ Route::name('admin.')->group(function () {
         Route::controller(SettingController::class)->group(function () {
             Route::get('setting/profile', 'profile')->name('setting.profile');
             Route::post('setting/profile/{id}', 'profileUpdate')->name('setting.profile.update');
+            Route::get('setting/site-setting', 'editConst')->name('setting.const');
+            Route::post('setting/site-setting', 'updateConst')->name('setting.const.update');
         });
 
 
@@ -63,5 +66,6 @@ Route::name('admin.')->group(function () {
         Route::resource('staff', StaffController::class);
         Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
         Route::resource('clients', \App\Http\Controllers\Admin\ClientController::class);
+        Route::resource('products', ProductController::class);
     });
 });

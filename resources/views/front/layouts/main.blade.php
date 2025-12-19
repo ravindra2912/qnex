@@ -74,9 +74,7 @@
 	<link href="{{ asset('assets/front/vendor/css/bundle.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/front/vendor/css/revolution-settings.min.css') }}" rel="stylesheet">
 	<!-- Plugin Css -->
-	<link href="{{ asset('assets/front/vendor/css/jquery.fancybox.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/front/vendor/css/owl.carousel.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/front/vendor/css/swiper.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/front/vendor/css/cubeportfolio.min.css') }}" rel="stylesheet">
 	<!--Toastr -->
 
@@ -272,9 +270,7 @@
 	<script src="{{ asset('assets/front/vendor/js/bundle.min.js') }}"></script>
 	<!-- Plugin Js -->
 	<script src="{{ asset('assets/front/vendor/js/jquery.appear.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/jquery.fancybox.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/owl.carousel.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/swiper.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/morphext.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/TweenMax.min.js') }}"></script>
 	<script src="{{ asset('assets/front/vendor/js/wow.min.js') }}"></script>

@@ -679,132 +679,22 @@
         </div>
         <!--Row-->
         <div class="row wow fadeIn">
+            @foreach($products as $product)
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/1.webp') }}">
-                        <img alt="Product 1" class="img-fluid" src="{{ asset('assets/front/agency/img/products/1.webp') }}">
+                    <a class="cbp-caption cbp-lightbox" href="{{ getImage($product->image) }}">
+                        <img alt="{{ $product->name }}" class="img-fluid" src="{{ getImage($product->image) }}">
                         <div class="portfolio-overlay">
                             <div class="portfolio-content">
                                 <div class="plus"></div>
                                 <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
+                                <p class="text-white">{{ $product->name }}</p>
                             </div>
                         </div>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/2.webp') }}">
-                        <img alt="Product 2" class="img-fluid" src="{{ asset('assets/front/agency/img/products/2.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/3.webp') }}">
-                        <img alt="Product 3" class="img-fluid" src="{{ asset('assets/front/agency/img/products/3.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/4.webp') }}">
-                        <img alt="Product 4" class="img-fluid" src="{{ asset('assets/front/agency/img/products/4.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/5.webp') }}">
-                        <img alt="Product 5" class="img-fluid" src="{{ asset('assets/front/agency/img/products/5.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/6-converted-from-png.webp') }}">
-                        <img alt="Product 6" class="img-fluid" src="{{ asset('assets/front/agency/img/products/6-converted-from-png.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/7-converted-from-jpg.webp') }}">
-                        <img alt="Product 7" class="img-fluid" src="{{ asset('assets/front/agency/img/products/7-converted-from-jpg.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/8-converted-from-png.webp') }}">
-                        <img alt="Product 8" class="img-fluid" src="{{ asset('assets/front/agency/img/products/8-converted-from-png.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="cbp-caption cbp-lightbox" href="{{ asset('assets/front/agency/img/products/9-converted-from-jpg.webp') }}">
-                        <img alt="Product 9" class="img-fluid" src="{{ asset('assets/front/agency/img/products/9-converted-from-jpg.webp') }}">
-                        <div class="portfolio-overlay">
-                            <div class="portfolio-content">
-                                <div class="plus"></div>
-                                <h5 class="text-white mb-1">Our Products</h5>
-                                <p class="text-white">Quality AC Spare Parts</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </section>
