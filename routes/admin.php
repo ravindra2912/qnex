@@ -67,5 +67,6 @@ Route::name('admin.')->group(function () {
         Route::resource('testimonials', \App\Http\Controllers\Admin\TestimonialController::class);
         Route::resource('clients', \App\Http\Controllers\Admin\ClientController::class);
         Route::resource('products', ProductController::class);
+        Route::resource('subsidiaries', \App\Http\Controllers\Admin\SubsidiaryController::class);
     });
 });

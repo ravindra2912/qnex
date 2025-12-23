@@ -108,6 +108,37 @@
         width: 3px;
         height: 30px;
     }
+
+    /* Subsidiary Card Shadow */
+    .subsidiary-card-shadow {
+        box-shadow: 0px 0rem 1rem 0px rgba(0, 0, 0, .175) !important;
+    }
+
+    /* Owl Carousel Dots Customization */
+    .subsidiary-slider .owl-dots {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .subsidiary-slider .owl-dot {
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .subsidiary-slider .owl-dot span {
+        display: block;
+        width: 12px;
+        height: 12px;
+        background: #ddd;
+        border-radius: 50%;
+        transition: background 0.3s ease;
+    }
+
+    .subsidiary-slider .owl-dot.active span {
+        background: #007bff;
+        /* Primary Blue or match theme color */
+        transform: scale(1.2);
+    }
 </style>
 @endpush
 
@@ -344,6 +375,8 @@
     </div>
 </section>
 <!--About Us End-->
+
+
 
 <!--Services Start-->
 <section id="services">
@@ -638,6 +671,38 @@
     </div>
 </section>
 <!--Blog End-->
+
+<!--Subsidiary Start-->
+<section id="subsidiary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="heading-area mx-570 mb-5">
+                    <span class="sub-title">Expanding Horizons</span>
+                    <h2 class="title">Our <span class="alt-color js-rotating">Subsidiaries, Companies</span></h2>
+                    <p class="para">Explore our family of companies dedicated to excellence and innovation across various sectors.</p>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel subsidiary-slider wow fadeInUp">
+            @php
+            $colorClasses = ['blue', 'midnight', 'purple', 'pink'];
+            @endphp
+            @foreach($subsidiaries as $index => $subsidiary)
+            <div class="item p-1">
+                <div class="process-wrapp text-center p-5 rounded subsidiary-card-shadow bg-white h-100 position-relative">
+                    <div class="pro-step midnight mb-4 d-inline-block position-relative" style="left: auto; top: auto; transform: none;">
+                        <img src="{{ getImage($subsidiary->image) }}" alt="{{ $subsidiary->name }}" style="width: 80px; height: 80px; object-fit: contain; border-radius: 50%;">
+                    </div>
+                    <h4 class="service-heading mb-3">{{ $subsidiary->name }}</h4>
+                    <p class="para mb-4">{{ $subsidiary->description }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<!--Subsidiary End-->
 
 <!--Client Map-->
 <section class="gradient-bg2" id="client">

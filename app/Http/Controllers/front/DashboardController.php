@@ -14,6 +14,7 @@ use App\Models\Staff;
 use App\Models\Testimonial;
 use App\Models\Client;
 use App\Models\Product;
+use App\Models\Subsidiary;
 
 class DashboardController
 {
@@ -27,7 +28,8 @@ class DashboardController
         $testimonials = Testimonial::where('status', 'active')->get();
         $clients = Client::where('status', 'active')->get();
         $products = Product::where('status', 'active')->get();
-        return view('front.home', compact('latestBlogs', 'staffs', 'testimonials', 'clients', 'products'));
+        $subsidiaries = Subsidiary::where('status', 'active')->get();
+        return view('front.home', compact('latestBlogs', 'staffs', 'testimonials', 'clients', 'products', 'subsidiaries'));
     }
 
     public function getRoutes(Request $request)

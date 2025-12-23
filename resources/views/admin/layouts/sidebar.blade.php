@@ -53,6 +53,14 @@
         </li>
 
         <li class="nav-item">
+          <a href="{{ route('admin.subsidiaries.index') }}"
+            class="nav-link {{ request()->routeIs('admin.subsidiaries*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-building"></i>
+            <p> Subsidiaries </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
           <a href="{{ route('admin.products.index') }}"
             class="nav-link {{ request()->routeIs('admin.products*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-box-open"></i>
