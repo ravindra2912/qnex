@@ -2311,6 +2311,7 @@ span.anchor-circle {
     width: auto;
     max-width: 100%;
     display: inline-block;
+    height: 80px;
 }
 
 .partners-slider .logo-item {

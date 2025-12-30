@@ -15,7 +15,7 @@ return [
     "contactUs" => [
         "address" => "Office No 3-4 (1st Floor) Madhav Park, Opp. Tirupati Balaji Complex, Near Maruti Chowk, L. H. Road, Hirabaugh, Surat, Gujarat 395006",
         "contact" => ['8128121857', '9099101246'],
-        "whatsapp" => 8128121857,
+        "whatsapp" => 9099101246,
         "email" => 'Salesqnex@gmail.com',
     ],
 

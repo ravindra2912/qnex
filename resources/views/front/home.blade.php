@@ -208,7 +208,7 @@
                         id="slide-43-layer-11"
 
                         style="z-index: 14; min-width: 650px; max-width: 650px; white-space: nowrap; font-size: 70px; line-height: 70px; font-weight: 700; color: #ffffff; letter-spacing: 0px;font-family:Montserrat;">
-                        is a Wholesaler
+                        is a <span class="alt-color js-rotating">Wholesaler, Manufacturer, Importer</span>
                     </div>
 
                     <!-- LAYER NR. 11 -->
@@ -485,7 +485,7 @@
                     <p class="designation mb-2">{{ $staff->position }}</p>
                     <!--Team Social-->
                     <div class="team-social social-icon-bg-hvr">
-                        @if($staff->facebook_url)
+                        <!-- @if($staff->facebook_url)
                         <a href="{{ $staff->facebook_url }}" target="_blank"><i aria-hidden="true" class="fab fa-facebook-f"></i></a>
                         @endif
                         @if($staff->linkedin_url)
@@ -493,7 +493,7 @@
                         @endif
                         @if($staff->x_url)
                         <a href="{{ $staff->x_url }}" target="_blank"><i aria-hidden="true" class="fab fa-x-twitter"></i></a>
-                        @endif
+                        @endif -->
                     </div>
                 </div>
             </div>
@@ -746,8 +746,7 @@
                     <!--Heading-->
                     <div class="heading-area pb-5">
                         <h2 class="title mt-0 pb-1">Our Location</h2>
-                        <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority
-                            have suffered .</p>
+                        <!-- <p class="para">There are many variations of passages of Lorem Ipsum available, but the majority have suffered .</p> -->
                     </div>
 
                     <!--Address-->
@@ -792,11 +791,11 @@
                                     type="text">
                             </div>
                             <div class="form-group">
-                                <input class="form-control mb-0 required" id="your_email" name="userEmail" placeholder="Email" required=""
-                                    type="email">
+                                <input class="form-control mb-0 required" id="your_city" name="userCity" placeholder="City" required=""
+                                    type="text">
                             </div>
                             <div class="form-group">
-                                <input class="form-control mb-0 required" id="subject" name="userSubject" placeholder="Subject" required=""
+                                <input class="form-control mb-0 required" id="user_work" name="userWork" placeholder="Ap kya kam karte ho ?" required=""
                                     type="text">
                             </div>
                         </div>
@@ -853,8 +852,8 @@
 
             var form = $('#contact-form-data');
             var nameInput = $('#your_name');
-            var emailInput = $('#your_email');
-            var subjectInput = $('#subject');
+            var cityInput = $('#your_city');
+            var userWorkInput = $('#user_work');
             var messageInput = $('#message');
 
             var isValid = true;
@@ -866,24 +865,18 @@
                 nameInput.after('<div class="text-danger errors">The Name field is required.</div>');
             }
 
-            // Validate Email
-            var emailValue = emailInput.val().trim();
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailValue) {
+            // Validate City
+            if (!cityInput.val().trim()) {
                 isValid = false;
-                emailInput.addClass('is-invalid');
-                emailInput.after('<div class="text-danger errors">The Email field is required.</div>');
-            } else if (!emailPattern.test(emailValue)) {
-                isValid = false;
-                emailInput.addClass('is-invalid');
-                emailInput.after('<div class="text-danger errors">Please enter a valid email address.</div>');
+                cityInput.addClass('is-invalid');
+                cityInput.after('<div class="text-danger errors">The City field is required.</div>');
             }
 
-            // Validate Subject
-            if (!subjectInput.val().trim()) {
+            // Validate User Work
+            if (!userWorkInput.val().trim()) {
                 isValid = false;
-                subjectInput.addClass('is-invalid');
-                subjectInput.after('<div class="text-danger errors">The Subject field is required.</div>');
+                userWorkInput.addClass('is-invalid');
+                userWorkInput.after('<div class="text-danger errors">The "Ap kya kam karte ho ?" field is required.</div>');
             }
 
             // Validate Message
@@ -902,8 +895,8 @@
 
                 var text = title + "%0a%0a" +
                     "*Name:* " + nameInput.val().trim() + "%0a" +
-                    "*Email:* " + emailValue + "%0a" +
-                    "*Subject:* " + subjectInput.val().trim() + "%0a" +
+                    "*City:* " + cityInput.val().trim() + "%0a" +
+                    "*my work ?:* " + userWorkInput.val().trim() + "%0a" +
                     "*Message:* " + messageInput.val().trim();
 
                 var whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + text;

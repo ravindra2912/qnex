@@ -43,14 +43,14 @@
 	<meta property="og:description" content="{{ $seo['description'] }}" />
 	<meta property="og:keywords" content="{{ $seo['keywords'] }}" />
 	<meta property="og:url" content="{{ url()->current() }}">
-	<meta property="og:type" content="Car and Taxi Booking Website" />
-	<meta property="og:site_name" content="{{$customeseo['domain']}} - Car and Taxi Booking Website">
+	<meta property="og:type" content="Wholesaler, Manufacturer, Importer" />
+	<meta property="og:site_name" content="{{$customeseo['domain']}} - Wholesaler, Manufacturer, Importer">
 	<meta property="og:locale" content="en_GB">
 	<meta property="og:image" content="{{ config('const.site_setting.fevicon') }}">
 	<!-- <meta property="og:image:width" content="550" />
 		<meta property="og:image:height" content="413" /> -->
 
-	<meta name="author" content="{{$customeseo['domain']}} Car and Taxi Booking " />
+	<meta name="author" content="{{$customeseo['domain']}} Wholesaler, Manufacturer, Importer " />
 
 	<meta property="twitter:card" content="summary">
 	<meta property="twitter:site" content="{{$customeseo['domainwithdot']}}">
@@ -71,15 +71,15 @@
 
 	<link href="{{ asset('assets/front/img/favicon.ico') }}" rel="icon">
 	<!-- Bundle -->
-	<link href="{{ asset('assets/front/vendor/css/bundle.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/front/vendor/css/revolution-settings.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/front/vendor/css/bundle.min.css') }}?v={{ filemtime(public_path('assets/front/vendor/css/bundle.min.css')) }}" rel="stylesheet">
+	<link href="{{ asset('assets/front/vendor/css/revolution-settings.min.css') }}?v={{ filemtime(public_path('assets/front/vendor/css/revolution-settings.min.css')) }}" rel="stylesheet">
 	<!-- Plugin Css -->
-	<link href="{{ asset('assets/front/vendor/css/owl.carousel.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('assets/front/vendor/css/cubeportfolio.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/front/vendor/css/owl.carousel.min.css') }}?v={{ filemtime(public_path('assets/front/vendor/css/owl.carousel.min.css')) }}" rel="stylesheet">
+	<link href="{{ asset('assets/front/vendor/css/cubeportfolio.min.css') }}?v={{ filemtime(public_path('assets/front/vendor/css/cubeportfolio.min.css')) }}" rel="stylesheet">
 	<!--Toastr -->
 
 	<!-- Style Sheet -->
-	<link href="{{ asset('assets/front/agency/css/style.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/front/agency/css/style.css') }}?v={{ filemtime(public_path('assets/front/agency/css/style.css')) }}" rel="stylesheet">
 
 
 
@@ -267,29 +267,29 @@
 	<!--Scroll Top End-->
 
 	<!-- JavaScript -->
-	<script src="{{ asset('assets/front/vendor/js/bundle.min.js') }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/bundle.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/bundle.min.js')) }}"></script>
 	<!-- Plugin Js -->
-	<script src="{{ asset('assets/front/vendor/js/jquery.appear.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/owl.carousel.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/morphext.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/TweenMax.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/wow.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/jquery.cubeportfolio.min.js') }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/jquery.appear.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/jquery.appear.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/owl.carousel.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/owl.carousel.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/morphext.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/morphext.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/TweenMax.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/TweenMax.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/wow.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/wow.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/jquery.cubeportfolio.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/jquery.cubeportfolio.min.js')) }}"></script>
 	<!-- REVOLUTION JS FILES -->
-	<script src="{{ asset('assets/front/vendor/js/jquery.themepunch.tools.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/jquery.themepunch.revolution.min.js') }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/jquery.themepunch.tools.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/jquery.themepunch.tools.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/jquery.themepunch.revolution.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/jquery.themepunch.revolution.min.js')) }}"></script>
 	<!-- SLIDER REVOLUTION EXTENSIONS -->
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.actions.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.carousel.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.kenburn.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.layeranimation.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.migration.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.navigation.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.parallax.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.slideanims.min.js') }}"></script>
-	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.video.min.js') }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.actions.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.actions.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.carousel.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.carousel.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.kenburn.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.kenburn.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.layeranimation.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.layeranimation.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.migration.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.migration.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.navigation.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.navigation.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.parallax.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.parallax.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.slideanims.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.slideanims.min.js')) }}"></script>
+	<script src="{{ asset('assets/front/vendor/js/extensions/revolution.extension.video.min.js') }}?v={{ filemtime(public_path('assets/front/vendor/js/extensions/revolution.extension.video.min.js')) }}"></script>
 	<!-- custom script -->
-	<script src="{{ asset('assets/front/agency/js/script.js') }}"></script>
+	<script src="{{ asset('assets/front/agency/js/script.js') }}?v={{ filemtime(public_path('assets/front/agency/js/script.js')) }}"></script>
 
 	@stack('js')
 
